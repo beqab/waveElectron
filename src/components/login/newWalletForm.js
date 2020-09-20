@@ -1,7 +1,11 @@
 import React from "react";
 import { MDBBtn } from "mdbreact";
+const { ipcRenderer } = require("electron");
+import { WalletKeyContext } from "../walletKeyContext/walletKeyContext";
 
 const newWalletForm = ({ changeContent }) => {
+  const { setUserKey } = React.useContext(WalletKeyContext);
+
   return (
     <div>
       <form className="my-5 mx-md-10" action="">
@@ -31,7 +35,21 @@ const newWalletForm = ({ changeContent }) => {
                     id="passwordHelpBlock"
                     className="form-text text-right blue-text"
                   ></small>
-                  <MDBBtn color="light-green">crete</MDBBtn>
+                  <MDBBtn
+                    onClick={() => {
+                      ipcRenderer.send("create", {
+                        wallet: "123test",
+                        key: "456testKey",
+                      });
+                      setUserKey({
+                        wallet: "123test",
+                        key: "456testKey",
+                      });
+                    }}
+                    color="light-green"
+                  >
+                    crete
+                  </MDBBtn>
                   <div className="text-center"></div>
                 </form>
               </div>

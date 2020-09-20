@@ -1,6 +1,14 @@
 const path = require("path");
 const url = require("url");
-const { app, BrowserWindow, Menu, globalShortcut } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  Menu,
+  globalShortcut,
+  ipcMain,
+} = require("electron");
+
+const store = require("./store");
 
 let mainWindow;
 
@@ -66,6 +74,14 @@ function createMainWindow() {
 
 app.on("ready", () => {
   createMainWindow();
+  const newStore = new store({
+    fileName: "userKay",
+    data: {},
+  });
+
+  mainWindow.webContents.on("dom-ready", () => {
+    mainWindow.webContents.send("getUser", newStore.get());
+  });
   //   Menu.setApplicationMenu(false);
   Menu.setApplicationMenu(null);
 });
@@ -85,6 +101,17 @@ app.on("activate", () => {
     globalShortcut.register("CmdOrCtrl+R", () => mainWindow.reload());
     globalShortcut.register("Ctrl+Shift+I", () => mainWindow.toggleDevTools());
   }
+});
+
+ipcMain.on("create", (e, options = "ttt") => {
+  console.log(options);
+  const setStore = new store({
+    fileName: "userKay",
+    data: {},
+  });
+
+  setStore.set(options);
+  console.log("ttt");
 });
 
 // Stop error

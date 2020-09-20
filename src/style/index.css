@@ -38,3 +38,33 @@ body {
   border-radius: 5px;
   padding: 20px;
 }
+.WaveCircle {
+  width: 130px;
+  height: 130px;
+  margin: auto;
+  border-radius: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e0fff3;
+  margin-bottom: 30px;
+}
+
+.wave-main .amount span {
+  font-weight: bold;
+  font-size: 24px;
+}
+.wave-main .amount {
+  font-size: 23px;
+  color: #3aa3da;
+}
+.wave-main {
+  max-width: 500px;
+  margin: auto;
+  margin-top: 100px;
+  text-align: center;
+}
+.wave-main .btn-group button {
+  border-radius: 50px !important;
+  min-width: 190px;
+}

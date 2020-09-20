@@ -1,6 +1,7 @@
 import React from "react";
 import {
   MDBBtn,
+  MDBIcon,
   MDBCard,
   MDBCardBody,
   MDBCardImage,
@@ -10,56 +11,58 @@ import {
 } from "mdbreact";
 import Header from "./header/header";
 import Login from "./login/login";
+import WalletKeyProvider, {
+  WalletKeyContext,
+} from "./walletKeyContext/walletKeyContext";
+import Wave from "../imgs/logo.png";
+import Modal from "./sendModal/sendModal";
 
 const App = () => {
+  const [modal14, setModal14] = React.useState(false);
+
+  const val = React.useContext(WalletKeyContext);
+
   return (
     <div className="app">
-      <Login />
+      {!val.userKey && <Login />}
       <Header />
-      <button type="button" class="btn btn-primary">
-        Primary
-      </button>
-      <button type="button" class="btn btn-secondary">
-        Secondary
-      </button>
-      <button type="button" class="btn btn-success">
-        Success
-      </button>
-      <button type="button" class="btn btn-danger">
-        Danger
-      </button>
-      <button type="button" class="btn btn-warning">
-        Warning
-      </button>
-      <button type="button" class="btn btn-info">
-        Info
-      </button>
-      <button type="button" class="btn btn-light">
-        Light
-      </button>
-      <button type="button" class="btn btn-dark">
-        Dark
-      </button>
-      <button type="button" class="btn btn-link">
-        Link
-      </button>
-      <MDBCol>
-        <MDBCard style={{ width: "22rem" }}>
-          <MDBCardImage
-            className="img-fluid"
-            src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg"
-            waves
-          />
-          <MDBCardBody>
-            <MDBCardTitle>Card title</MDBCardTitle>
-            <MDBCardText>
-              Some quick example text to build on the card title and make up the
-              bulk of the card&apos;s content.
-            </MDBCardText>
-            <MDBBtn href="#">MDBBtn</MDBBtn>
-          </MDBCardBody>
-        </MDBCard>
-      </MDBCol>
+      <Modal modal14={modal14} toggle={(e) => setModal14(e)} />
+      <div className="container">
+        <div className="wave-main">
+          <div className="WaveCircle">
+            <img width="90" src={Wave} />
+          </div>
+          <div className="amount mb-5">
+            45.5 <span>Wave </span>
+          </div>
+
+          <div className="btn-group">
+            <MDBBtn
+              onClick={() => setModal14(14)}
+              className="mx-3"
+              color="primary"
+              outline
+              rounded
+            >
+              Send
+            </MDBBtn>
+            <MDBBtn className="mx-3" color="primary" outline rounded>
+              Receive
+            </MDBBtn>
+
+            <MDBBtn
+              className="mx-3"
+              tag="a"
+              size="lg"
+              gradient="blue"
+              floating
+              rounded
+            >
+              <MDBIcon icon="exchange-alt" />
+            </MDBBtn>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
