@@ -1,0 +1,40 @@
+body {
+  background: url(../imgs/slider-bg.jpg);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.header {
+  background-color: black;
+}
+.header .menu a {
+  height: 20px;
+  display: block;
+}
+.header .menu i {
+  font-size: 22px;
+  line-height: 22px;
+}
+
+.login-modal {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  height: 100vh;
+  width: 100vw;
+  z-index: 400;
+  background: rgba(0, 0, 0, 0.438);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-modal .container {
+  background: #fff;
+  height: 500px;
+  max-width: 600px;
+  width: 100%;
+  border-radius: 5px;
+  padding: 20px;
+}
