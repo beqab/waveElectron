@@ -106,6 +106,25 @@ body {
   }
 }
 
+.WalletAddress {
+  position: relative;
+  color: #007bff;
+  div {
+    background: #fee4d89e;
+    padding: 20px;
+  }
+  .copy {
+    color: #007bff;
+    font-weight: bold;
+    right: 3px;
+    position: absolute;
+    cursor: pointer;
+    top: 18px;
+    background: #bcb5b5;
+    padding: 3px 9px;
+    border-radius: 10px;
+  }
+}
 .modalTitle {
   color: #000;
   text-align: center;

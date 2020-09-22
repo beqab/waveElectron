@@ -15,11 +15,14 @@ import {
   MDBIcon,
 } from "mdbreact";
 import Logo from "../../imgs/logo.png";
+import QR from "../../imgs/qr.png";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const ModalPage = ({ modal14, toggle }) => {
-  //   state = {
-  //     modal14: false,
-  //   };
+  const [address, setAddress] = React.useState(
+    "bnb1dq3r0qn4qdxjt82ym6l79p9e4mqy3l75p94mur"
+  );
+  const [copied, setCopied] = React.useState(false);
 
   return (
     <MDBContainer className="MainModalWrapper">
@@ -29,38 +32,27 @@ const ModalPage = ({ modal14, toggle }) => {
         </MDBModalHeader>
         <MDBModalBody>
           <MDBRow>
-            <MDBCol md="9" lg="7" xl="5" className="mx-auto mt-3">
+            <MDBCol md="10" lg="10" xl="10" className="mx-auto mt-3">
               <MDBCard>
-                <h3 className="modalTitle">Your Binance Coin Address</h3>
+                <h3 className="modalTitle">Your Wave Coin Address</h3>
                 <MDBCardBody className="mx-4">
-                  <MDBInput
-                    clear
-                    label="Send to Wave coin address"
-                    group
-                    type="email"
-                    validate
-                    error="text"
-                    success="right"
-                  />
-                  <MDBInput
-                    clear
-                    label="Memo (recommended)"
-                    group
-                    type="text"
-                    validate
-                    containerClass="mb-0"
-                  />
-                  <MDBInput
-                    clear
-                    label="Personal note (optional)"
-                    group
-                    type="text"
-                    validate
-                    containerClass="mb-0"
-                  />
-                  <div className=" currencyField">
-                    <MDBInput hint="0.00" type="number" />
-                    <span className="labelCurr">Wave</span>
+                  <div className="WalletAddress ">
+                    <div>{address}</div>
+
+                    <CopyToClipboard
+                      text={address}
+                      onCopy={() => setCopied(true)}
+                    >
+                      <span
+                        style={{ color: copied ? "green" : "#007bff" }}
+                        className="copy"
+                      >
+                        copy
+                      </span>
+                    </CopyToClipboard>
+                  </div>
+                  <div className="text-center">
+                    <img src={QR} />
                   </div>
                   <div className="text-center pt-3 mb-3">
                     <MDBBtn
