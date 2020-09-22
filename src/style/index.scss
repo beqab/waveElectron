@@ -68,3 +68,46 @@ body {
   border-radius: 50px !important;
   min-width: 190px;
 }
+
+.MainModalWrapper .modal-header {
+  position: relative;
+  .close {
+    position: absolute;
+    right: 20px;
+    span {
+      font-size: 30px;
+      color: #fff;
+    }
+  }
+  .modal-title {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.MainModalWrapper .modal-dialog {
+  max-width: 80% !important;
+  min-height: 80vh;
+}
+.MainModalWrapper .modal-content {
+  box-shadow: none;
+  background: #07103fb3;
+  color: #fff;
+}
+
+.currencyField {
+  position: relative;
+  .labelCurr {
+    color: #007bff;
+    font-weight: bold;
+    right: 18px;
+    position: absolute;
+    top: 8px;
+  }
+}
+
+.modalTitle {
+  color: #000;
+  text-align: center;
+  padding-top: 25px;
+}

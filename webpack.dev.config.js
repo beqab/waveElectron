@@ -11,6 +11,27 @@ module.exports = {
         use: [{ loader: "style-loader" }, { loader: "css-loader" }],
       },
       {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: "style-loader",
+          },
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      },
+      {
         test: /\.jsx?$/,
         use: [{ loader: "babel-loader", query: { compact: false } }],
       },

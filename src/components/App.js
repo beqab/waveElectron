@@ -16,9 +16,12 @@ import WalletKeyProvider, {
 } from "./walletKeyContext/walletKeyContext";
 import Wave from "../imgs/logo.png";
 import Modal from "./sendModal/sendModal";
+import "../style/test.scss";
+import ReceiveModal from "./receiveModal/receiveModal";
 
 const App = () => {
   const [modal14, setModal14] = React.useState(false);
+  const [receiveModal, setReceiveModal] = React.useState(false);
 
   const val = React.useContext(WalletKeyContext);
 
@@ -27,6 +30,7 @@ const App = () => {
       {!val.userKey && <Login />}
       <Header />
       <Modal modal14={modal14} toggle={(e) => setModal14(e)} />
+      <ReceiveModal modal14={receiveModal} toggle={(e) => setReceiveModal(e)} />
       <div className="container">
         <div className="wave-main">
           <div className="WaveCircle">
@@ -46,7 +50,13 @@ const App = () => {
             >
               Send
             </MDBBtn>
-            <MDBBtn className="mx-3" color="primary" outline rounded>
+            <MDBBtn
+              onClick={() => setReceiveModal(true)}
+              className="mx-3"
+              color="primary"
+              outline
+              rounded
+            >
               Receive
             </MDBBtn>
 

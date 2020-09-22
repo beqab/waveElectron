@@ -31,6 +31,7 @@ const ModalPage = ({ modal14, toggle }) => {
           <MDBRow>
             <MDBCol md="9" lg="7" xl="5" className="mx-auto mt-3">
               <MDBCard>
+                <h3 className="modalTitle">Your Binance Coin Address</h3>
                 <MDBCardBody className="mx-4">
                   <MDBInput
                     clear
