@@ -111,7 +111,7 @@ ipcMain.on("create", (e, options = "ttt") => {
   });
 
   setStore.set(options);
-  console.log("ttt");
+  console.log("ttt", options);
 });
 
 // Stop error

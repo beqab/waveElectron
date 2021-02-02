@@ -19,6 +19,8 @@ class Store {
 
   set(data) {
     this.data = { ...data };
+
+    console.log(this.path, "this.path");
     fs.writeFileSync(this.path, JSON.stringify(this.data));
   }
 }

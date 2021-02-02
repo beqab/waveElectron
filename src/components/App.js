@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   MDBBtn,
   MDBIcon,
@@ -16,62 +16,54 @@ import WalletKeyProvider, {
 } from "./walletKeyContext/walletKeyContext";
 import Wave from "../imgs/logo.png";
 import Modal from "./sendModal/sendModal";
-import "../style/test.scss";
+// import "../style/test.scss";
 import ReceiveModal from "./receiveModal/receiveModal";
+import Wallet from "./Wallet";
+import Stoking from "./Stoking";
+import Freezing from "./Freezing";
+import Security from "./security";
+import Settings from "./settings";
 
 const App = () => {
   const [modal14, setModal14] = React.useState(false);
   const [receiveModal, setReceiveModal] = React.useState(false);
+  const [currentTab, setCurrentTab] = React.useState("Settings");
 
   const val = React.useContext(WalletKeyContext);
 
+  console.log(val.userKey, "val.userKey");
+  useEffect(() => {}, []);
+
+  const getContent = () => {
+    if (currentTab === "Wallet") {
+      return <Wallet />;
+    } else if (currentTab === "Stoking") {
+      return <Stoking />;
+    } else if (currentTab === "Freezing") {
+      return <Freezing />;
+    } else if (currentTab === "Security") {
+      return <Security />;
+    } else if (currentTab === "Settings") {
+      return <Settings />;
+    }
+
+    return "mhhhh";
+  };
   return (
     <div className="app">
-      {!val.userKey && <Login />}
-      <Header />
-      <Modal modal14={modal14} toggle={(e) => setModal14(e)} />
-      <ReceiveModal modal14={receiveModal} toggle={(e) => setReceiveModal(e)} />
+      {/* {!val.userKey && <Login />} */}
+      <Header
+        currentTab={currentTab}
+        setCurrentTab={(tabName) => setCurrentTab(tabName)}
+      />
+      {/* <Modal modal14={modal14} toggle={(e) => setModal14(e)} /> */}
       <div className="container">
-        <div className="wave-main">
-          <div className="WaveCircle">
-            <img width="90" src={Wave} />
-          </div>
-          <div className="amount mb-5">
-            45.5 <span>Wave </span>
-          </div>
-
-          <div className="btn-group">
-            <MDBBtn
-              onClick={() => setModal14(14)}
-              className="mx-3"
-              color="primary"
-              outline
-              rounded
-            >
-              Send
-            </MDBBtn>
-            <MDBBtn
-              onClick={() => setReceiveModal(true)}
-              className="mx-3"
-              color="primary"
-              outline
-              rounded
-            >
-              Receive
-            </MDBBtn>
-
-            <MDBBtn
-              className="mx-3"
-              tag="a"
-              size="lg"
-              gradient="blue"
-              floating
-              rounded
-            >
-              <MDBIcon icon="exchange-alt" />
-            </MDBBtn>
-          </div>
-        </div>
+        <ReceiveModal
+          modal14={receiveModal}
+          setCurrentTab={(tabName) => setCurrentTab(tabName)}
+          toggle={(e) => setReceiveModal(e)}
+        />
+        {getContent()}
       </div>
     </div>
   );

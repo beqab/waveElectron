@@ -9,6 +9,7 @@
     "npm": ">=5.0.0",
     "yarn": ">=1.0.0"
   },
+  "proxy": "http://51.255.211.135:8181",
   "browserslist": [
     "last 4 versions"
   ],
@@ -21,7 +22,10 @@
     "postpackage": "electron-packager ./ --out=./release-builds"
   },
   "dependencies": {
+    "axios": "^0.21.1",
+    "classnames": "^2.2.6",
     "mdbreact": "^4.27.0",
+    "mnemonic-words": "^1.1.0",
     "react": "^16.13.1",
     "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1"

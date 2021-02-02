@@ -3,7 +3,7 @@ import { MDBBtn } from "mdbreact";
 
 const oldWaletFrom = ({ changeContent }) => {
   return (
-    <div className="text-center w-75">
+    <div className="text-center w-100">
       <form className="my-5 mx-md-10" action="">
         <div className="row">
           <div className="col-md-12 mx-auto">
@@ -49,7 +49,7 @@ const oldWaletFrom = ({ changeContent }) => {
                   <div className="text-center">
                     <button
                       type="button"
-                      className="btn btn-default  btn-rounded my-4 waves-effect"
+                      className="btn btn-default btnMain  btn-rounded my-4 waves-effect"
                     >
                       submit
                     </button>
