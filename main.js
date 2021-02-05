@@ -37,7 +37,7 @@ function createMainWindow() {
   if (isDev && process.argv.indexOf("--noDevServer") === -1) {
     indexPath = url.format({
       protocol: "http:",
-      host: "localhost:8080",
+      host: "localhost:8080/",
       pathname: "index.html",
       slashes: true,
     });
@@ -74,6 +74,7 @@ function createMainWindow() {
 
 app.on("ready", () => {
   createMainWindow();
+
   const newStore = new store({
     fileName: "userKay",
     data: {},

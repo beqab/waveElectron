@@ -1,6 +1,8 @@
 import React from "react";
 import Wave from "../../imgs/logo.png";
 import Modal from "../sendModal/sendModal";
+import ReceiveModal from "../receiveModal/receiveModal";
+
 import WalletKeyProvider, {
   WalletKeyContext,
 } from "../walletKeyContext/walletKeyContext";
@@ -16,8 +18,13 @@ import {
 } from "mdbreact";
 
 function index() {
+  const [modal14, setModal14] = React.useState(false);
+  const [receiveModal, setReceiveModal] = React.useState(false);
+
   return (
     <div className="wave-main">
+      <Modal modal14={modal14} toggle={(e) => setModal14(e)} />
+      <ReceiveModal modal14={receiveModal} toggle={(e) => setReceiveModal(e)} />
       <div className="">
         <img width="90" src={Wave} />
       </div>
@@ -27,7 +34,7 @@ function index() {
 
       <div className="btn-group walletBtn">
         <MDBBtn
-          onClick={() => setModal14(14)}
+          onClick={() => setReceiveModal(true)}
           className="mx-3 btnMain bold textCapital"
         >
           <svg
@@ -57,7 +64,8 @@ function index() {
           Receive
         </MDBBtn>
         <MDBBtn
-          onClick={() => setReceiveModal(true)}
+          // onClick={() => setReceiveModal(true)}
+          onClick={() => setModal14(14)}
           className="mx-3 btnMain bold textCapital"
         >
           <svg

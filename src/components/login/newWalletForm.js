@@ -2,8 +2,20 @@ import React, { useState, useEffect } from "react";
 import { MDBBtn } from "mdbreact";
 const { ipcRenderer } = require("electron");
 import { WalletKeyContext } from "../walletKeyContext/walletKeyContext";
+const HttpsProxyAgent = require("https-proxy-agent");
 import axios from "axios";
 const mnemonicWords = require("mnemonic-words");
+
+// const axiosDefaultConfig = {
+//   baseURL: "http://51.255.211.135:8181",
+//   proxy: false,
+//   httpsAgent: new HttpsProxyAgent("http://localhost:8080"),
+// };
+
+// const axios = require("axios").create(axiosDefaultConfig);
+// const customAxiosInstance = axios.create({
+//   baseURL: "http://51.255.211.135:8181",
+// });
 
 const newWalletForm = ({ changeContent }) => {
   const [words, setWords] = useState("");
@@ -15,26 +27,40 @@ const newWalletForm = ({ changeContent }) => {
   const createKey = () => {
     if (!words) {
       setWordsError("at first generate mnemonicWords (24 Words)");
-    }
-    {
-      ipcRenderer.send("create", {
-        wallet: "123test",
-        key: "456testKey",
-      });
-      setUserKey({
-        wallet: "123test",
-        key: "456testKey",
-      });
-    }
+    } else {
+      axios
+        .post(
+          "http://51.255.211.135:8181/wallet/create",
+          {
+            secret: words.slice(0, 26).join(" "),
+          }
+          // {
+          //   // proxy: {
+          //   //   host: "http://51.255.211.135",
+          //   //   port: 8181,
+          //   // },
+          //   header: {
+          //     "Access-Control-Allow-Origin": "*",
+          //   },
+          // }
+        )
+        .then((res) => {
+          console.log("mhhh");
+          // debugger;
 
-    // axios
-    //   .post("/wallet/create")
-    //   .then((res) => {
-    //     console.log("mhhh");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err, "errr");
-    //   });
+          ipcRenderer.send("create", {
+            wallet: res.data.privKey,
+            key: res.data.pubKey,
+          });
+          setUserKey({
+            wallet: res.data.privKey,
+            key: res.data.pubKey,
+          });
+        })
+        .catch((err) => {
+          console.log(err, "errr");
+        });
+    }
   };
   return (
     <div>

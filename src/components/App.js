@@ -27,7 +27,7 @@ import Settings from "./settings";
 const App = () => {
   const [modal14, setModal14] = React.useState(false);
   const [receiveModal, setReceiveModal] = React.useState(false);
-  const [currentTab, setCurrentTab] = React.useState("Settings");
+  const [currentTab, setCurrentTab] = React.useState("Wallet");
 
   const val = React.useContext(WalletKeyContext);
 
@@ -49,9 +49,10 @@ const App = () => {
 
     return "mhhhh";
   };
+  console.log(val.userKey, "val.userKey");
   return (
     <div className="app">
-      {/* {!val.userKey && <Login />} */}
+      {!val.userKey && <Login />}
       <Header
         currentTab={currentTab}
         setCurrentTab={(tabName) => setCurrentTab(tabName)}
