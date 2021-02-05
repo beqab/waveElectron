@@ -5,7 +5,7 @@ const welcome = ({ changeContent }) => {
   return (
     <div className="mb-5 p-4">
       {/* <h2 className="text-center mb-5">welcome to WAVE</h2> */}
-      <h5 className="text-center mb-5">create new walt or use exist</h5>
+      <h5 className="text-center mb-5">Create new wallet or use exist</h5>
       <div className="d-flex justify-content-center">
         <MDBBtn
           onClick={() => {
@@ -14,7 +14,7 @@ const welcome = ({ changeContent }) => {
           }}
           color="light-blue mx-3 btnMain"
         >
-          crate new
+          Create New
         </MDBBtn>
         <MDBBtn
           onClick={() => {
@@ -23,7 +23,7 @@ const welcome = ({ changeContent }) => {
           }}
           color="light-blue mx-3 btnMain"
         >
-          use old
+          Use Old
         </MDBBtn>
       </div>
     </div>

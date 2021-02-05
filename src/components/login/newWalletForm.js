@@ -18,8 +18,10 @@ const mnemonicWords = require("mnemonic-words");
 // });
 
 const newWalletForm = ({ changeContent }) => {
-  const [words, setWords] = useState("");
+  // const [words, setWords] = useState("");
   const [wordsError, setWordsError] = useState("");
+  const [words, setWords] = useState([]);
+  const [newWallet, setNewWallet] = useState(null);
 
   useEffect(() => {});
 
@@ -30,10 +32,10 @@ const newWalletForm = ({ changeContent }) => {
     } else {
       axios
         .post(
-          "http://51.255.211.135:8181/wallet/create",
-          {
-            secret: words.slice(0, 26).join(" "),
-          }
+          "http://51.255.211.135:8181/wallet/create"
+          // {
+          //   secret: words.slice(0, 26).join(" "),
+          // }
           // {
           //   // proxy: {
           //   //   host: "http://51.255.211.135",
@@ -46,16 +48,17 @@ const newWalletForm = ({ changeContent }) => {
         )
         .then((res) => {
           console.log("mhhh");
-          // debugger;
-
-          ipcRenderer.send("create", {
-            wallet: res.data.privKey,
-            key: res.data.pubKey,
-          });
-          setUserKey({
-            wallet: res.data.privKey,
-            key: res.data.pubKey,
-          });
+          debugger;
+          setWords(res.data.phrases.split(" "));
+          setNewWallet(res.data);
+          // ipcRenderer.send("create", {
+          //   wallet: res.data.privKey,
+          //   key: res.data.pubKey,
+          // });
+          // setUserKey({
+          //   wallet: res.data.privKey,
+          //   key: res.data.pubKey,
+          // });
         })
         .catch((err) => {
           console.log(err, "errr");
@@ -84,11 +87,34 @@ const newWalletForm = ({ changeContent }) => {
                   action="#!"
                 >
                   <h3 className="font-weight-bold my-2 pb-2 text-center dark-grey-text">
-                    crete new Wallet
+                    Crete new Wallet
                   </h3>
 
-                  <textarea value={words} className="wordsContainer"></textarea>
-
+                  {/* <textarea value={words} className="wordsContainer"></textarea> */}
+                  <div className="mnemonicContainer">
+                    {words.map((el, i) => {
+                      return (
+                        <div>
+                          <span>{i + 1}</span>
+                          <input
+                            value={el}
+                            key={i}
+                            onChange={(e) => {
+                              let NewWords = words.map((word, index) => {
+                                // debugger;
+                                if (i === index) {
+                                  return e.target.value;
+                                } else {
+                                  return word;
+                                }
+                              });
+                              setWords([...NewWords]);
+                            }}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
                   <small
                     id="passwordHelpBlock"
                     className="form-text text-right blue-text"
@@ -100,25 +126,29 @@ const newWalletForm = ({ changeContent }) => {
                         {wordsError}{" "}
                       </div>
                     )}
-                    <MDBBtn
-                      // onClick={() => {
-                      //   ipcRenderer.send("create", {
-                      //     wallet: "123test",
-                      //     key: "456testKey",
-                      //   });
-                      //   setUserKey({
-                      //     wallet: "123test",
-                      //     key: "456testKey",
-                      //   });
-                      // }}
-                      onClick={() => {
-                        setWords(mnemonicWords);
-                        setWordsError("");
-                      }}
-                      color="light-green btnMain w-75"
-                    >
-                      IMPORT FROM MNEMONICS (24 WORDS)
-                    </MDBBtn>
+
+                    {newWallet && (
+                      <MDBBtn
+                        // onClick={() => {
+                        //   ipcRenderer.send("create", {
+                        //     wallet: "123test",
+                        //     key: "456testKey",
+                        //   });
+                        //   setUserKey({
+                        //     wallet: "123test",
+                        //     key: "456testKey",
+                        //   });
+                        // }}
+                        onClick={() => {
+                          //  setWords(mnemonicWords);
+                          //  setWordsError("");
+                          console.log("singIn");
+                        }}
+                        color="light-green btnMain w-75"
+                      >
+                        Sign in
+                      </MDBBtn>
+                    )}
 
                     <MDBBtn
                       // onClick={() => {
@@ -137,6 +167,43 @@ const newWalletForm = ({ changeContent }) => {
                       CREATE A NEW PRIVATE KEY
                     </MDBBtn>
                   </div>
+                  {newWallet && (
+                    <>
+                      <div className="walletInfo">
+                        <div>
+                          pubKey: <span> {newWallet.pubKey} </span>
+                        </div>
+                        <div>
+                          privKey: <span> {newWallet.privKey} </span>
+                        </div>
+                        <div>
+                          phrases: <span> {newWallet.phrases} </span>{" "}
+                        </div>
+                      </div>
+                      <MDBBtn
+                        // onClick={() => {
+                        //   ipcRenderer.send("create", {
+                        //     wallet: "123test",
+                        //     key: "456testKey",
+                        //   });
+                        //   setUserKey({
+                        //     wallet: "123test",
+                        //     key: "456testKey",
+                        //   });
+                        // }}
+                        onClick={() => {
+                          // ipcRenderer.send("exportKeys", {
+                          //   pubKey: newWallet.pubKey,
+                          //   privKey: newWallet.privKey,
+                          //   phrases: newWallet.phrases,
+                          // });
+                        }}
+                        color="light-green btnMain w-75"
+                      >
+                        Export keys
+                      </MDBBtn>
+                    </>
+                  )}
                   <div className="text-center"></div>
                 </form>
               </div>
