@@ -90,7 +90,7 @@ const oldWaletFrom = ({ changeContent }) => {
                       type="button"
                       className="btn btn-default btnMain  btn-rounded my-4 waves-effect"
                     >
-                      submit
+                      SIGN IN
                     </button>
                   </div>
                 </form>

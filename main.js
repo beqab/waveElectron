@@ -1,5 +1,9 @@
 const path = require("path");
 const url = require("url");
+const { shell } = require("electron");
+const os = require("os");
+const fs = require("fs");
+
 const {
   app,
   BrowserWindow,
@@ -115,5 +119,28 @@ ipcMain.on("create", (e, options = "ttt") => {
   console.log("ttt", options);
 });
 
+ipcMain.on("exportKeys", (e, options = "ttt") => {
+  // session.on("will-download", function (event, item, webContents) {
+  //   event.preventDefault();
+  //   require("request")(item.getUrl(), function (data) {
+  //     require("fs").writeFileSync("/somewhere", data);
+  //   });
+  // });
+
+  const path2 = path.join(os.homedir(), "pubKey.txt");
+  console.log(path2, "path2path2", "pubKey");
+  fs.writeFileSync(path2, JSON.stringify(options));
+  shell.openItem(path2);
+  // const userDataPath = (electron.app || electron.remote.app).getPath("Desktop");
+  // console.log(userDataPath, "userDataPathuserDataPath");
+  // const setStore = new store({
+  //   fileName: "userKay",
+  //   data: {},
+  // });
+
+  // setStore.set(options);
+  // console.log("ttt", options);
+  // fs.writeFileSync(this.path, JSON.stringify(this.data));
+});
 // Stop error
 app.allowRendererProcessReuse = true;

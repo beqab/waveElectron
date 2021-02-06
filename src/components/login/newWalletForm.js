@@ -192,11 +192,11 @@ const newWalletForm = ({ changeContent }) => {
                         //   });
                         // }}
                         onClick={() => {
-                          // ipcRenderer.send("exportKeys", {
-                          //   pubKey: newWallet.pubKey,
-                          //   privKey: newWallet.privKey,
-                          //   phrases: newWallet.phrases,
-                          // });
+                          ipcRenderer.send("exportKeys", {
+                            pubKey: newWallet.pubKey,
+                            privKey: newWallet.privKey,
+                            phrases: newWallet.phrases,
+                          });
                         }}
                         color="light-green btnMain w-75"
                       >

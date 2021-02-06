@@ -289,14 +289,25 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
   > div {
-    max-width: 100px;
-    margin: 6px 15px;
+    max-width: calc(35% - 20px);
+
+    margin: 6px 0px;
     display: flex;
     align-items: center;
     justify-content: center;
+    span {
+      display: inline-block;
+      width: 30px;
+      // margin-right: 10px;
+    }
     input {
-      max-width: 100%;
+      max-width: calc(100% - 30px);
+
+      border-color: #30b5e2;
+      border-radius: 5px;
+      padding-left: 5px;
     }
   }
 }
