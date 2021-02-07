@@ -9,11 +9,13 @@ class Store {
     );
 
     this.path = path.join(userDataPath, options.fileName + ".json");
-    console.log(userDataPath, "sssss");
+    console.log(userDataPath, "sssss", this.path);
     this.data = parseDataFile(this.path, options.defaults);
   }
 
   get() {
+    console.log(this.data, "this.data****");
+
     return this.data;
   }
 
@@ -34,3 +36,17 @@ function parseDataFile(filePath, defaults) {
 }
 
 module.exports = Store;
+
+// Nijara, [06.02.21 04:52]
+// "bless fiction fame tell crater maze february fault long maid bring legend"
+
+// Nijara, [06.02.21 04:52]
+// SECRET : "bless fiction fame tell crater maze february fault long maid bring legend"
+
+// Desktop wallet :
+// 1) Am prazebis washala/shecvla ar unda shegedzlos
+// 2) Receive -shi Send button ar chirdeba
+// 3) Freezing-shi Staked nacvlad Freezed
+// 4) Send - shi Memo amovshalot
+// 5) Send by ID > Send
+// 6) Freezingis da Setting iconi gadacvale

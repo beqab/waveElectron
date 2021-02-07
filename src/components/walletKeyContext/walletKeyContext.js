@@ -1,5 +1,6 @@
 import React, { createContext } from "react";
 const { ipcRenderer } = require("electron");
+import axios from "axios";
 
 export const WalletKeyContext = createContext();
 
@@ -9,7 +10,15 @@ const walletKeyProvider = (props) => {
   React.useEffect(() => {
     console.log("eeffff");
     ipcRenderer.on("getUser", (e, val) => {
-      console.log(e, val, "esetttt");
+      console.log(e, val, "pppppppppppppppppppppppp");
+      // debugger;
+      // axios
+      //   .post("http://51.255.211.135:8181/wallet/sign-in", {
+      //     secret: val?.secret,
+      //   })
+      //   .then((res) => {
+      //     console.log("geeshvaa-------------");
+      //   });
       setUserKey(val);
     });
   }, []);

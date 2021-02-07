@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { MDBBtn } from "mdbreact";
+import { WalletKeyContext } from "../walletKeyContext/walletKeyContext";
+import axios from "axios";
+const { ipcRenderer } = require("electron");
 
 const oldWaletFrom = ({ changeContent }) => {
+  const { setUserKey } = React.useContext(WalletKeyContext);
+
   const [words, setWords] = useState([
     "",
     "",
@@ -16,6 +21,33 @@ const oldWaletFrom = ({ changeContent }) => {
     "",
     "",
   ]);
+
+  const signIngHandler = () => {
+    // debugger;
+    axios
+      .post("http://51.255.211.135:8181/wallet/sign-in", {
+        secret: words.join(" "),
+      })
+      .then((res) => {
+        console.log(res);
+
+        ipcRenderer.send("create", {
+          wallet: "res.data.privKey",
+          key: res.data.pubKey,
+          secret: words.join(" "),
+          balance: res.data.balance,
+        });
+        setUserKey({
+          wallet: "res.data.privKey",
+          key: res.data.pubKey,
+          secret: words.join(" "),
+          balance: res.data.balance,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="text-center w-100">
@@ -87,10 +119,13 @@ const oldWaletFrom = ({ changeContent }) => {
 
                   <div className="text-center">
                     <button
+                      onClick={() => {
+                        signIngHandler();
+                      }}
                       type="button"
                       className="btn btn-default btnMain  btn-rounded my-4 waves-effect"
                     >
-                      SIGN IN
+                      SIGN INნ
                     </button>
                   </div>
                 </form>

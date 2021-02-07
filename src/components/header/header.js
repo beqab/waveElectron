@@ -3,11 +3,12 @@ import classnames from "classnames";
 import Logo from "../../imgs/logoFFF.png";
 import Wallet from "../../imgs/Gruppe59.png";
 import Stoking from "../../imgs/Gruppe60.png";
-import Settings from "../../imgs/Pfad151.png";
-import Freezing from "../../imgs/Gruppe71.png";
+import Freezing from "../../imgs/Pfad151.png";
+import Settings from "../../imgs/Gruppe71.png";
 import user from "../../imgs/Gruppe64.png";
 import Secur from "../../imgs/Gruppe61.png";
 import Faq from "../../imgs/Gruppe75.png";
+import { ipcRenderer } from "electron";
 
 const header = ({ setCurrentTab, currentTab }) => {
   return (
@@ -43,7 +44,7 @@ const header = ({ setCurrentTab, currentTab }) => {
               <span>
                 <img src={Stoking} />
               </span>
-              Stoking
+              Staking
             </a>
           </li>
           <li
@@ -113,6 +114,20 @@ const header = ({ setCurrentTab, currentTab }) => {
               <img src={Faq} />
             </span>
             Help
+          </a>
+        </li>
+        <li
+          className={classnames("px-3", {
+            active: currentTab === "Help",
+          })}
+          onClick={() => {
+            ipcRenderer.send("logout", {});
+            setUserKey({});
+          }}
+        >
+          <a href="#">
+            <span>{/* <img src={Faq} /> */}</span>
+            logout
           </a>
         </li>
       </ul>

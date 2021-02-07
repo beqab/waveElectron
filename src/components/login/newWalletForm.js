@@ -23,6 +23,9 @@ const newWalletForm = ({ changeContent }) => {
   const [words, setWords] = useState([]);
   const [newWallet, setNewWallet] = useState(null);
 
+  const val = React.useContext(WalletKeyContext);
+  // debugger;
+
   useEffect(() => {});
 
   const { setUserKey } = React.useContext(WalletKeyContext);
@@ -48,22 +51,36 @@ const newWalletForm = ({ changeContent }) => {
         )
         .then((res) => {
           console.log("mhhh");
-          debugger;
+          // debugger;
           setWords(res.data.phrases.split(" "));
           setNewWallet(res.data);
-          // ipcRenderer.send("create", {
-          //   wallet: res.data.privKey,
-          //   key: res.data.pubKey,
-          // });
-          // setUserKey({
-          //   wallet: res.data.privKey,
-          //   key: res.data.pubKey,
-          // });
         })
         .catch((err) => {
           console.log(err, "errr");
         });
     }
+  };
+
+  const signIngHandler = () => {
+    axios
+      .post("http://51.255.211.135:8181/wallet/sign-in", {
+        secret: words.join(" "),
+      })
+      .then((res) => {
+        console.log(res);
+
+        ipcRenderer.send("create", {
+          wallet: words.join(" "),
+          key: res.data.pubKey,
+        });
+        setUserKey({
+          wallet: res.data.privKey,
+          key: res.data.pubKey,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div>
@@ -87,7 +104,7 @@ const newWalletForm = ({ changeContent }) => {
                   action="#!"
                 >
                   <h3 className="font-weight-bold my-2 pb-2 text-center dark-grey-text">
-                    Crete new Wallet
+                    Create New Wallet
                   </h3>
 
                   {/* <textarea value={words} className="wordsContainer"></textarea> */}
@@ -100,15 +117,7 @@ const newWalletForm = ({ changeContent }) => {
                             value={el}
                             key={i}
                             onChange={(e) => {
-                              let NewWords = words.map((word, index) => {
-                                // debugger;
-                                if (i === index) {
-                                  return e.target.value;
-                                } else {
-                                  return word;
-                                }
-                              });
-                              setWords([...NewWords]);
+                              return;
                             }}
                           />
                         </div>
@@ -142,6 +151,7 @@ const newWalletForm = ({ changeContent }) => {
                         onClick={() => {
                           //  setWords(mnemonicWords);
                           //  setWordsError("");
+                          signIngHandler();
                           console.log("singIn");
                         }}
                         color="light-green btnMain w-75"
@@ -171,10 +181,10 @@ const newWalletForm = ({ changeContent }) => {
                     <>
                       <div className="walletInfo">
                         <div>
-                          pubKey: <span> {newWallet.pubKey} </span>
+                          Public Key: <span> {newWallet.pubKey} </span>
                         </div>
                         <div>
-                          privKey: <span> {newWallet.privKey} </span>
+                          Private Key: <span> {newWallet.privKey} </span>
                         </div>
                         <div>
                           phrases: <span> {newWallet.phrases} </span>{" "}

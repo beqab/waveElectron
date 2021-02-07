@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Wave from "../../imgs/logo.png";
 import Modal from "../sendModal/sendModal";
 import ReceiveModal from "../receiveModal/receiveModal";
+import img from "../../imgs/Group65.png";
 
 import WalletKeyProvider, {
   WalletKeyContext,
@@ -16,20 +17,92 @@ import {
   MDBCardText,
   MDBCol,
 } from "mdbreact";
+import axios from "axios";
 
-function index() {
+const monthNames = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+function index({ account }) {
   const [modal14, setModal14] = React.useState(false);
   const [receiveModal, setReceiveModal] = React.useState(false);
+  const [transactions, setTransactions] = React.useState(false);
+  const [balance, setBalance] = React.useState(0);
+
+  const val = React.useContext(WalletKeyContext);
+  // debugger;
+
+  useEffect(() => {
+    if (val?.userKey?.key) {
+      axios
+        .get("http://51.255.211.135:8181/wallet/" + val?.userKey?.key)
+        .then((res) => {
+          // debugger;
+
+          let transactionsParse = [];
+          res.data.transactions.INCOMING.map((el) =>
+            transactionsParse.push({ ...el, type: "INCOMING" })
+          );
+          res.data.transactions.OUTGOING.map((el) =>
+            transactionsParse.push({ ...el, type: "OUTGOING" })
+          );
+
+          setBalance(res.data.wallet.balance);
+          setTransactions(transactionsParse);
+        });
+    }
+  }, [val?.userKey?.key]);
+  // debugger;
+
+  const fetchWalletData = () => {
+    axios
+      .get("http://51.255.211.135:8181/wallet/" + val?.userKey?.key)
+      .then((res) => {
+        // debugger;
+
+        let transactionsParse = [];
+        res.data.transactions.INCOMING.map((el) =>
+          transactionsParse.push({ ...el, type: "INCOMING" })
+        );
+        res.data.transactions.OUTGOING.map((el) =>
+          transactionsParse.push({ ...el, type: "OUTGOING" })
+        );
+        setBalance(res.data.wallet.balance);
+
+        setTransactions(transactionsParse);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="wave-main">
-      <Modal modal14={modal14} toggle={(e) => setModal14(e)} />
+      <Modal
+        account={account}
+        modal14={modal14}
+        reloadData={() => {
+          fetchWalletData();
+        }}
+        toggle={(e) => setModal14(e)}
+      />
       <ReceiveModal modal14={receiveModal} toggle={(e) => setReceiveModal(e)} />
       <div className="">
         <img width="90" src={Wave} />
       </div>
       <div className="amount mb-5">
-        45.5 <span>Wave </span>
+        {balance ? balance : 0} <span>Wave </span>
       </div>
 
       <div className="btn-group walletBtn">
@@ -97,285 +170,120 @@ function index() {
         </MDBBtn> */}
       </div>
       <div className="transactionsList">
-        <div className="item d-flex justify-content-between ">
-          <div className="left d-flex">
-            <div className="date ">
-              feb <br />
-              01
-            </div>
-            <svg
-              className="mr-3"
-              xmlns="http://www.w3.org/2000/svg"
-              width="38"
-              viewBox="0 0 41.046 26.749"
-            >
-              <path
-                id="Path_123"
-                data-name="Path 123"
-                d="M101.042,127.009a.565.565,0,0,0-.615-.139L60.513,142.326a.565.565,0,0,0,.1,1.084L71.71,145.4l2.591,7.792a.565.565,0,0,0,.968.186l5.459-6.463,10.329,1.96a.565.565,0,0,0,.621-.322l9.467-20.924A.566.566,0,0,0,101.042,127.009Zm-4.8,2.7L71.745,144.26,62.8,142.653ZM75.056,151.881l-2.3-6.908L93.7,132.531,78.113,145.479a.565.565,0,0,0,.256.99l1.085.206Zm15.776-4.2-11.074-2.1,19.269-16.01Z"
-                transform="translate(-60.151 -126.833)"
-                fill="#fff"
-              />
-            </svg>
-          </div>
-          <div className="right">+ 0.0452345</div>
-        </div>
-        <div className="item d-flex justify-content-between ">
-          <div className="left d-flex">
-            <div className="date ">
-              feb <br />
-              01
-            </div>
-            <svg
-              className="mr-3"
-              xmlns="http://www.w3.org/2000/svg"
-              width="38"
-              viewBox="0 0 41.046 26.749"
-            >
-              <path
-                id="Path_123"
-                data-name="Path 123"
-                d="M101.042,127.009a.565.565,0,0,0-.615-.139L60.513,142.326a.565.565,0,0,0,.1,1.084L71.71,145.4l2.591,7.792a.565.565,0,0,0,.968.186l5.459-6.463,10.329,1.96a.565.565,0,0,0,.621-.322l9.467-20.924A.566.566,0,0,0,101.042,127.009Zm-4.8,2.7L71.745,144.26,62.8,142.653ZM75.056,151.881l-2.3-6.908L93.7,132.531,78.113,145.479a.565.565,0,0,0,.256.99l1.085.206Zm15.776-4.2-11.074-2.1,19.269-16.01Z"
-                transform="translate(-60.151 -126.833)"
-                fill="#fff"
-              />
-            </svg>
-          </div>
-          <div className="right">+ 0.0452345</div>
-        </div>{" "}
-        <div className="item d-flex justify-content-between ">
-          <div className="left d-flex">
-            <div className="date ">
-              feb <br />
-              01
-            </div>
-            <svg
-              className="mr-3"
-              xmlns="http://www.w3.org/2000/svg"
-              width="38"
-              viewBox="0 0 41.046 26.749"
-            >
-              <path
-                id="Path_123"
-                data-name="Path 123"
-                d="M101.042,127.009a.565.565,0,0,0-.615-.139L60.513,142.326a.565.565,0,0,0,.1,1.084L71.71,145.4l2.591,7.792a.565.565,0,0,0,.968.186l5.459-6.463,10.329,1.96a.565.565,0,0,0,.621-.322l9.467-20.924A.566.566,0,0,0,101.042,127.009Zm-4.8,2.7L71.745,144.26,62.8,142.653ZM75.056,151.881l-2.3-6.908L93.7,132.531,78.113,145.479a.565.565,0,0,0,.256.99l1.085.206Zm15.776-4.2-11.074-2.1,19.269-16.01Z"
-                transform="translate(-60.151 -126.833)"
-                fill="#fff"
-              />
-            </svg>
-          </div>
-          <div className="right">+ 0.0452345</div>
-        </div>{" "}
-        <div className="item d-flex justify-content-between ">
-          <div className="left d-flex">
-            <div className="date ">
-              feb <br />
-              01
-            </div>
-            <svg
-              className="mr-3"
-              xmlns="http://www.w3.org/2000/svg"
-              width="38"
-              viewBox="0 0 41.046 26.749"
-            >
-              <path
-                id="Path_123"
-                data-name="Path 123"
-                d="M101.042,127.009a.565.565,0,0,0-.615-.139L60.513,142.326a.565.565,0,0,0,.1,1.084L71.71,145.4l2.591,7.792a.565.565,0,0,0,.968.186l5.459-6.463,10.329,1.96a.565.565,0,0,0,.621-.322l9.467-20.924A.566.566,0,0,0,101.042,127.009Zm-4.8,2.7L71.745,144.26,62.8,142.653ZM75.056,151.881l-2.3-6.908L93.7,132.531,78.113,145.479a.565.565,0,0,0,.256.99l1.085.206Zm15.776-4.2-11.074-2.1,19.269-16.01Z"
-                transform="translate(-60.151 -126.833)"
-                fill="#fff"
-              />
-            </svg>
-          </div>
-          <div className="right">+ 0.0452345</div>
-        </div>{" "}
-        <div className="item d-flex justify-content-between ">
-          <div className="left d-flex">
-            <div className="date ">
-              feb <br />
-              01
-            </div>
-            <svg
-              className="mr-3"
-              xmlns="http://www.w3.org/2000/svg"
-              width="38"
-              viewBox="0 0 41.046 26.749"
-            >
-              <path
-                id="Path_123"
-                data-name="Path 123"
-                d="M101.042,127.009a.565.565,0,0,0-.615-.139L60.513,142.326a.565.565,0,0,0,.1,1.084L71.71,145.4l2.591,7.792a.565.565,0,0,0,.968.186l5.459-6.463,10.329,1.96a.565.565,0,0,0,.621-.322l9.467-20.924A.566.566,0,0,0,101.042,127.009Zm-4.8,2.7L71.745,144.26,62.8,142.653ZM75.056,151.881l-2.3-6.908L93.7,132.531,78.113,145.479a.565.565,0,0,0,.256.99l1.085.206Zm15.776-4.2-11.074-2.1,19.269-16.01Z"
-                transform="translate(-60.151 -126.833)"
-                fill="#fff"
-              />
-            </svg>
-          </div>
-          <div className="right">+ 0.0452345</div>
-        </div>{" "}
-        <div className="item d-flex justify-content-between ">
-          <div className="left d-flex">
-            <div className="date ">
-              feb <br />
-              01
-            </div>
-            <svg
-              className="mr-3"
-              xmlns="http://www.w3.org/2000/svg"
-              width="38"
-              viewBox="0 0 41.046 26.749"
-            >
-              <path
-                id="Path_123"
-                data-name="Path 123"
-                d="M101.042,127.009a.565.565,0,0,0-.615-.139L60.513,142.326a.565.565,0,0,0,.1,1.084L71.71,145.4l2.591,7.792a.565.565,0,0,0,.968.186l5.459-6.463,10.329,1.96a.565.565,0,0,0,.621-.322l9.467-20.924A.566.566,0,0,0,101.042,127.009Zm-4.8,2.7L71.745,144.26,62.8,142.653ZM75.056,151.881l-2.3-6.908L93.7,132.531,78.113,145.479a.565.565,0,0,0,.256.99l1.085.206Zm15.776-4.2-11.074-2.1,19.269-16.01Z"
-                transform="translate(-60.151 -126.833)"
-                fill="#fff"
-              />
-            </svg>
-          </div>
-          <div className="right">+ 0.0452345</div>
-        </div>{" "}
-        <div className="item d-flex justify-content-between ">
-          <div className="left d-flex">
-            <div className="date ">
-              feb <br />
-              01
-            </div>
-            <svg
-              className="mr-3"
-              xmlns="http://www.w3.org/2000/svg"
-              width="38"
-              viewBox="0 0 41.046 26.749"
-            >
-              <path
-                id="Path_123"
-                data-name="Path 123"
-                d="M101.042,127.009a.565.565,0,0,0-.615-.139L60.513,142.326a.565.565,0,0,0,.1,1.084L71.71,145.4l2.591,7.792a.565.565,0,0,0,.968.186l5.459-6.463,10.329,1.96a.565.565,0,0,0,.621-.322l9.467-20.924A.566.566,0,0,0,101.042,127.009Zm-4.8,2.7L71.745,144.26,62.8,142.653ZM75.056,151.881l-2.3-6.908L93.7,132.531,78.113,145.479a.565.565,0,0,0,.256.99l1.085.206Zm15.776-4.2-11.074-2.1,19.269-16.01Z"
-                transform="translate(-60.151 -126.833)"
-                fill="#fff"
-              />
-            </svg>
-          </div>
-          <div className="right">+ 0.0452345</div>
-        </div>{" "}
-        <div className="item d-flex justify-content-between ">
-          <div className="left d-flex">
-            <div className="date ">
-              feb <br />
-              01
-            </div>
-            <svg
-              className="mr-3"
-              xmlns="http://www.w3.org/2000/svg"
-              width="38"
-              viewBox="0 0 41.046 26.749"
-            >
-              <path
-                id="Path_123"
-                data-name="Path 123"
-                d="M101.042,127.009a.565.565,0,0,0-.615-.139L60.513,142.326a.565.565,0,0,0,.1,1.084L71.71,145.4l2.591,7.792a.565.565,0,0,0,.968.186l5.459-6.463,10.329,1.96a.565.565,0,0,0,.621-.322l9.467-20.924A.566.566,0,0,0,101.042,127.009Zm-4.8,2.7L71.745,144.26,62.8,142.653ZM75.056,151.881l-2.3-6.908L93.7,132.531,78.113,145.479a.565.565,0,0,0,.256.99l1.085.206Zm15.776-4.2-11.074-2.1,19.269-16.01Z"
-                transform="translate(-60.151 -126.833)"
-                fill="#fff"
-              />
-            </svg>
-          </div>
-          <div className="right">+ 0.0452345</div>
-        </div>{" "}
-        <div className="item d-flex justify-content-between ">
-          <div className="left d-flex">
-            <div className="date ">
-              feb <br />
-              01
-            </div>
-            <svg
-              className="mr-3"
-              xmlns="http://www.w3.org/2000/svg"
-              width="38"
-              viewBox="0 0 41.046 26.749"
-            >
-              <path
-                id="Path_123"
-                data-name="Path 123"
-                d="M101.042,127.009a.565.565,0,0,0-.615-.139L60.513,142.326a.565.565,0,0,0,.1,1.084L71.71,145.4l2.591,7.792a.565.565,0,0,0,.968.186l5.459-6.463,10.329,1.96a.565.565,0,0,0,.621-.322l9.467-20.924A.566.566,0,0,0,101.042,127.009Zm-4.8,2.7L71.745,144.26,62.8,142.653ZM75.056,151.881l-2.3-6.908L93.7,132.531,78.113,145.479a.565.565,0,0,0,.256.99l1.085.206Zm15.776-4.2-11.074-2.1,19.269-16.01Z"
-                transform="translate(-60.151 -126.833)"
-                fill="#fff"
-              />
-            </svg>
-          </div>
-          <div className="right">+ 0.0452345</div>
-        </div>{" "}
-        <div className="item d-flex justify-content-between ">
-          <div className="left d-flex">
-            <div className="date ">
-              feb <br />
-              01
-            </div>
-            <svg
-              className="mr-3"
-              xmlns="http://www.w3.org/2000/svg"
-              width="38"
-              viewBox="0 0 41.046 26.749"
-            >
-              <path
-                id="Path_123"
-                data-name="Path 123"
-                d="M101.042,127.009a.565.565,0,0,0-.615-.139L60.513,142.326a.565.565,0,0,0,.1,1.084L71.71,145.4l2.591,7.792a.565.565,0,0,0,.968.186l5.459-6.463,10.329,1.96a.565.565,0,0,0,.621-.322l9.467-20.924A.566.566,0,0,0,101.042,127.009Zm-4.8,2.7L71.745,144.26,62.8,142.653ZM75.056,151.881l-2.3-6.908L93.7,132.531,78.113,145.479a.565.565,0,0,0,.256.99l1.085.206Zm15.776-4.2-11.074-2.1,19.269-16.01Z"
-                transform="translate(-60.151 -126.833)"
-                fill="#fff"
-              />
-            </svg>
-          </div>
-          <div className="right">+ 0.0452345</div>
-        </div>
-        <div className="item d-flex justify-content-between ">
-          <div className="left d-flex">
-            <div className="date ">
-              feb <br />
-              01
-            </div>
-            <svg
-              className="mr-3"
-              xmlns="http://www.w3.org/2000/svg"
-              width="38"
-              viewBox="0 0 41.046 26.749"
-            >
-              <path
-                id="Path_123"
-                data-name="Path 123"
-                d="M101.042,127.009a.565.565,0,0,0-.615-.139L60.513,142.326a.565.565,0,0,0,.1,1.084L71.71,145.4l2.591,7.792a.565.565,0,0,0,.968.186l5.459-6.463,10.329,1.96a.565.565,0,0,0,.621-.322l9.467-20.924A.566.566,0,0,0,101.042,127.009Zm-4.8,2.7L71.745,144.26,62.8,142.653ZM75.056,151.881l-2.3-6.908L93.7,132.531,78.113,145.479a.565.565,0,0,0,.256.99l1.085.206Zm15.776-4.2-11.074-2.1,19.269-16.01Z"
-                transform="translate(-60.151 -126.833)"
-                fill="#fff"
-              />
-            </svg>
-          </div>
-          <div className="right">+ 0.0452345</div>
-        </div>
-        <div className="item d-flex justify-content-between ">
-          <div className="left d-flex">
-            <div className="date ">
-              feb <br />
-              01
-            </div>
-            <svg
-              className="mr-3"
-              xmlns="http://www.w3.org/2000/svg"
-              width="38"
-              viewBox="0 0 41.046 26.749"
-            >
-              <path
-                id="Path_123"
-                data-name="Path 123"
-                d="M101.042,127.009a.565.565,0,0,0-.615-.139L60.513,142.326a.565.565,0,0,0,.1,1.084L71.71,145.4l2.591,7.792a.565.565,0,0,0,.968.186l5.459-6.463,10.329,1.96a.565.565,0,0,0,.621-.322l9.467-20.924A.566.566,0,0,0,101.042,127.009Zm-4.8,2.7L71.745,144.26,62.8,142.653ZM75.056,151.881l-2.3-6.908L93.7,132.531,78.113,145.479a.565.565,0,0,0,.256.99l1.085.206Zm15.776-4.2-11.074-2.1,19.269-16.01Z"
-                transform="translate(-60.151 -126.833)"
-                fill="#fff"
-              />
-            </svg>
-          </div>
-          <div className="right">+ 0.0452345</div>
-        </div>
+        {transactions && transactions.length
+          ? transactions.map((el, i) => {
+              var d = new Date(el.input.timestamp);
+              const Month = d.getMonth();
+              let day = d.getDate();
+              if (day < 10) {
+                day = `0${day}`;
+              }
+              return (
+                <div className="item d-flex justify-content-between ">
+                  <div className="left d-flex">
+                    {/* <div className="date ">
+                      {monthNames[Month]} <br />
+                      {day}
+                    </div> */}
+                    <div>
+                      <span style={{ width: "64px", display: "inline-block" }}>
+                        {el.type === "OUTGOING" ? (
+                          <svg
+                            className="mr-3"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="38"
+                            viewBox="0 0 41.046 26.749"
+                          >
+                            <path
+                              id="Path_123"
+                              data-name="Path 123"
+                              d="M101.042,127.009a.565.565,0,0,0-.615-.139L60.513,142.326a.565.565,0,0,0,.1,1.084L71.71,145.4l2.591,7.792a.565.565,0,0,0,.968.186l5.459-6.463,10.329,1.96a.565.565,0,0,0,.621-.322l9.467-20.924A.566.566,0,0,0,101.042,127.009Zm-4.8,2.7L71.745,144.26,62.8,142.653ZM75.056,151.881l-2.3-6.908L93.7,132.531,78.113,145.479a.565.565,0,0,0,.256.99l1.085.206Zm15.776-4.2-11.074-2.1,19.269-16.01Z"
+                              transform="translate(-60.151 -126.833)"
+                              fill="#fff"
+                            />
+                          </svg>
+                        ) : (
+                          <img
+                            height="30"
+                            style={{ marginLeft: "10px", marginBottom: "4px" }}
+                            src={img}
+                          />
+                        )}
+                      </span>
+                      <span>
+                        {el.type === "OUTGOING" ? "- " : "+ "}{" "}
+                        {el.output.amount}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="middle text-left ">
+                    <div
+                      style={{
+                        color: "#ffffff8c",
+                        fontSize: "12px",
+                        lineHeight: "9px",
+                      }}
+                    >
+                      {el.type === "OUTGOING" ? "To" : "From"}
+                    </div>
+                    <div
+                      style={{
+                        overflow: "hidden",
+                        maxWidth: "130px",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {" "}
+                      {el.type === "OUTGOING" ? el.output.to : el.input.from}
+                    </div>
+                  </div>
+                  <div className="right">
+                    {" "}
+                    {el.type === "OUTGOING" ? "- " : "+ "} {el.output.amount}
+                  </div>
+                </div>
+              );
+            })
+          : "Transactions not found"}
       </div>
     </div>
   );
 }
 
 export default index;
+
+// <div className="item d-flex justify-content-between ">
+// <div className="left d-flex">
+//   <div className="date ">
+//     {monthNames[Month]} <br />
+//     {day}
+//   </div>
+
+//   {el.type === "OUTGOING" ? (
+//     <svg
+//       className="mr-3"
+//       xmlns="http://www.w3.org/2000/svg"
+//       width="38"
+//       viewBox="0 0 41.046 26.749"
+//     >
+//       <path
+//         id="Path_123"
+//         data-name="Path 123"
+//         d="M101.042,127.009a.565.565,0,0,0-.615-.139L60.513,142.326a.565.565,0,0,0,.1,1.084L71.71,145.4l2.591,7.792a.565.565,0,0,0,.968.186l5.459-6.463,10.329,1.96a.565.565,0,0,0,.621-.322l9.467-20.924A.566.566,0,0,0,101.042,127.009Zm-4.8,2.7L71.745,144.26,62.8,142.653ZM75.056,151.881l-2.3-6.908L93.7,132.531,78.113,145.479a.565.565,0,0,0,.256.99l1.085.206Zm15.776-4.2-11.074-2.1,19.269-16.01Z"
+//         transform="translate(-60.151 -126.833)"
+//         fill="#fff"
+//       />
+//     </svg>
+//   ) : (
+//     <img
+//       height="30"
+//       style={{ marginLeft: "10px" }}
+//       src={img}
+//     />
+//   )}
+// </div>
+// <div className="right">
+//   {" "}
+//   {el.type === "OUTGOING" ? "- " : "+ "} {el.output.amount}
+// </div>
+// </div>

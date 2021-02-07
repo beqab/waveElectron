@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   MDBContainer,
   MDBBtn,
@@ -15,11 +15,40 @@ import {
   MDBIcon,
 } from "mdbreact";
 import Logo from "../../imgs/logo.png";
+import axios from "axios";
 
-const ModalPage = ({ modal14, toggle }) => {
+const ModalPage = ({ modal14, toggle, account, reloadData }) => {
+  const [sendTo, setSendTo] = useState("");
+  const [amount, setAmount] = useState(0);
   //   state = {
   //     modal14: false,
   //   };
+
+  const sendWave = () => {
+    console.log(account);
+    // debugger;
+    axios
+      .post(
+        "http://51.255.211.135:8181/wallet/transact",
+        {
+          to: sendTo,
+          amount: Number(amount),
+          type: "transaction",
+        },
+        {
+          headers: {
+            account: account,
+          },
+        }
+      )
+      .then((res) => {
+        reloadData();
+        setSendTo("");
+        setAmount(0);
+
+        toggle(null);
+      });
+  };
 
   return (
     <MDBContainer className="MainModalWrapper">
@@ -40,15 +69,14 @@ const ModalPage = ({ modal14, toggle }) => {
                     validate
                     error="text"
                     success="right"
+                    value={sendTo}
+                    onChange={(e) => {
+                      console.log(e);
+                      setSendTo(e.target.value);
+                      // debugger;
+                    }}
                   />
-                  <MDBInput
-                    clear
-                    label="Memo (recommended)"
-                    group
-                    type="text"
-                    validate
-                    containerClass="mb-0"
-                  />
+
                   <MDBInput
                     clear
                     label="Personal note (optional)"
@@ -58,7 +86,14 @@ const ModalPage = ({ modal14, toggle }) => {
                     containerClass="mb-0"
                   />
                   <div className=" currencyField">
-                    <MDBInput hint="0.00" type="number" />
+                    <MDBInput
+                      value={amount}
+                      onChange={(e) => {
+                        setAmount(e.target.value);
+                      }}
+                      hint="0.00"
+                      type="number"
+                    />
                     <span className="labelCurr">Wave</span>
                   </div>
                   <div className="text-center pt-3 mb-3">
@@ -67,6 +102,9 @@ const ModalPage = ({ modal14, toggle }) => {
                       gradient="blue"
                       rounded
                       className="btn-block z-depth-1a"
+                      onClick={() => {
+                        sendWave();
+                      }}
                     >
                       Send
                     </MDBBtn>

@@ -23,22 +23,42 @@ import Stoking from "./Stoking";
 import Freezing from "./Freezing";
 import Security from "./security";
 import Settings from "./settings";
+import axios from "axios";
+const { ipcRenderer } = require("electron");
+
+const instance = axios.create({
+  withCredentials: true,
+  origin: true,
+});
 
 const App = () => {
   const [modal14, setModal14] = React.useState(false);
   const [receiveModal, setReceiveModal] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState("Wallet");
+  const [account, setAccount] = React.useState("");
 
   const val = React.useContext(WalletKeyContext);
 
-  console.log(val.userKey, "val.userKey");
-  useEffect(() => {}, []);
+  useEffect(() => {
+    ipcRenderer.on("getUser", (e, val) => {
+      // debugger;
+      if (val?.secret) {
+        instance
+          .post("http://51.255.211.135:8181/wallet/sign-in", {
+            secret: val?.secret,
+          })
+          .then((res) => {
+            setAccount(res.headers.account);
+          });
+      }
+    });
+  }, [val]);
 
   const getContent = () => {
     if (currentTab === "Wallet") {
-      return <Wallet />;
+      return <Wallet account={account} />;
     } else if (currentTab === "Stoking") {
-      return <Stoking />;
+      return <Stoking account={account} />;
     } else if (currentTab === "Freezing") {
       return <Freezing />;
     } else if (currentTab === "Security") {
@@ -49,10 +69,18 @@ const App = () => {
 
     return "mhhhh";
   };
-  console.log(val.userKey, "val.userKey");
+  console.log(
+    !val.userKey || (Object.keys(val).length === 0 && typeof val === "object"),
+    "tttttttttttttt"
+  );
+
+  // debugger;
+
   return (
     <div className="app">
-      {!val.userKey && <Login />}
+      {!val.userKey ||
+        (Object.keys(val.userKey).length === 0 &&
+          typeof val.userKey === "object" && <Login />)}
       <Header
         currentTab={currentTab}
         setCurrentTab={(tabName) => setCurrentTab(tabName)}

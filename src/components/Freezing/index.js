@@ -32,11 +32,11 @@ function index() {
           <div className="right">0 WAE</div>
         </div>
         <div className="item d-flex justify-content-between ">
-          <div className="left d-flex">Stakad</div>
+          <div className="left d-flex">Freezed</div>
           <div className="right">0 WAE</div>
         </div>
         <div className="item d-flex justify-content-between ">
-          <div className="left d-flex">Pending withdrals</div>
+          <div className="left d-flex"> Pending Withdrawals</div>
           <div className="right">0 WAE</div>
         </div>
         <div className="item d-flex justify-content-between ">

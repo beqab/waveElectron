@@ -108,14 +108,28 @@ app.on("activate", () => {
   }
 });
 
-ipcMain.on("create", (e, options = "ttt") => {
-  console.log(options);
+ipcMain.on("create", (e, options = {}) => {
+  console.log(options, "00000000000000");
   const setStore = new store({
     fileName: "userKay",
     data: {},
   });
 
   setStore.set(options);
+  console.log("ttt", options);
+});
+
+ipcMain.on("logout", (e, options = {}) => {
+  console.log(options, "00000000000000");
+  const setStore = new store({
+    fileName: "userKay",
+    data: {},
+  });
+
+  mainWindow.webContents.send("getUser", {});
+
+  setStore.set(options);
+  mainWindow.reload();
   console.log("ttt", options);
 });
 
