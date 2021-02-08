@@ -17,6 +17,8 @@ import {
   MDBCardText,
   MDBCol,
 } from "mdbreact";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+
 import axios from "axios";
 // import Moment from "react-moment";
 
@@ -40,6 +42,11 @@ function index({ account }) {
   const [receiveModal, setReceiveModal] = React.useState(false);
   const [transactions, setTransactions] = React.useState(false);
   const [balance, setBalance] = React.useState(0);
+  const [address, setAddress] = React.useState("");
+
+  const [copied, setCopied] = React.useState(false);
+
+  const [activeIndex, setActiveIndex] = React.useState(null);
 
   const val = React.useContext(WalletKeyContext);
   // debugger;
@@ -182,7 +189,14 @@ function index({ account }) {
 
               const time = new Date(el.input.timestamp);
               return (
-                <div className="item d-flex justify-content-between ">
+                <div
+                  onClick={() => {
+                    setActiveIndex(i);
+                    setAddress(el.txId);
+                    setCopied(false);
+                  }}
+                  className="item d-flex justify-content-between "
+                >
                   <div
                     style={{ width: "200px", textAlign: "left" }}
                     className="left d-flex"
@@ -232,25 +246,79 @@ function index({ account }) {
                       </span>
                     </div>
                   </div>
-                  <div className="middle text-left ">
-                    <div
-                      style={{
-                        color: "#ffffff8c",
-                        fontSize: "12px",
-                        lineHeight: "9px",
-                      }}
-                    >
-                      {el.type === "OUTGOING" ? "To" : "From"}
+                  <div
+                    className={
+                      activeIndex === i
+                        ? "middle transactionsMiddle text-left active "
+                        : "middle transactionsMiddle text-left "
+                    }
+                  >
+                    <div>
+                      <div
+                        style={{
+                          color: "#ffffff8c",
+                          fontSize: "12px",
+                          lineHeight: "9px",
+                        }}
+                      >
+                        {el.type === "OUTGOING" ? "To" : "From"}
+                      </div>
+                      <div className="address">
+                        {" "}
+                        {el.type === "OUTGOING" ? el.output.to : el.input.from}
+                      </div>
                     </div>
-                    <div
-                      style={{
-                        overflow: "hidden",
-                        maxWidth: "130px",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      {" "}
-                      {el.type === "OUTGOING" ? el.output.to : el.input.from}
+                    <div className={activeIndex === i ? "d-block" : "d-none"}>
+                      <div>
+                        <div
+                          style={{
+                            color: "#ffffff8c",
+                            fontSize: "12px",
+                            lineHeight: "9px",
+                          }}
+                        >
+                          {el.type === "OUTGOING" ? "From" : "To"}
+                        </div>
+                        <div className="address">
+                          {" "}
+                          {el.type === "OUTGOING"
+                            ? el.input.from
+                            : el.output.to}
+                        </div>
+                      </div>
+                      <div>
+                        <div
+                          style={{
+                            color: "#ffffff8c",
+                            fontSize: "12px",
+                            lineHeight: "9px",
+                          }}
+                        >
+                          Hash
+                        </div>
+                        <div className="address">{el.txId}</div>
+                      </div>
+
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                        className="text-center"
+                      >
+                        <CopyToClipboard
+                          text={address}
+                          onCopy={() => {
+                            setCopied(true);
+                          }}
+                        >
+                          <span
+                            style={{ color: copied ? "green" : "#fff" }}
+                            className="copy btn"
+                          >
+                            copy
+                          </span>
+                        </CopyToClipboard>
+                      </div>
                     </div>
                   </div>
                   <div

@@ -268,7 +268,6 @@ body {
 }
 .transactionsList > div .right {
   font-weight: bold;
-  align-self: flex-end;
 }
 .mnemonicContainer {
   display: flex;
@@ -306,4 +305,27 @@ body {
 }
 .textCapital {
   text-transform: capitalize !important;
+}
+.transactionsMiddle {
+  max-width: 300px;
+}
+.transactionsMiddle.active .address {
+  width: 100%;
+  word-break: break-all;
+  margin-bottom: 15px;
+}
+.transactionsMiddle .copy {
+  border-radius: 50px;
+  margin-bottom: 20px;
+  /* color: #fff;
+	 */
+  border: 2px solid #fff;
+  /* height: 30px;
+	 */
+  padding: 7px 37px;
+}
+.transactionsMiddle .address {
+  overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
 }

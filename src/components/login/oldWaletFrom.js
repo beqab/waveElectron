@@ -125,7 +125,7 @@ const oldWaletFrom = ({ changeContent }) => {
                       type="button"
                       className="btn btn-default btnMain  btn-rounded my-4 waves-effect"
                     >
-                      SIGN INნ
+                      SIGN IN
                     </button>
                   </div>
                 </form>

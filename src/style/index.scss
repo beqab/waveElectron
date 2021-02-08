@@ -280,7 +280,7 @@ body {
     .right {
       font-weight: bold;
 
-      align-self: flex-end;
+      // align-self: flex-end;
     }
   }
 }
@@ -329,4 +329,30 @@ body {
 
 .textCapital {
   text-transform: capitalize !important;
+}
+
+.transactionsMiddle {
+  max-width: 300px;
+  &.active {
+    .address {
+      // overflow: hidden;
+      width: 100%;
+      word-break: break-all;
+      // text-overflow: ellipsis;
+      margin-bottom: 15px;
+    }
+  }
+  .copy {
+    border-radius: 50px;
+    margin-bottom: 20px;
+    /* color: #fff; */
+    border: 2px solid #fff;
+    /* height: 30px; */
+    padding: 7px 37px;
+  }
+  .address {
+    overflow: hidden;
+    width: 100%;
+    text-overflow: ellipsis;
+  }
 }

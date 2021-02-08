@@ -80,11 +80,18 @@ const App = () => {
     <div className="app">
       {!val.userKey ||
         (Object.keys(val.userKey).length === 0 &&
-          typeof val.userKey === "object" && <Login />)}
-      <Header
+        typeof val.userKey === "object" ? (
+          <Login />
+        ) : (
+          <Header
+            currentTab={currentTab}
+            setCurrentTab={(tabName) => setCurrentTab(tabName)}
+          />
+        ))}
+      {/* <Header
         currentTab={currentTab}
         setCurrentTab={(tabName) => setCurrentTab(tabName)}
-      />
+      /> */}
       {/* <Modal modal14={modal14} toggle={(e) => setModal14(e)} /> */}
       <div className="container">
         <ReceiveModal
