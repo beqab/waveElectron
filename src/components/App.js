@@ -92,7 +92,12 @@ const App = () => {
           setCurrentTab={(tabName) => setCurrentTab(tabName)}
           toggle={(e) => setReceiveModal(e)}
         />
-        {getContent()}
+        {!val.userKey ||
+        (Object.keys(val.userKey).length === 0 &&
+          typeof val.userKey === "object")
+          ? null
+          : getContent()}
+        {/* {getContent()} */}
       </div>
     </div>
   );

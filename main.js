@@ -30,7 +30,7 @@ function createMainWindow() {
     width: 1100,
     height: 800,
     show: false,
-    icon: "./assets/icons/logo.png",
+    icon: __dirname + "/assets/icon.ico",
     webPreferences: {
       nodeIntegration: true,
     },
@@ -75,14 +75,12 @@ function createMainWindow() {
 
   mainWindow.on("closed", () => (mainWindow = null));
 }
-
+const newStore = new store({
+  fileName: "userKay",
+  data: {},
+});
 app.on("ready", () => {
   createMainWindow();
-
-  const newStore = new store({
-    fileName: "userKay",
-    data: {},
-  });
 
   mainWindow.webContents.on("dom-ready", () => {
     mainWindow.webContents.send("getUser", newStore.get());
@@ -110,26 +108,21 @@ app.on("activate", () => {
 
 ipcMain.on("create", (e, options = {}) => {
   console.log(options, "00000000000000");
-  const setStore = new store({
-    fileName: "userKay",
-    data: {},
-  });
 
-  setStore.set(options);
+  newStore.set(options);
   console.log("ttt", options);
 });
 
 ipcMain.on("logout", (e, options = {}) => {
   console.log(options, "00000000000000");
-  const setStore = new store({
-    fileName: "userKay",
-    data: {},
-  });
 
-  mainWindow.webContents.send("getUser", {});
+  let t = () => {
+    return {};
+  };
 
-  setStore.set(options);
-  mainWindow.reload();
+  newStore.set(options);
+  mainWindow.webContents.send("getUser", newStore.get());
+  // mainWindow.reload();
   console.log("ttt", options);
 });
 

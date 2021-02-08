@@ -18,6 +18,7 @@ import {
   MDBCol,
 } from "mdbreact";
 import axios from "axios";
+// import Moment from "react-moment";
 
 const monthNames = [
   "Jan",
@@ -178,9 +179,14 @@ function index({ account }) {
               if (day < 10) {
                 day = `0${day}`;
               }
+
+              const time = new Date(el.input.timestamp);
               return (
                 <div className="item d-flex justify-content-between ">
-                  <div className="left d-flex">
+                  <div
+                    style={{ width: "200px", textAlign: "left" }}
+                    className="left d-flex"
+                  >
                     {/* <div className="date ">
                       {monthNames[Month]} <br />
                       {day}
@@ -205,14 +211,24 @@ function index({ account }) {
                         ) : (
                           <img
                             height="30"
-                            style={{ marginLeft: "10px", marginBottom: "4px" }}
+                            style={{ marginBottom: "4px" }}
                             src={img}
                           />
                         )}
                       </span>
                       <span>
                         {el.type === "OUTGOING" ? "- " : "+ "}{" "}
-                        {el.output.amount}
+                        {el.output.amount}{" "}
+                        <span
+                          style={{
+                            color: "#ffffff8c",
+                            textTransform: "capitalize",
+                            fontSize: "14px",
+                          }}
+                        >
+                          {" "}
+                          Wave
+                        </span>
                       </span>
                     </div>
                   </div>
@@ -237,9 +253,28 @@ function index({ account }) {
                       {el.type === "OUTGOING" ? el.output.to : el.input.from}
                     </div>
                   </div>
-                  <div className="right">
+                  <div
+                    style={{
+                      color: "#ffffff8c",
+                      fontSize: "12px",
+                      // lineHeight: "9px",
+                    }}
+                    className="right"
+                  >
                     {" "}
-                    {el.type === "OUTGOING" ? "- " : "+ "} {el.output.amount}
+                    {/* <Moment format="YYYY/MM/DD">{time}</Moment> */}
+                    {time.getFullYear() +
+                      "/" +
+                      (time.getMonth() + 1) +
+                      "/" +
+                      time.getDate()}
+                    <br />
+                    {time.getHours() +
+                      ":" +
+                      time.getMinutes() +
+                      ":" +
+                      time.getSeconds()}
+                    {/* <Moment format="HH:mm:ss ">{time}</Moment> */}
                   </div>
                 </div>
               );

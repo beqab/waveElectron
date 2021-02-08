@@ -9,8 +9,11 @@ import user from "../../imgs/Gruppe64.png";
 import Secur from "../../imgs/Gruppe61.png";
 import Faq from "../../imgs/Gruppe75.png";
 import { ipcRenderer } from "electron";
+import { WalletKeyContext } from "../walletKeyContext/walletKeyContext";
 
 const header = ({ setCurrentTab, currentTab }) => {
+  const { setUserKey } = React.useContext(WalletKeyContext);
+
   return (
     <div className="header py-2 container-fluid align-items-between h-100">
       <div className=" align-items-center flex-column ">
