@@ -79,6 +79,7 @@ const newStore = new store({
   fileName: "userKay",
   data: {},
 });
+
 app.on("ready", () => {
   createMainWindow();
 

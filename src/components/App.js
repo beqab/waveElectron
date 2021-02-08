@@ -38,6 +38,7 @@ const App = () => {
   const [account, setAccount] = React.useState("");
 
   const val = React.useContext(WalletKeyContext);
+  // debugger;
 
   useEffect(() => {
     ipcRenderer.on("getUser", (e, val) => {
@@ -74,24 +75,33 @@ const App = () => {
     "tttttttttttttt"
   );
 
+  const signOut = () => {
+    if (!val) {
+      return true;
+    } else if (!val.userKey) {
+      return true;
+    } else if (
+      Object.keys(val.userKey).length === 0 &&
+      typeof val.userKey === "object"
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   // debugger;
 
   return (
     <div className="app">
-      {!val.userKey ||
-        (Object.keys(val.userKey).length === 0 &&
-        typeof val.userKey === "object" ? (
-          <Login />
-        ) : (
-          <Header
-            currentTab={currentTab}
-            setCurrentTab={(tabName) => setCurrentTab(tabName)}
-          />
-        ))}
-      {/* <Header
-        currentTab={currentTab}
-        setCurrentTab={(tabName) => setCurrentTab(tabName)}
-      /> */}
+      {signOut() ? (
+        <Login />
+      ) : (
+        <Header
+          currentTab={currentTab}
+          setCurrentTab={(tabName) => setCurrentTab(tabName)}
+        />
+      )}
+
       {/* <Modal modal14={modal14} toggle={(e) => setModal14(e)} /> */}
       <div className="container">
         <ReceiveModal
@@ -99,11 +109,7 @@ const App = () => {
           setCurrentTab={(tabName) => setCurrentTab(tabName)}
           toggle={(e) => setReceiveModal(e)}
         />
-        {!val.userKey ||
-        (Object.keys(val.userKey).length === 0 &&
-          typeof val.userKey === "object")
-          ? null
-          : getContent()}
+        {signOut() ? null : getContent()}
         {/* {getContent()} */}
       </div>
     </div>
