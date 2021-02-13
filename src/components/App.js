@@ -50,6 +50,14 @@ const App = () => {
           })
           .then((res) => {
             setAccount(res.headers.account);
+
+            // axios
+            //   .get("http://51.255.211.135:8181/freezes", {
+            //     secret: val?.secret,
+            //   })
+            //   .then((res) => {
+            //     debugger;
+            //   });
           });
       }
     });
@@ -61,7 +69,7 @@ const App = () => {
     } else if (currentTab === "Stoking") {
       return <Stoking account={account} />;
     } else if (currentTab === "Freezing") {
-      return <Freezing />;
+      return <Freezing account={account} />;
     } else if (currentTab === "Security") {
       return <Security />;
     } else if (currentTab === "Settings") {
