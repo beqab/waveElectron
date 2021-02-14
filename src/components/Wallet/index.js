@@ -48,34 +48,36 @@ function index({ account }) {
 
   const [activeIndex, setActiveIndex] = React.useState(null);
 
-  const val = React.useContext(WalletKeyContext);
+  const { userKey } = React.useContext(WalletKeyContext);
   // debugger;
 
+  const selectedWallet = (data) => {
+    return data?.wallets?.find((el) => el.accountName === data.currentUser);
+  };
+
   useEffect(() => {
-    if (val?.userKey?.key) {
-      axios
-        .get("http://51.255.211.135:8181/wallet/" + val?.userKey?.key)
-        .then((res) => {
-          // debugger;
+    axios
+      .get("http://51.255.211.135:8181/wallet/" + selectedWallet(userKey).key)
+      .then((res) => {
+        // debugger;
 
-          let transactionsParse = [];
-          res.data.transactions.INCOMING.map((el) =>
-            transactionsParse.push({ ...el, type: "INCOMING" })
-          );
-          res.data.transactions.OUTGOING.map((el) =>
-            transactionsParse.push({ ...el, type: "OUTGOING" })
-          );
+        let transactionsParse = [];
+        res.data.transactions.INCOMING.map((el) =>
+          transactionsParse.push({ ...el, type: "INCOMING" })
+        );
+        res.data.transactions.OUTGOING.map((el) =>
+          transactionsParse.push({ ...el, type: "OUTGOING" })
+        );
 
-          setBalance(res.data.wallet.balance);
-          setTransactions(transactionsParse);
-        });
-    }
-  }, [val?.userKey?.key]);
+        setBalance(res.data.wallet.balance);
+        setTransactions(transactionsParse);
+      });
+  }, [userKey]);
   // debugger;
 
   const fetchWalletData = () => {
     axios
-      .get("http://51.255.211.135:8181/wallet/" + val?.userKey?.key)
+      .get("http://51.255.211.135:8181/wallet/" + selectedWallet(userKey).key)
       .then((res) => {
         // debugger;
 

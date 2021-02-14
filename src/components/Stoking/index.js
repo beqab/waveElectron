@@ -7,6 +7,7 @@ import WalletKeyProvider, {
 } from "../walletKeyContext/walletKeyContext";
 import Logo from "../../imgs/logo.png";
 import Wave from "../../imgs/logo.png";
+import { getSelectedWallet } from "../helpers";
 
 import {
   MDBContainer,
@@ -28,7 +29,7 @@ function index({ account }) {
   const [balance, setBalance] = useState(null);
   const [amount, setAmount] = useState(null);
   const [openModal, setOpenModal] = useState(null);
-  const val = React.useContext(WalletKeyContext);
+  const { userKey } = React.useContext(WalletKeyContext);
 
   useEffect(() => {
     fetchWalletData();
@@ -42,11 +43,13 @@ function index({ account }) {
         },
       }
     );
-  }, [val?.userKey?.key]);
+  }, [userKey]);
 
   const fetchWalletData = () => {
     axios
-      .get("http://51.255.211.135:8181/wallet/" + val?.userKey?.key)
+      .get(
+        "http://51.255.211.135:8181/wallet/" + getSelectedWallet(userKey).key
+      )
       .then((res) => {
         // debugger;
 

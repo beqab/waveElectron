@@ -142,6 +142,20 @@ ipcMain.on("changeAccount", (e, options = {}) => {
   console.log("ttt", options);
 });
 
+ipcMain.on("setPassword", (e, options = {}) => {
+  console.log(options, "00000000000000");
+
+  const res = newStore.get();
+
+  console.log(res, "*************************");
+  // debugger;
+
+  newStore.set({ ...res, password: options.password });
+
+  mainWindow.webContents.send("getUser", newStore.get());
+  console.log("ttt", options);
+});
+
 ipcMain.on("logout", (e, options = {}) => {
   console.log(options, "00000000000000");
   let storeData = newStore.get();

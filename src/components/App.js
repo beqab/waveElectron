@@ -150,14 +150,14 @@ const App = () => {
 
       {/* <Modal modal14={modal14} toggle={(e) => setModal14(e)} /> */}
       <div className="container">
-        <button
+        {/* <button
           onClick={() => {
             // debugger;
             ipcRenderer.send("getFileData", {});
           }}
         >
           get userInfo
-        </button>
+        </button> */}
         <ReceiveModal
           modal14={receiveModal}
           setCurrentTab={(tabName) => setCurrentTab(tabName)}

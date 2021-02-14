@@ -85,6 +85,9 @@ const newWalletForm = ({ changeContent }) => {
           key: res.data.pubKey,
           accountName,
         });
+        ipcRenderer.send("changeAccount", {
+          name: accountName,
+        });
         setUserKey({
           wallet: words.join(" "),
           key: res.data.pubKey,

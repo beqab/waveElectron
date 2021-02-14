@@ -22,12 +22,13 @@ import Modal from "../sendModal/sendModal";
 import WalletKeyProvider, {
   WalletKeyContext,
 } from "../walletKeyContext/walletKeyContext";
+import { getSelectedWallet } from "../helpers";
 
 function index({ account }) {
   const [balance, setBalance] = useState(null);
   const [amount, setAmount] = useState(null);
   const [openModal, setOpenModal] = useState(null);
-  const val = React.useContext(WalletKeyContext);
+  const { userKey } = React.useContext(WalletKeyContext);
 
   useEffect(() => {
     fetchWalletData();
@@ -41,11 +42,13 @@ function index({ account }) {
         },
       }
     );
-  }, [val?.userKey?.key]);
+  }, []);
 
   const fetchWalletData = () => {
     axios
-      .get("http://51.255.211.135:8181/wallet/" + val?.userKey?.key)
+      .get(
+        "http://51.255.211.135:8181/wallet/" + getSelectedWallet(userKey).key
+      )
       .then((res) => {
         // debugger;
 
@@ -88,8 +91,7 @@ function index({ account }) {
       .post(
         "http://51.255.211.135:8181/wallet/unfreeze",
         {
-          to:
-            "37e31578af0233e850e163825cd64d9c4c3dc0e951dd08591180c8d3a8872131",
+          to: balance.pubKey,
           amount: Number(amount),
           type: "freeze",
         },
