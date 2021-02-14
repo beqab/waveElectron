@@ -76,8 +76,12 @@ function createMainWindow() {
   mainWindow.on("closed", () => (mainWindow = null));
 }
 const newStore = new store({
-  fileName: "userKay",
-  data: {},
+  fileName: "userKey",
+  data: {
+    wallets: [],
+    currentUser: "",
+    password: "",
+  },
 });
 
 app.on("ready", () => {
@@ -110,21 +114,49 @@ app.on("activate", () => {
 ipcMain.on("create", (e, options = {}) => {
   console.log(options, "00000000000000");
 
-  newStore.set(options);
+  const res = newStore.get();
+
+  console.log(res, "*************************");
+  // debugger;
+
+  if (res && res.wallets) {
+    newStore.set({ ...res, wallets: [...res.wallets, options] });
+  } else {
+    newStore.set({ ...res, wallets: [options] });
+  }
+
+  console.log("ttt", options);
+});
+
+ipcMain.on("changeAccount", (e, options = {}) => {
+  console.log(options, "00000000000000");
+
+  const res = newStore.get();
+
+  console.log(res, "*************************");
+  // debugger;
+
+  newStore.set({ ...res, currentUser: options.name });
+
+  mainWindow.webContents.send("getUser", newStore.get());
   console.log("ttt", options);
 });
 
 ipcMain.on("logout", (e, options = {}) => {
   console.log(options, "00000000000000");
-
-  let t = () => {
-    return {};
-  };
-
-  newStore.set(options);
+  let storeData = newStore.get();
+  newStore.set({ ...storeData, currentUser: "" });
   mainWindow.webContents.send("getUser", newStore.get());
   // mainWindow.reload();
   console.log("ttt", options);
+});
+
+ipcMain.on("getFileData", (e) => {
+  console.log("options", "00000000000000");
+
+  mainWindow.webContents.send("getUser", newStore.get());
+
+  // console.log("ttt", options);
 });
 
 ipcMain.on("exportKeys", (e, options = "ttt") => {

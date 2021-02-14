@@ -36,31 +36,53 @@ const App = () => {
   const [receiveModal, setReceiveModal] = React.useState(false);
   const [currentTab, setCurrentTab] = React.useState("Wallet");
   const [account, setAccount] = React.useState("");
+  const [wallet1, setWallet] = React.useState(null);
 
   const val = React.useContext(WalletKeyContext);
-  // debugger;
 
   useEffect(() => {
-    ipcRenderer.on("getUser", (e, val) => {
-      // debugger;
-      if (val?.secret) {
-        instance
-          .post("http://51.255.211.135:8181/wallet/sign-in", {
-            secret: val?.secret,
-          })
-          .then((res) => {
-            setAccount(res.headers.account);
+    if (!signOut()) {
+      instance
+        .post("http://51.255.211.135:8181/wallet/sign-in", {
+          secret: val.userKey.wallets.find(
+            (el) => el.accountName === val.userKey.currentUser
+          ).wallet,
+        })
+        .then((res) => {
+          setAccount(res.headers.account);
+          setWallet(res.data);
+          // debugger;
+          // debugger;
 
-            // axios
-            //   .get("http://51.255.211.135:8181/freezes", {
-            //     secret: val?.secret,
-            //   })
-            //   .then((res) => {
-            //     debugger;
-            //   });
-          });
-      }
-    });
+          // axios
+          //   .get("http://51.255.211.135:8181/freezes", {
+          //     secret: val?.secret,
+          //   })
+          //   .then((res) => {
+          //     debugger;
+          //   });
+        });
+    }
+    // ipcRenderer.on("getUser", (e, val) => {
+    // debugger;
+    // if (val?.secret) {
+    //   instance
+    //     .post("http://51.255.211.135:8181/wallet/sign-in", {
+    //       secret: val?.,
+    //     })
+    //     .then((res) => {
+    //       setAccount(res.headers.account);
+
+    //       // axios
+    //       //   .get("http://51.255.211.135:8181/freezes", {
+    //       //     secret: val?.secret,
+    //       //   })
+    //       //   .then((res) => {
+    //       //     debugger;
+    //       //   });
+    //     });
+    // }
+    // });
   }, [val]);
 
   const getContent = () => {
@@ -88,16 +110,32 @@ const App = () => {
       return true;
     } else if (!val.userKey) {
       return true;
+    } else if (!val?.userKey?.wallets?.length) {
+      return true;
     } else if (
-      Object.keys(val.userKey).length === 0 &&
-      typeof val.userKey === "object"
+      !val.userKey.wallets.find(
+        (el) => el.accountName === val.userKey.currentUser
+      )
     ) {
+      let t = val.userKey.wallets.find(
+        (el) => el.accountName === val.userKey.currentUser
+      );
+
+      console.log(t, "tyyyy");
+      // debugger;
       return true;
     }
+
+    // debugger;
     return false;
   };
 
   // debugger;
+
+  if (!signOut()) {
+    // console.log(wallet, "valvalvalvalval");
+    // debugger;
+  }
 
   return (
     <div className="app">
@@ -112,10 +150,19 @@ const App = () => {
 
       {/* <Modal modal14={modal14} toggle={(e) => setModal14(e)} /> */}
       <div className="container">
+        <button
+          onClick={() => {
+            // debugger;
+            ipcRenderer.send("getFileData", {});
+          }}
+        >
+          get userInfo
+        </button>
         <ReceiveModal
           modal14={receiveModal}
           setCurrentTab={(tabName) => setCurrentTab(tabName)}
           toggle={(e) => setReceiveModal(e)}
+          currentWallet={wallet1}
         />
         {signOut() ? null : getContent()}
         {/* {getContent()} */}

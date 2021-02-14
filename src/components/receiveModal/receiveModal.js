@@ -19,14 +19,18 @@ import QR from "../../imgs/qr.png";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { WalletKeyContext } from "../walletKeyContext/walletKeyContext";
 
-const ModalPage = ({ modal14, toggle }) => {
+const ModalPage = ({ modal14, toggle, currentWallet }) => {
   const val = React.useContext(WalletKeyContext);
   const [address, setAddress] = React.useState("");
   useEffect(() => {
-    if (val?.userKey?.key) {
-      setAddress(val?.userKey?.key);
+    let t = val?.userKey?.wallets?.find(
+      (el) => el.accountName === val.userKey.currentUser
+    );
+
+    if (t) {
+      setAddress(t.key);
     }
-  }, [val?.userKey?.key]);
+  }, [val?.userKey?.wallets]);
   const [copied, setCopied] = React.useState(false);
 
   return (
