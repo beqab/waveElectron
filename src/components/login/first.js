@@ -50,7 +50,7 @@ const welcome = ({ changeContent }) => {
                 {accountError}{" "}
               </div>
             )}
-            <MDBInput
+            {/* <MDBInput
               label="Password"
               outline
               //   icon="lock"
@@ -74,16 +74,16 @@ const welcome = ({ changeContent }) => {
                 {" "}
                 {passwordError}{" "}
               </div>
-            )}
+            )} */}
             <MDBBtn
               onClick={() => {
                 if (!currentAccount) {
                   return setAccountError("select account");
                 }
-                if (password !== userKey?.password) {
-                  debugger;
-                  return setPasswordError("wrong password");
-                }
+                // if (password !== userKey?.password) {
+                //   debugger;
+                //   return setPasswordError("wrong password");
+                // }
 
                 ipcRenderer.send("changeAccount", {
                   name: currentAccount,

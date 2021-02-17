@@ -156,6 +156,29 @@ ipcMain.on("setPassword", (e, options = {}) => {
   console.log("ttt", options);
 });
 
+ipcMain.on("authWithPassword", (e, options = {}) => {
+  console.log(options, "00000000000000");
+
+  const res = newStore.get();
+
+  console.log(res, "*************************");
+  // debugger;
+
+  newStore.set({ ...res, isAuth: true });
+
+  mainWindow.webContents.send("getUser", newStore.get());
+  console.log("ttt", options);
+});
+
+ipcMain.on("resetWallet", (e, options = {}) => {
+  // debugger;
+
+  newStore.set({});
+
+  mainWindow.webContents.send("getUser", newStore.get());
+  console.log("ttt", options);
+});
+
 ipcMain.on("logout", (e, options = {}) => {
   console.log(options, "00000000000000");
   let storeData = newStore.get();

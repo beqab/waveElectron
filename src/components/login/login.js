@@ -7,7 +7,7 @@ import First from "./first";
 import SetPassword from "./setPassword";
 
 const login = () => {
-  const [currentContent, setCurrentContent] = React.useState("first");
+  const [currentContent, setCurrentContent] = React.useState("setPassword");
   return (
     <div className="login-modal ">
       <div className="container justify-content-center flex-column align-items-center d-flex  ">

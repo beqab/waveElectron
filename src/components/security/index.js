@@ -17,9 +17,31 @@ import {
   MDBCol,
 } from "mdbreact";
 
-function index() {
+const Mark = ({ color = null, width = 35 }) => {
   return (
-    <div className="wave-main">
+    <svg
+      aria-hidden="true"
+      focusable="false"
+      data-prefix="far"
+      data-icon="check-circle"
+      role="img"
+      style={{ fontSize: "10px", width: width + "px" }}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 512 512"
+      class="svg-inline--fa fa-check-circle fa-w-16 fa-2x"
+    >
+      <path
+        fill={color || "currentColor"}
+        d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 48c110.532 0 200 89.451 200 200 0 110.532-89.451 200-200 200-110.532 0-200-89.451-200-200 0-110.532 89.451-200 200-200m140.204 130.267l-22.536-22.718c-4.667-4.705-12.265-4.736-16.97-.068L215.346 303.697l-59.792-60.277c-4.667-4.705-12.265-4.736-16.97-.069l-22.719 22.536c-4.705 4.667-4.736 12.265-.068 16.971l90.781 91.516c4.667 4.705 12.265 4.736 16.97.068l172.589-171.204c4.704-4.668 4.734-12.266.067-16.971z"
+        class=""
+      ></path>
+    </svg>
+  );
+};
+
+function index({ setCurrentTab }) {
+  return (
+    <div style={{ maxWidth: "1000px" }} className="wave-main">
       <div className="">
         <svg
           id="Group_78"
@@ -45,6 +67,111 @@ function index() {
         </svg>
       </div>
       <div className="amount mb-1">Security</div>
+      <div className="container mt-4">
+        <div
+          style={{ color: "#fff", fontSize: "12px" }}
+          className="row text-left mb-4"
+        >
+          <div className="col-6">
+            Complete the steps below to help prevent unauthorized access to your
+            wallet. Add additional verification to access your funds at any
+            time.
+          </div>
+          <div className="col-6">
+            <div className="row    ">
+              <div className="col-4 d-flex px-1">
+                <Mark width={35} color="green" />
+
+                <span className="ml-2"> Setup your Wallet Password</span>
+              </div>
+              <div className="col-4 d-flex px-1">
+                <Mark width="35" color="grey" />
+                <span className="ml-2">Setup your Wallet Password</span>
+              </div>
+              <div className="col-4 d-flex px-1">
+                <Mark width="35" color="grey" />
+                <span className="ml-2">Setup your Wallet Password</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style={{ background: "#fff" }}
+          className="row py-3 align-items-center mb-3"
+        >
+          <div class="col-2">
+            <Mark width={50} color="green" />
+          </div>
+          <div style={{ fontSize: "14px" }} class="col-7 text-left px-0 ">
+            <h5 style={{ color: "#000" }}>
+              <b>Wallet Password </b>
+            </h5>
+            Your wallet password was created successfully when you created your
+            wallet. Don`t tell others your password and keep sure it on the
+            right pace.
+          </div>
+
+          <div class="col-3">
+            <MDBBtn
+              onClick={() => setCurrentTab("Settings")}
+              style={{ padding: "5px 17px" }}
+              className="btnMain"
+            >
+              Change Password
+            </MDBBtn>
+          </div>
+        </div>
+        <div
+          style={{ background: "#fff" }}
+          className="row py-3 align-items-center mb-3"
+        >
+          <div class="col-2">
+            <Mark width={50} color="grey" />
+          </div>
+          <div style={{ fontSize: "14px" }} class="col-7 text-left px-0 ">
+            <h5 style={{ color: "#000" }}>
+              <b>Secret Private Key Recovery Phrase </b>
+            </h5>
+            Your Secret Recovery Phrase is needed to recover your wallet in case
+            the password is lost. Please write there 12 words down, in order and
+            keep them somewhere safe offline. the secret Recovery phrase givers
+            you (or anyone who has it) a way to ..
+            <div style={{ color: "red", marginTop: "10px" }}>
+              Never share your secret phrase
+            </div>
+          </div>
+
+          <div class="col-3">
+            <MDBBtn style={{ padding: "5px 17px" }} className="btnMain">
+              Backup Funds
+            </MDBBtn>
+          </div>
+        </div>
+        <div
+          style={{ background: "#fff" }}
+          className="row py-3 align-items-center mb-3"
+        >
+          <div class="col-2">
+            <Mark width={50} color="grey" />
+          </div>
+          <div style={{ fontSize: "14px" }} class="col-7 text-left px-0 ">
+            <h5 style={{ color: "#000" }}>
+              <b>Two-Step Verification </b>
+            </h5>
+            Use an Authentication app, Sms Codes Two-step verification helps to
+            prevent authorized access to your wallet by requiring a one-time
+            password for every login attempt. Enable this to further secure your
+            wallet.
+          </div>
+
+          <div class="col-3">
+            <MDBBtn style={{ padding: "5px 17px" }} className="btnMain">
+              Enable
+            </MDBBtn>
+          </div>
+        </div>
+      </div>
 
       <div className="transactionsList"></div>
     </div>

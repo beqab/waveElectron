@@ -8,6 +8,7 @@ import WalletKeyProvider, {
 } from "../walletKeyContext/walletKeyContext";
 import {
   MDBBtn,
+  MDBInput,
   MDBIcon,
   MDBCard,
   MDBCardBody,
@@ -17,9 +18,259 @@ import {
   MDBCol,
 } from "mdbreact";
 
+const { ipcRenderer } = require("electron");
+
 function index() {
+  const { userKey } = React.useContext(WalletKeyContext);
+
+  const [password, setPassword] = React.useState("");
+  const [tab, setTab] = React.useState("Password");
+  const [passwordChanged, setPasswordChanged] = React.useState("");
+  const [oldPassword, setOldPassword] = React.useState("");
+  const [oldPasswordError, setOldPasswordError] = React.useState("");
+  const [passwordError, setPasswordError] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = React.useState("");
+
+  const clearFields = () => {
+    setPassword("");
+    setOldPassword("");
+    setConfirmPassword("");
+    setPasswordChanged(true);
+  };
+
+  const getKeysTab = () => {
+    return (
+      <div
+        style={{ background: "#194275", color: "#fff" }}
+        className="card p-3 mt-3"
+      >
+        <p style={{ fontSize: "13px" }}>
+          NEVER give you 12-wod backup phrase and private keys to anyone. Giving
+          this data may result in loss of your funds
+        </p>
+        {!passwordChanged && (
+          <div style={{ maxWidth: "300px" }} className="m-auto w-100 ">
+            <MDBInput
+              label="Password"
+              //   icon="lock"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              value={password}
+              type="password"
+              validate
+            />
+            {passwordError && (
+              <div
+                style={{
+                  color: "red",
+                  marginTop: "-37px",
+                  fontSize: "14px",
+                  textAlign: "left",
+                  marginBottom: "20px",
+                }}
+              >
+                {passwordError}
+              </div>
+            )}
+          </div>
+        )}
+
+        {passwordChanged && (
+          <div class="alert alert-success" role="alert">
+            {userKey.wallets.map((el, i) => {
+              return (
+                <>
+                  <div
+                    style={{
+                      maxWidth: "100%",
+                      wordBreak: " break-all",
+                    }}
+                    className="d-flex align-times-center flex-column"
+                  >
+                    <div style={{ minWidth: "70px", alignSelf: "center" }}>
+                      <b>Account Name : {el.accountName}</b>
+                    </div>
+                    <div>
+                      <div className>
+                        <span>
+                          {" "}
+                          <b> 12-World </b>
+                        </span>
+                        <div>{el.wallet}</div>
+                      </div>
+                      <div>
+                        <span>
+                          {" "}
+                          <b> Public key </b>{" "}
+                        </span>
+                        <div>{el.key}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr />
+                </>
+              );
+            })}
+          </div>
+        )}
+
+        {!passwordChanged && (
+          <MDBBtn
+            onClick={() => {
+              if (userKey.password !== password) {
+                return setPasswordError("wrong password");
+              } else {
+                setPasswordError("");
+              }
+
+              clearFields();
+            }}
+            className="btnMain"
+          >
+            change password
+          </MDBBtn>
+        )}
+      </div>
+    );
+  };
+
+  const changePasswordTab = () => {
+    return (
+      <div
+        style={{ background: "#194275", color: "#fff" }}
+        className="card p-3 mt-3"
+      >
+        <p style={{ fontSize: "13px" }}>
+          Password keeps your wallet protected by encryption/ Please be careful
+          when changing it, tis action cannot be undone. We strongly recommended
+          saving the 12 words backup phrase before yo continue.
+        </p>
+
+        <div style={{ maxWidth: "300px" }} className="m-auto w-100 ">
+          <MDBInput
+            label="Old Password"
+            //   icon="lock"
+            onChange={(e) => {
+              setOldPassword(e.target.value);
+              // if (e.target.value.length >= 6) {
+              //   setPasswordError("");
+              // }
+            }}
+            value={oldPassword}
+            type="password"
+            validate
+          />
+          {oldPasswordError && (
+            <div
+              style={{
+                color: "red",
+                marginTop: "-37px",
+                fontSize: "14px",
+                textAlign: "left",
+                marginBottom: "20px",
+              }}
+            >
+              {oldPasswordError}
+            </div>
+          )}
+
+          <MDBInput
+            label="Password"
+            //   icon="lock"
+            onChange={(e) => {
+              setPassword(e.target.value);
+              if (e.target.value.length >= 6) {
+                setPasswordError("");
+              }
+            }}
+            value={password}
+            type="password"
+            validate
+          />
+          {passwordError && (
+            <div
+              style={{
+                color: "red",
+                marginTop: "-37px",
+                fontSize: "14px",
+                textAlign: "left",
+                marginBottom: "20px",
+              }}
+            >
+              {passwordError}
+            </div>
+          )}
+
+          <MDBInput
+            label="Confirm Password"
+            //   icon="lock"
+            onChange={(e) => {
+              setConfirmPassword(e.target.value);
+              if (e.target.value === password) {
+                setConfirmPasswordError("");
+              }
+            }}
+            value={confirmPassword}
+            type="password"
+            validate
+          />
+          {confirmPasswordError && (
+            <div
+              style={{
+                color: "red",
+                marginTop: "-37px",
+                fontSize: "14px",
+                textAlign: "left",
+                marginBottom: "20px",
+              }}
+            >
+              {" "}
+              {confirmPasswordError}{" "}
+            </div>
+          )}
+        </div>
+
+        {passwordChanged && (
+          <div class="alert alert-success" role="alert">
+            Password Changed Successfully
+          </div>
+        )}
+        <MDBBtn
+          onClick={() => {
+            if (userKey.password !== oldPassword) {
+              return setOldPasswordError("wrong password");
+            } else {
+              setOldPasswordError("");
+            }
+            if (password.length < 6) {
+              return setPasswordError("enter minimum 6 characters");
+            } else {
+              setPasswordError("");
+            }
+            if (password !== confirmPassword) {
+              return setConfirmPasswordError(
+                "The password confirmation does not match."
+              );
+            } else {
+              setConfirmPasswordError("");
+            }
+
+            clearFields();
+            ipcRenderer.send("setPassword", {
+              password,
+            });
+          }}
+          className="btnMain"
+        >
+          change password
+        </MDBBtn>
+      </div>
+    );
+  };
   return (
-    <div className="wave-main">
+    <div style={{ marginTop: "50px" }} className="wave-main">
       <div className="">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -61,6 +312,39 @@ function index() {
         </svg>
       </div>
       <div className="amount mb-1">Settings</div>
+      <div
+        style={{ maxWidth: "500px" }}
+        className="container settingsContainer mt-4"
+      >
+        <div className="row text-center">
+          <div className="col-6">
+            <MDBBtn
+              onClick={() => {
+                clearFields();
+                setPasswordChanged(false);
+                setTab("Password");
+              }}
+              className={tab === "Password" ? "btnMain active" : "btnMain "}
+            >
+              change password
+            </MDBBtn>
+          </div>
+
+          <div className="col-6">
+            <MDBBtn
+              onClick={() => {
+                clearFields();
+                setPasswordChanged(false);
+                setTab("Keys");
+              }}
+              className={tab === "Keys" ? "btnMain active" : "btnMain"}
+            >
+              show private keys
+            </MDBBtn>
+          </div>
+        </div>
+        {tab === "Password" ? changePasswordTab() : getKeysTab()}
+      </div>
 
       <div className="transactionsList"></div>
     </div>
