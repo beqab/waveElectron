@@ -361,3 +361,12 @@ body {
     text-overflow: ellipsis;
   }
 }
+
+.accounts {
+  max-height: 285px;
+  overflow: auto;
+  background: rgb(25, 66, 117);
+  .accountItem {
+    background: #0000004a;
+  }
+}

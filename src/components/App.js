@@ -23,6 +23,8 @@ import Stoking from "./Stoking";
 import Freezing from "./Freezing";
 import Security from "./security";
 import Settings from "./settings";
+import Help from "./Help";
+import Account from "./account";
 import axios from "axios";
 const { ipcRenderer } = require("electron");
 
@@ -34,7 +36,7 @@ const instance = axios.create({
 const App = () => {
   const [modal14, setModal14] = React.useState(false);
   const [receiveModal, setReceiveModal] = React.useState(false);
-  const [currentTab, setCurrentTab] = React.useState("Settings");
+  const [currentTab, setCurrentTab] = React.useState("Account");
   const [account, setAccount] = React.useState("");
   const [wallet1, setWallet] = React.useState(null);
 
@@ -96,6 +98,10 @@ const App = () => {
       return <Security setCurrentTab={(val) => setCurrentTab(val)} />;
     } else if (currentTab === "Settings") {
       return <Settings />;
+    } else if (currentTab === "Help") {
+      return <Help />;
+    } else if (currentTab === "Account") {
+      return <Account />;
     }
 
     return "mhhhh";

@@ -120,7 +120,7 @@ ipcMain.on("create", (e, options = {}) => {
   // debugger;
 
   if (res && res.wallets) {
-    newStore.set({ ...res, wallets: [...res.wallets, options] });
+    newStore.set({ ...res, wallets: [options, ...res.wallets] });
   } else {
     newStore.set({ ...res, wallets: [options] });
   }
@@ -140,6 +140,56 @@ ipcMain.on("changeAccount", (e, options = {}) => {
 
   mainWindow.webContents.send("getUser", newStore.get());
   console.log("ttt", options);
+});
+
+ipcMain.on("changeAccountName", (e, options = {}) => {
+  console.log(options, "00000000000000");
+
+  const res = newStore.get();
+
+  console.log(res, "*************************");
+  // debugger;
+
+  let currentUser = res.currentUser;
+
+  if (res.currentUser === options.name) {
+    currentUser = options.newName;
+  }
+
+  newStore.set({
+    ...res,
+    currentUser,
+    wallets: res.wallets.map((el) => {
+      if (el.accountName === options.name) {
+        el.accountName = options.newName;
+      }
+      return el;
+    }),
+  });
+
+  mainWindow.webContents.send("getUser", newStore.get());
+  console.log("ttt", options);
+});
+
+ipcMain.on("deleteAccount", (e, options = {}) => {
+  const res = newStore.get();
+
+  console.log(res, "*************************");
+  // debugger;
+
+  // let currentUser = res.currentUser;
+
+  // if (res.currentUser === options.name) {
+  //   currentUser = options.newName;
+  // }
+
+  newStore.set({
+    ...res,
+
+    wallets: res.wallets.filter((el) => el.accountName !== options.name),
+  });
+
+  mainWindow.webContents.send("getUser", newStore.get());
 });
 
 ipcMain.on("setPassword", (e, options = {}) => {

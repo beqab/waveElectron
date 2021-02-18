@@ -163,6 +163,10 @@ body {
   align-items: center;
   justify-content: center;
 }
+.btnMain.active {
+  background-image: linear-gradient(to right, #032d69, #44f1bd) !important;
+  box-shadow: 0 0 6px 1px #000 24;
+}
 .newWoletContainer {
   min-width: 500px;
 }
@@ -181,7 +185,7 @@ body {
   max-width: calc(100% - 200px);
 }
 .header {
-  position: absolute;
+  position: fixed;
   width: 201px !important;
   min-height: 100vh;
   justify-content: space-between;

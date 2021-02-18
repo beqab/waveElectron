@@ -24,7 +24,7 @@ const modalSteps = {
   CONFIRM: "CONFIRM",
 };
 
-const newWalletForm = ({ changeContent }) => {
+const newWalletForm = ({ changeContent, fromAccount }) => {
   // const [words, setWords] = useState("");
   const [wordsError, setWordsError] = useState("");
   const [accountName, setAccountName] = useState("");
@@ -103,14 +103,16 @@ const newWalletForm = ({ changeContent }) => {
     if (type === modalSteps.CREATE) {
       return (
         <div className="card-body">
-          <div className="text-left">
-            <span
-              className="cursor-pointer"
-              onClick={() => changeContent("Welcome")}
-            >
-              <i class="fas fa-backward"></i> go back
-            </span>
-          </div>
+          {!fromAccount && (
+            <div className="text-left">
+              <span
+                className="cursor-pointer"
+                onClick={() => changeContent("Welcome")}
+              >
+                <i class="fas fa-backward"></i> go back11
+              </span>
+            </div>
+          )}
 
           <form
             className="text-center"
