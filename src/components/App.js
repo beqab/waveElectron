@@ -36,7 +36,7 @@ const instance = axios.create({
 const App = () => {
   const [modal14, setModal14] = React.useState(false);
   const [receiveModal, setReceiveModal] = React.useState(false);
-  const [currentTab, setCurrentTab] = React.useState("Account");
+  const [currentTab, setCurrentTab] = React.useState("Wallet");
   const [account, setAccount] = React.useState("");
   const [wallet1, setWallet] = React.useState(null);
 

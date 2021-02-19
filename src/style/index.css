@@ -333,3 +333,11 @@ body {
   width: 100%;
   text-overflow: ellipsis;
 }
+.accounts {
+  max-height: 285px;
+  overflow: auto;
+  background: #194275;
+}
+.accounts .accountItem {
+  background: #000 4a;
+}
