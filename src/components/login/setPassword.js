@@ -50,7 +50,7 @@ const welcome = ({ changeContent }) => {
 
           <br />
         </div>
-      ) : !userKey?.password ? (
+      ) : userKey && !userKey.password ? (
         <div className="d- ttttttttt justify-content-center flex-column">
           <>
             <h6 className="text-center">Set your wave Application password</h6>

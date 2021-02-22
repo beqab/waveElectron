@@ -129,7 +129,7 @@ function index() {
             }}
             className="btnMain"
           >
-            change password
+            show keys
           </MDBBtn>
         )}
       </div>
