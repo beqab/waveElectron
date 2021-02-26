@@ -174,7 +174,8 @@ const welcome = ({ changeContent }) => {
             </div>
             <MDBBtn
               onClick={() => {
-                if (password !== userKey?.password) {
+                if (password !== userKey.password) {
+                  debugger;
                   return setPasswordError("wrong password");
                 } else {
                   setPasswordError("");
