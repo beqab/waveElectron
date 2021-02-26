@@ -317,11 +317,11 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
               {newWallet && (
                 <MDBBtn
                   onClick={() => {
-                    ipcRenderer.send("exportKeys", {
-                      pubKey: newWallet.pubKey,
-                      privKey: newWallet.privKey,
-                      phrases: newWallet.phrases,
-                    });
+                    // ipcRenderer.send("exportKeys", {
+                    //   pubKey: newWallet.pubKey,
+                    //   privKey: newWallet.privKey,
+                    //   phrases: newWallet.phrases,
+                    // });
                     signIngHandler();
                   }}
                   color="light-green btnMain w-75"

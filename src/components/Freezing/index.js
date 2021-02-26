@@ -129,35 +129,62 @@ function index({ account }) {
               <MDBCol md="9" lg="7" xl="5" className="mx-auto mt-3">
                 <MDBCard>
                   <MDBCardBody className="mx-4">
-                    <div className=" currencyField">
-                      <MDBInput
-                        value={amount}
-                        onChange={(e) => {
-                          setAmount(e.target.value);
-                        }}
-                        hint="Amount"
-                        type="number"
-                      />
-                      <span className="labelCurr">WAVE</span>
-                    </div>
+                    {balance?.blocked && openModal === "freeze" ? (
+                      <>
+                        <div>
+                          <div style={{ color: "#000" }}>
+                            You have already freezed wave if you want to freeze
+                            more UNFREEZE at first
+                          </div>
+                          <div className="text-venter">
+                            <MDBBtn
+                              onClick={() => setOpenModal("unfreeze")}
+                              className="mx-3 btnMain bold textCapital"
+                            >
+                              UNFREEZE
+                            </MDBBtn>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        {openModal === "freeze" ? (
+                          <div className=" currencyField">
+                            <MDBInput
+                              value={amount}
+                              onChange={(e) => {
+                                setAmount(e.target.value);
+                              }}
+                              hint="Amount"
+                              type="number"
+                            />
+                            <span className="labelCurr">WAVE</span>
+                          </div>
+                        ) : (
+                          <div style={{ color: "#000" }}>
+                            Are you sure to unfreeze wave?
+                          </div>
+                        )}
 
-                    <div className="text-center pt-3 mb-3">
-                      <MDBBtn
-                        type="button"
-                        gradient="blue"
-                        rounded
-                        className="btn-block z-depth-1a"
-                        onClick={() => {
-                          if (openModal === "freeze") {
-                            freezeWave();
-                          } else {
-                            unfreezeWave();
-                          }
-                        }}
-                      >
-                        {openModal === "freeze" ? "FREEZE" : "UNFREEZE"}
-                      </MDBBtn>
-                    </div>
+                        <div className="text-center pt-3 mb-3">
+                          <MDBBtn
+                            type="button"
+                            gradient="blue"
+                            rounded
+                            className="btn-block z-depth-1a"
+                            onClick={() => {
+                              if (openModal === "freeze") {
+                                freezeWave();
+                              } else {
+                                unfreezeWave();
+                              }
+                            }}
+                          >
+                            {openModal === "freeze" ? "FREEZE" : "UNFREEZE"}
+                          </MDBBtn>
+                        </div>
+                      </>
+                    )}
                     {/* <p className="dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
                     {" "}
                     or Sign up with:
@@ -208,7 +235,9 @@ function index({ account }) {
           UNFREEZE
         </MDBBtn>
         <MDBBtn
-          onClick={() => setOpenModal("freeze")}
+          onClick={() => {
+            setOpenModal("freeze");
+          }}
           className="mx-3 btnMain bold textCapital"
         >
           FREEZE
