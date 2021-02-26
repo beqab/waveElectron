@@ -323,6 +323,33 @@ function index({ account }) {
                       </div>
                     </div>
                   </div>
+
+                  <div style={{ minWidth: "100px", textAlign: "left" }}>
+                    <div
+                      style={{
+                        color: "rgba(255, 255, 255, 0.55)",
+                        fontSize: "12px",
+                        lineHeight: "9px",
+                        textAlign: "left",
+                      }}
+                    >
+                      fee
+                    </div>
+
+                    <span>
+                      {el.output.fee}{" "}
+                      <span
+                        style={{
+                          color: "rgba(255, 255, 255, 0.55)",
+                          textTransform: "capitalize",
+                          fontSize: "14px",
+                        }}
+                      >
+                        {" "}
+                        Wave{" "}
+                      </span>
+                    </span>
+                  </div>
                   <div
                     style={{
                       color: "#ffffff8c",
