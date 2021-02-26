@@ -30,6 +30,7 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
   const [accountName, setAccountName] = useState("");
   const [accountNameError, setAccountNameError] = useState("");
   const [words, setWords] = useState([]);
+  const [privateKey, getPrivateKey] = useState("");
   const [newWallet, setNewWallet] = useState(null);
   const [modalStep, setModalStep] = useState(modalSteps.CREATE);
 
@@ -63,6 +64,7 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
           console.log("mhhh");
           // debugger;
           setWords(res.data.phrases.split(" "));
+          getPrivateKey(res.data.privKey);
           setNewWallet(res.data);
           setModalStep(modalSteps.CREATED);
         })
@@ -83,6 +85,7 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
         ipcRenderer.send("create", {
           wallet: words.join(" "),
           key: res.data.pubKey,
+          privateKey,
           accountName,
         });
         ipcRenderer.send("changeAccount", {

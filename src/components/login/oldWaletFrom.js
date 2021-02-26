@@ -38,6 +38,7 @@ const oldWaletFrom = ({ changeContent }) => {
           ipcRenderer.send("create", {
             wallet: words.join(" "),
             key: res.data.pubKey,
+            privateKey: res.data.privKey,
             accountName,
           });
           ipcRenderer.send("changeAccount", {

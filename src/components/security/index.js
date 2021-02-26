@@ -84,14 +84,14 @@ function index({ setCurrentTab }) {
 
                 <span className="ml-2"> Setup your Wallet Password</span>
               </div>
-              <div className="col-4 d-flex px-1">
+              {/* <div className="col-4 d-flex px-1">
                 <Mark width="35" color="grey" />
                 <span className="ml-2">Setup your Wallet Password</span>
               </div>
               <div className="col-4 d-flex px-1">
                 <Mark width="35" color="grey" />
                 <span className="ml-2">Setup your Wallet Password</span>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -122,7 +122,7 @@ function index({ setCurrentTab }) {
             </MDBBtn>
           </div>
         </div>
-        <div
+        {/* <div
           style={{ background: "#fff" }}
           className="row py-3 align-items-center mb-3"
         >
@@ -147,8 +147,8 @@ function index({ setCurrentTab }) {
               Backup Funds
             </MDBBtn>
           </div>
-        </div>
-        <div
+        </div> */}
+        {/* <div
           style={{ background: "#fff" }}
           className="row py-3 align-items-center mb-3"
         >
@@ -170,7 +170,7 @@ function index({ setCurrentTab }) {
               Enable
             </MDBBtn>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="transactionsList"></div>

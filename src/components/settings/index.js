@@ -100,6 +100,16 @@ function index() {
                         </span>
                         <div>{el.wallet}</div>
                       </div>
+                      {el.privateKey && (
+                        <div>
+                          <span>
+                            {" "}
+                            <b> Private key </b>{" "}
+                          </span>
+                          <div>{el.privateKey}</div>
+                        </div>
+                      )}
+
                       <div>
                         <span>
                           {" "}
