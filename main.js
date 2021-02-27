@@ -73,7 +73,14 @@ function createMainWindow() {
     }
   });
 
-  mainWindow.on("closed", () => (mainWindow = null));
+  mainWindow.on("closed", () => {
+    let storeData = newStore.get();
+    newStore.set({ ...storeData, currentUser: "" });
+
+    // mainWindow.reload();
+
+    mainWindow = null;
+  });
 }
 const newStore = new store({
   fileName: "userKey",
