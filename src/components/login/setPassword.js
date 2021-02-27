@@ -14,6 +14,10 @@ const welcome = ({ changeContent }) => {
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [confirmPasswordError, setConfirmPasswordError] = React.useState("");
 
+  React.useEffect(() => {
+    ipcRenderer.send("getFile", {});
+  }, []);
+
   return (
     <div className="mb-5 p-4">
       {/* <h2 className="text-center mb-5">welcome to WAVE</h2> */}
@@ -50,7 +54,7 @@ const welcome = ({ changeContent }) => {
 
           <br />
         </div>
-      ) : userKey && !userKey.password ? (
+      ) : !userKey || !userKey.password ? (
         <div className="d- ttttttttt justify-content-center flex-column">
           <>
             <h6 className="text-center">Set your wave Application password</h6>

@@ -206,6 +206,17 @@ ipcMain.on("setPassword", (e, options = {}) => {
   console.log("ttt", options);
 });
 
+ipcMain.on("getFile", (e, options = {}) => {
+  console.log(options, "00000000000000");
+
+  const res = newStore.get();
+
+  newStore.set({ ...res });
+
+  mainWindow.webContents.send("getUser", newStore.get());
+  console.log("ttt", options);
+});
+
 ipcMain.on("authWithPassword", (e, options = {}) => {
   console.log(options, "00000000000000");
 
