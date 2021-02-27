@@ -39,6 +39,7 @@ const App = () => {
   const [currentTab, setCurrentTab] = React.useState("Wallet");
   const [account, setAccount] = React.useState("");
   const [wallet1, setWallet] = React.useState(null);
+  const [setKeys, setSetKeys] = React.useState(false);
 
   const val = React.useContext(WalletKeyContext);
 
@@ -95,9 +96,16 @@ const App = () => {
     } else if (currentTab === "Freezing") {
       return <Freezing account={account} />;
     } else if (currentTab === "Security") {
-      return <Security setCurrentTab={(val) => setCurrentTab(val)} />;
+      return (
+        <Security
+          setCurrentTab={(val) => {
+            setSetKeys(true);
+            setCurrentTab(val);
+          }}
+        />
+      );
     } else if (currentTab === "Settings") {
-      return <Settings />;
+      return <Settings setKeys={setKeys} />;
     } else if (currentTab === "Help") {
       return <Help />;
     } else if (currentTab === "Account") {

@@ -84,11 +84,11 @@ function index({ setCurrentTab }) {
 
                 <span className="ml-2"> Setup your Wallet Password</span>
               </div>
-              {/* <div className="col-4 d-flex px-1">
-                <Mark width="35" color="grey" />
+              <div className="col-4 d-flex px-1">
+                <Mark width="35" color="green" />
                 <span className="ml-2">Setup your Wallet Password</span>
               </div>
-              <div className="col-4 d-flex px-1">
+              {/* <div className="col-4 d-flex px-1">
                 <Mark width="35" color="grey" />
                 <span className="ml-2">Setup your Wallet Password</span>
               </div> */}
@@ -122,12 +122,12 @@ function index({ setCurrentTab }) {
             </MDBBtn>
           </div>
         </div>
-        {/* <div
+        <div
           style={{ background: "#fff" }}
           className="row py-3 align-items-center mb-3"
         >
           <div class="col-2">
-            <Mark width={50} color="grey" />
+            <Mark width={50} color="green" />
           </div>
           <div style={{ fontSize: "14px" }} class="col-7 text-left px-0 ">
             <h5 style={{ color: "#000" }}>
@@ -143,11 +143,15 @@ function index({ setCurrentTab }) {
           </div>
 
           <div class="col-3">
-            <MDBBtn style={{ padding: "5px 17px" }} className="btnMain">
+            <MDBBtn
+              onClick={() => setCurrentTab("Settings")}
+              style={{ padding: "5px 17px" }}
+              className="btnMain"
+            >
               Backup Funds
             </MDBBtn>
           </div>
-        </div> */}
+        </div>
         {/* <div
           style={{ background: "#fff" }}
           className="row py-3 align-items-center mb-3"

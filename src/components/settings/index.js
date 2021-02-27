@@ -20,7 +20,7 @@ import {
 
 const { ipcRenderer } = require("electron");
 
-function index() {
+function index({ setKeys }) {
   const { userKey } = React.useContext(WalletKeyContext);
 
   const [password, setPassword] = React.useState("");
@@ -38,6 +38,12 @@ function index() {
     setConfirmPassword("");
     setPasswordChanged(true);
   };
+
+  React.useEffect(() => {
+    if (setKeys) {
+      setTab("Keys");
+    }
+  }, [setKeys]);
 
   const getKeysTab = () => {
     return (
