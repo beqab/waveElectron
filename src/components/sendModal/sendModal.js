@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   MDBContainer,
   MDBBtn,
@@ -19,10 +19,17 @@ import axios from "axios";
 
 const ModalPage = ({ modal14, toggle, account, reloadData }) => {
   const [sendTo, setSendTo] = useState("");
+  const [serverError, setServerError] = useState("");
   const [amount, setAmount] = useState(0);
   //   state = {
   //     modal14: false,
   //   };
+
+  useEffect(() => {
+    return () => {
+      setServerError("");
+    };
+  }, []);
 
   const sendWave = () => {
     console.log(account);
@@ -47,12 +54,26 @@ const ModalPage = ({ modal14, toggle, account, reloadData }) => {
         setAmount(0);
 
         toggle(null);
+      })
+      .catch((err) => {
+        console.log("errrrrrrrrrr", err.response);
+        // debugger;
+        if (err?.response?.data?.message) {
+          setServerError(err?.response?.data?.message);
+        }
       });
   };
 
   return (
     <MDBContainer className="MainModalWrapper">
-      <MDBModal isOpen={modal14} toggle={() => toggle(null)} centered>
+      <MDBModal
+        isOpen={modal14}
+        toggle={() => {
+          setServerError("");
+          toggle(null);
+        }}
+        centered
+      >
         <MDBModalHeader className="text-center" toggle={() => toggle(null)}>
           <img src={Logo} width="60" />
         </MDBModalHeader>
@@ -73,6 +94,8 @@ const ModalPage = ({ modal14, toggle, account, reloadData }) => {
                     onChange={(e) => {
                       console.log(e);
                       setSendTo(e.target.value);
+                      setServerError("");
+
                       // debugger;
                     }}
                   />
@@ -90,12 +113,17 @@ const ModalPage = ({ modal14, toggle, account, reloadData }) => {
                       value={amount}
                       onChange={(e) => {
                         setAmount(e.target.value);
+                        setServerError("");
                       }}
                       hint="0.00"
                       type="number"
                     />
                     <span className="labelCurr">Wave</span>
                   </div>
+                  {serverError && (
+                    <span style={{ color: "red" }}>{serverError}</span>
+                  )}
+
                   <div className="text-center pt-3 mb-3">
                     <MDBBtn
                       type="button"

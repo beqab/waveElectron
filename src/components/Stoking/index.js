@@ -27,22 +27,34 @@ import {
 
 function index({ account }) {
   const [balance, setBalance] = useState(null);
+  const [stake, setStake] = useState(0);
   const [amount, setAmount] = useState(null);
   const [openModal, setOpenModal] = useState(null);
   const { userKey } = React.useContext(WalletKeyContext);
+  const [serverError, setServerError] = useState("");
 
   useEffect(() => {
     fetchWalletData();
 
-    axios.get(
-      "http://51.255.211.135:8181/validators",
+    axios
+      .get(
+        "http://51.255.211.135:8181/validators",
 
-      {
-        headers: {
-          account: account,
-        },
-      }
-    );
+        {
+          headers: {
+            account: account,
+          },
+        }
+      )
+      .then((res) => {
+        let sum = 0;
+
+        res.data.forEach((element) => {
+          // debugger;
+          sum += element.amount;
+        });
+        setStake(sum);
+      });
   }, [userKey]);
 
   const fetchWalletData = () => {
@@ -71,7 +83,7 @@ function index({ account }) {
           to:
             "0512d818771130abf35543032887fe2ae9677379c013126e1f092b366ad3391a",
           amount: Number(amount),
-          type: "validator",
+          type: "stake",
         },
         {
           headers: {
@@ -81,8 +93,46 @@ function index({ account }) {
       )
       .then((res) => {
         // debugger;
+
         setOpenModal(null);
         fetchWalletData();
+      })
+      .catch((err) => {
+        // debugger;
+        if (err.response?.data?.message) {
+          setServerError(err.response.data.message);
+        }
+      });
+  };
+
+  const unStakeWave = () => {
+    axios
+      .post(
+        "http://51.255.211.135:8181/wallet/transact",
+        {
+          // to: balance.pubKey,
+          to:
+            "0512d818771130abf35543032887fe2ae9677379c013126e1f092b366ad3391a",
+          amount: Number(amount),
+          type: "unstake",
+        },
+        {
+          headers: {
+            account: account,
+          },
+        }
+      )
+      .then((res) => {
+        // debugger;
+
+        setOpenModal(null);
+        fetchWalletData();
+      })
+      .catch((err) => {
+        // debugger;
+        if (err.response?.data?.message) {
+          setServerError(err.response.data.message);
+        }
       });
   };
 
@@ -97,7 +147,10 @@ function index({ account }) {
             <img src={Logo} width="60" />
           </MDBModalHeader>
           <MDBModalBody>
-            <div className="amount mt-0 mb-1">Stake WAVE</div>
+            <div className="amount mt-0 mb-1">
+              {openModal === "stake" ? "Stake " : "unstake "}
+              WAVE
+            </div>
 
             <MDBRow>
               <MDBCol md="9" lg="7" xl="5" className="mx-auto mt-3">
@@ -114,21 +167,25 @@ function index({ account }) {
                       />
                       <span className="labelCurr">WAVE</span>
                     </div>
-                    <div className="d-flex justify-content-between">
-                      <div style={{ color: "#000", textAlign: "left" }}>
-                        <div>Available:</div>
-                        <div>{balance?.balance} Wave</div>
+                    {openModal === "stake" && (
+                      <div className="d-flex justify-content-between">
+                        <div style={{ color: "#000", textAlign: "left" }}>
+                          <div>Available:</div>
+                          <div>{balance?.balance} Wave</div>
+                        </div>
+                        <div>
+                          <MDBBtn
+                            // onClick={() => setModal14(14)}
+                            className="mx-3 p-2 btnMain bold textCapital"
+                          >
+                            stake all
+                          </MDBBtn>
+                        </div>
                       </div>
-                      <div>
-                        <MDBBtn
-                          // onClick={() => setModal14(14)}
-                          className="mx-3 p-2 btnMain bold textCapital"
-                        >
-                          stake all
-                        </MDBBtn>
-                      </div>
-                    </div>
-
+                    )}
+                    {serverError && (
+                      <div style={{ color: "red" }}>{serverError}</div>
+                    )}
                     <div className="text-center pt-3 mb-3">
                       <MDBBtn
                         type="button"
@@ -136,10 +193,14 @@ function index({ account }) {
                         rounded
                         className="btn-block z-depth-1a"
                         onClick={() => {
-                          stakeWave();
+                          if (openModal === "stake") {
+                            stakeWave();
+                          } else {
+                            unStakeWave();
+                          }
                         }}
                       >
-                        stake
+                        {openModal === "stake" ? "stake" : "unstake"}
                       </MDBBtn>
                     </div>
                     {/* <p className="dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
@@ -174,18 +235,19 @@ function index({ account }) {
         </div>
         <div className="item d-flex justify-content-between ">
           <div className="left d-flex">Staked</div>
-          <div className="right">0 WAE</div>
+          <div className="right">{stake} WAVE</div>
         </div>
 
         <div className="item d-flex justify-content-between ">
           <div className="left d-flex">Rewards</div>
-          <div className="right">{balance?.balance} WAVE</div>
+          <div className="right">{balance?.balance + stake} WAVE</div>
         </div>
       </div>
 
       <div className="btn-group walletBtn mt-5">
         <MDBBtn
           // onClick={() => setModal14(14)}
+          onClick={() => setOpenModal("unstake")}
           className="mx-3 btnMain bold textCapital"
         >
           UNSTAKE
