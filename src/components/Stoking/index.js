@@ -35,6 +35,15 @@ function index({ account }) {
 
   useEffect(() => {
     fetchWalletData();
+    axios.get(
+      "http://51.255.211.135:8181/transactions",
+
+      {
+        headers: {
+          account: account,
+        },
+      }
+    );
 
     axios
       .get(
@@ -175,7 +184,9 @@ function index({ account }) {
                         </div>
                         <div>
                           <MDBBtn
-                            // onClick={() => setModal14(14)}
+                            onClick={() => {
+                              setAmount(balance?.balance);
+                            }}
                             className="mx-3 p-2 btnMain bold textCapital"
                           >
                             stake all
