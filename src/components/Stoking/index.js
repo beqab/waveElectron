@@ -92,7 +92,7 @@ function index({ account }) {
           to:
             "0512d818771130abf35543032887fe2ae9677379c013126e1f092b366ad3391a",
           amount: Number(amount),
-          type: "stake",
+          type: "validator",
         },
         {
           headers: {
