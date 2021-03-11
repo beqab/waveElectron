@@ -69,8 +69,36 @@ function index({ account }) {
           transactionsParse.push({ ...el, type: "OUTGOING" })
         );
 
-        setBalance(res.data.wallet.balance);
-        setTransactions(transactionsParse);
+        if (transactionsParse.length) {
+          axios
+            .get(
+              "http://51.255.211.135:8181/transactions/unfinished",
+
+              {
+                headers: {
+                  account: account,
+                },
+              }
+            )
+            .then((res2) => {
+              let newTrx = transactionsParse.map((el) => {
+                // debugger;
+                let check = res2.data.find((item) => item.txId === el.txId);
+
+                if (check) {
+                  el.pending = true;
+                } else {
+                  el.pending = false;
+                }
+                return el;
+              });
+
+              // debugger;
+              setBalance(res.data.wallet.balance);
+              // debugger;
+              setTransactions(newTrx);
+            });
+        }
       });
   }, [userKey]);
   // debugger;
@@ -209,7 +237,16 @@ function index({ account }) {
                     </div> */}
                     <div>
                       <span style={{ width: "64px", display: "inline-block" }}>
-                        {el.type === "OUTGOING" ? (
+                        {el.pending ? (
+                          <img
+                            height="30"
+                            style={{
+                              marginBottom: "4px",
+                              filter: "brightness(0) invert(1)",
+                            }}
+                            src="https://static.thenounproject.com/png/1768762-200.png"
+                          />
+                        ) : el.type === "OUTGOING" ? (
                           <svg
                             className="mr-3"
                             xmlns="http://www.w3.org/2000/svg"

@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import img from "../../imgs/Group65.png";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import Modal from "../sendModal/sendModal";
 import WalletKeyProvider, {
@@ -33,6 +35,9 @@ function index({ account }) {
   const { userKey } = React.useContext(WalletKeyContext);
   const [serverError, setServerError] = useState("");
   const [pending, setPending] = useState(null);
+  const [copied, setCopied] = React.useState(false);
+  const [address, setAddress] = React.useState("");
+  const [activeIndex, setActiveIndex] = React.useState(null);
 
   useEffect(() => {
     fetchWalletData();
@@ -91,7 +96,10 @@ function index({ account }) {
             )
             .then((st) => {
               const myPending = st.data.find(
-                (item) => item.input.from === validator.address
+                (item) =>
+                  item.input.from === validator.address &&
+                  (item.type.type === "validator" ||
+                    item.type.type === "unstake")
               );
               debugger;
               if (myPending) {
@@ -290,9 +298,226 @@ function index({ account }) {
       </div>
 
       {pending ? (
-        <div class="alert alert-warning mt-5" role="alert">
-          pending stake {pending?.output?.amount} WAVE
-        </div>
+        <>
+          <div class="alert alert-warning mt-5" role="alert">
+            pending {pending?.type?.type === "unstake" ? "unstake" : "stake"}{" "}
+            {pending?.output?.amount} WAVE
+          </div>
+          <div className="transactionsList">
+            {pending
+              ? [1].map((ss, i) => {
+                  let el = pending;
+                  var d = new Date(el.input.timestamp);
+                  const Month = d.getMonth();
+                  let day = d.getDate();
+                  if (day < 10) {
+                    day = `0${day}`;
+                  }
+
+                  const time = new Date(el.input.timestamp);
+                  return (
+                    <div
+                      onClick={() => {
+                        setActiveIndex(i);
+                        setAddress(el.txId);
+                        setCopied(false);
+                      }}
+                      className="item d-flex justify-content-between "
+                    >
+                      <div
+                        style={{ width: "200px", textAlign: "left" }}
+                        className="left d-flex"
+                      >
+                        {/* <div className="date ">
+                      {monthNames[Month]} <br />
+                      {day}
+                    </div> */}
+                        <div>
+                          <span
+                            style={{ width: "64px", display: "inline-block" }}
+                          >
+                            <img
+                              height="30"
+                              style={{
+                                marginBottom: "4px",
+                                filter: "brightness(0) invert(1)",
+                              }}
+                              src="https://static.thenounproject.com/png/1768762-200.png"
+                            />
+                            {/* {el.type === "OUTGOING" ? (
+                              <svg
+                                className="mr-3"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="38"
+                                viewBox="0 0 41.046 26.749"
+                              >
+                                <path
+                                  id="Path_123"
+                                  data-name="Path 123"
+                                  d="M101.042,127.009a.565.565,0,0,0-.615-.139L60.513,142.326a.565.565,0,0,0,.1,1.084L71.71,145.4l2.591,7.792a.565.565,0,0,0,.968.186l5.459-6.463,10.329,1.96a.565.565,0,0,0,.621-.322l9.467-20.924A.566.566,0,0,0,101.042,127.009Zm-4.8,2.7L71.745,144.26,62.8,142.653ZM75.056,151.881l-2.3-6.908L93.7,132.531,78.113,145.479a.565.565,0,0,0,.256.99l1.085.206Zm15.776-4.2-11.074-2.1,19.269-16.01Z"
+                                  transform="translate(-60.151 -126.833)"
+                                  fill="#fff"
+                                />
+                              </svg>
+                            ) : (
+                              <img
+                                height="30"
+                                style={{ marginBottom: "4px" }}
+                                src={img}
+                              />
+                            )} */}
+                          </span>
+                          <span>
+                            {el.type === "OUTGOING" ? "- " : "+ "}{" "}
+                            {el.output.amount}{" "}
+                            <span
+                              style={{
+                                color: "#ffffff8c",
+                                textTransform: "capitalize",
+                                fontSize: "14px",
+                              }}
+                            >
+                              {" "}
+                              Wave
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        className={
+                          activeIndex === i
+                            ? "middle transactionsMiddle text-left active "
+                            : "middle transactionsMiddle text-left "
+                        }
+                      >
+                        <div>
+                          <div
+                            style={{
+                              color: "#ffffff8c",
+                              fontSize: "12px",
+                              lineHeight: "9px",
+                            }}
+                          >
+                            {el.type === "OUTGOING" ? "To" : "From"}
+                          </div>
+                          <div className="address">
+                            {" "}
+                            {el.type === "OUTGOING"
+                              ? el.output.to
+                              : el.input.from}
+                          </div>
+                        </div>
+                        <div
+                          className={activeIndex === i ? "d-block" : "d-none"}
+                        >
+                          <div>
+                            <div
+                              style={{
+                                color: "#ffffff8c",
+                                fontSize: "12px",
+                                lineHeight: "9px",
+                              }}
+                            >
+                              {el.type === "OUTGOING" ? "From" : "To"}
+                            </div>
+                            <div className="address">
+                              {" "}
+                              {el.type === "OUTGOING"
+                                ? el.input.from
+                                : el.output.to}
+                            </div>
+                          </div>
+                          <div>
+                            <div
+                              style={{
+                                color: "#ffffff8c",
+                                fontSize: "12px",
+                                lineHeight: "9px",
+                              }}
+                            >
+                              Hash
+                            </div>
+                            <div className="address">{el.txId}</div>
+                          </div>
+
+                          <div
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
+                            className="text-center"
+                          >
+                            <CopyToClipboard
+                              text={address}
+                              onCopy={() => {
+                                setCopied(true);
+                              }}
+                            >
+                              <span
+                                style={{ color: copied ? "green" : "#fff" }}
+                                className="copy btn"
+                              >
+                                copy
+                              </span>
+                            </CopyToClipboard>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div style={{ minWidth: "100px", textAlign: "left" }}>
+                        <div
+                          style={{
+                            color: "rgba(255, 255, 255, 0.55)",
+                            fontSize: "12px",
+                            lineHeight: "9px",
+                            textAlign: "left",
+                          }}
+                        >
+                          fee
+                        </div>
+
+                        <span>
+                          {el.output.fee}{" "}
+                          <span
+                            style={{
+                              color: "rgba(255, 255, 255, 0.55)",
+                              textTransform: "capitalize",
+                              fontSize: "14px",
+                            }}
+                          >
+                            {" "}
+                            Wave{" "}
+                          </span>
+                        </span>
+                      </div>
+                      <div
+                        style={{
+                          color: "#ffffff8c",
+                          fontSize: "12px",
+                          // lineHeight: "9px",
+                        }}
+                        className="right"
+                      >
+                        {" "}
+                        {/* <Moment format="YYYY/MM/DD">{time}</Moment> */}
+                        {time.getFullYear() +
+                          "/" +
+                          (time.getMonth() + 1) +
+                          "/" +
+                          time.getDate()}
+                        <br />
+                        {time.getHours() +
+                          ":" +
+                          time.getMinutes() +
+                          ":" +
+                          time.getSeconds()}
+                        {/* <Moment format="HH:mm:ss ">{time}</Moment> */}
+                      </div>
+                    </div>
+                  );
+                })
+              : "Transactions not found"}
+          </div>
+        </>
       ) : (
         <div className="btn-group walletBtn mt-5">
           {stake !== 0 && (
