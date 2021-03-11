@@ -32,38 +32,19 @@ function index({ account }) {
   const [openModal, setOpenModal] = useState(null);
   const { userKey } = React.useContext(WalletKeyContext);
   const [serverError, setServerError] = useState("");
+  const [pending, setPending] = useState(null);
 
   useEffect(() => {
     fetchWalletData();
-    axios.get(
-      "http://51.255.211.135:8181/transactions",
+    // axios.get(
+    //   "http://51.255.211.135:8181/transactions",
 
-      {
-        headers: {
-          account: account,
-        },
-      }
-    );
-
-    axios
-      .get(
-        "http://51.255.211.135:8181/validators",
-
-        {
-          headers: {
-            account: account,
-          },
-        }
-      )
-      .then((res) => {
-        let sum = 0;
-
-        res.data.forEach((element) => {
-          // debugger;
-          sum += element.amount;
-        });
-        setStake(sum);
-      });
+    //   {
+    //     headers: {
+    //       account: account,
+    //     },
+    //   }
+    // );
   }, [userKey]);
 
   const fetchWalletData = () => {
@@ -78,6 +59,59 @@ function index({ account }) {
       })
       .catch((err) => {
         console.log(err);
+      });
+
+    axios
+      .get(
+        "http://51.255.211.135:8181/validators",
+
+        {
+          headers: {
+            account: account,
+          },
+        }
+      )
+      .then((res) => {
+        let t = userKey?.wallets?.find(
+          (el) => el.accountName === userKey.currentUser
+        );
+        // userKey;
+        let validator = res.data.find((el) => el.address === t.key);
+
+        if (validator && validator.amount) {
+          axios
+            .get(
+              "http://51.255.211.135:8181/transactions/unfinished",
+
+              {
+                headers: {
+                  account: account,
+                },
+              }
+            )
+            .then((st) => {
+              const myPending = st.data.find(
+                (item) => item.input.from === validator.address
+              );
+              debugger;
+              if (myPending) {
+                setPending(myPending);
+                setStake(validator.amount - myPending.output.amount);
+              } else {
+                setStake(validator.amount);
+                setPending(null);
+              }
+              // debugger;
+              // debugger;
+            });
+        } else {
+          setPending(null);
+        }
+
+        // res.data.forEach((element) => {
+        //   // debugger;
+        //   sum += element.amount;
+        // });
       });
   };
 
@@ -255,21 +289,29 @@ function index({ account }) {
         </div>
       </div>
 
-      <div className="btn-group walletBtn mt-5">
-        <MDBBtn
-          // onClick={() => setModal14(14)}
-          onClick={() => setOpenModal("unstake")}
-          className="mx-3 btnMain bold textCapital"
-        >
-          UNSTAKE
-        </MDBBtn>
-        <MDBBtn
-          onClick={() => setOpenModal("stake")}
-          className="mx-3 btnMain bold textCapital"
-        >
-          STAKE
-        </MDBBtn>
-        {/* 
+      {pending ? (
+        <div class="alert alert-warning mt-5" role="alert">
+          pending stake {pending?.output?.amount} WAVE
+        </div>
+      ) : (
+        <div className="btn-group walletBtn mt-5">
+          {stake !== 0 && (
+            <MDBBtn
+              // onClick={() => setModal14(14)}
+              onClick={() => setOpenModal("unstake")}
+              className="mx-3 btnMain bold textCapital"
+            >
+              UNSTAKE
+            </MDBBtn>
+          )}
+
+          <MDBBtn
+            onClick={() => setOpenModal("stake")}
+            className="mx-3 btnMain bold textCapital"
+          >
+            STAKE
+          </MDBBtn>
+          {/* 
         <MDBBtn
           className="mx-3"
           tag="a"
@@ -280,7 +322,8 @@ function index({ account }) {
         >
           <MDBIcon icon="exchange-alt" />
         </MDBBtn> */}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
