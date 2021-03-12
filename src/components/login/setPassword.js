@@ -19,7 +19,7 @@ const welcome = ({ changeContent }) => {
   }, []);
 
   return (
-    <div className="mb-5 p-4">
+    <div className="my-4 p-4">
       {/* <h2 className="text-center mb-5">welcome to WAVE</h2> */}
       {forgot ? (
         <div className="d- ttttttttt justify-content-center flex-column">
@@ -30,11 +30,12 @@ const welcome = ({ changeContent }) => {
             <div className="d-flex">
               <MDBBtn
                 onClick={() => {
-                  ipcRenderer.send("resetWallet", {});
+                  // ipcRenderer.send("resetWallet", {});
                   // changeContent("Welcome");
+                  // setForgot(null);
                   setForgot(false);
                 }}
-                color="light-green btnMain w-100 m-3 mx-0 my-4"
+                color="light-green btnMain btnWithFrame w-100 m-3 mx-0 my-4"
               >
                 Cancel
               </MDBBtn>
@@ -45,7 +46,7 @@ const welcome = ({ changeContent }) => {
                   // changeContent("Welcome");
                   setForgot(false);
                 }}
-                color="light-green btnMain m-3 w-100 mx-0 my-4"
+                color="light-green btnWithFrame btnMain m-3 w-100 mx-0 my-4"
               >
                 Reset Password
               </MDBBtn>
@@ -57,10 +58,12 @@ const welcome = ({ changeContent }) => {
       ) : !userKey || !userKey.password ? (
         <div className="d- ttttttttt justify-content-center flex-column">
           <>
-            <h6 className="text-center">Set your wave Application password</h6>
+            <h6 className="text-center mb-5">
+              Set your wave Application password
+            </h6>
             <div>
-              <MDBInput
-                label="Password"
+              <input
+                placeholder="Password"
                 //   icon="lock"
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -68,25 +71,28 @@ const welcome = ({ changeContent }) => {
                     setPasswordError("");
                   }
                 }}
+                className="newInput d-block w-100 mb-4"
                 type="password"
-                validate
+                // validate
               />
               {passwordError && (
                 <div
                   style={{
-                    color: "red",
-                    marginTop: "-37px",
+                    color: "#ff8383",
+                    marginTop: "-17px",
                     fontSize: "14px",
                     textAlign: "left",
                     marginBottom: "20px",
+                    fontWeight: "bold",
                   }}
                 >
                   {" "}
                   {passwordError}{" "}
                 </div>
               )}
-              <MDBInput
-                label="Confirm Password"
+              <input
+                placeholder="Confirm Password"
+                className="newInput d-block w-100"
                 //   icon="lock"
                 onChange={(e) => {
                   setConfirmPassword(e.target.value);
@@ -95,16 +101,17 @@ const welcome = ({ changeContent }) => {
                   }
                 }}
                 type="password"
-                validate
+                // validate
               />
               {confirmPasswordError && (
                 <div
                   style={{
-                    color: "red",
-                    marginTop: "-37px",
+                    color: "#ff8383",
+                    marginTop: "8px",
                     fontSize: "14px",
                     textAlign: "left",
-                    marginBottom: "20px",
+                    marginBottom: "10px",
+                    fontWeight: "bold",
                   }}
                 >
                   {" "}
@@ -133,7 +140,7 @@ const welcome = ({ changeContent }) => {
                 });
                 // changeContent("Welcome");
               }}
-              color="light-green btnMain w-100 mx-0 my-4"
+              color="light-green btnMain w-100 btnWithFrame mt-5 mx-0 my-4"
             >
               save password
             </MDBBtn>
@@ -142,39 +149,61 @@ const welcome = ({ changeContent }) => {
           <br />
         </div>
       ) : (
-        <div className="d- ttttttttt justify-content-center flex-column">
+        <div className="d- modalContent justify-content-center flex-column">
           <>
             <h6 className="text-center">
               Enter your wave Application password
             </h6>
 
             <div>
-              <MDBInput
-                label="Password"
+              <input
+                // label="Password"
+                placeholder="Password"
                 //   icon="lock"
+
                 onChange={(e) => {
                   setPassword(e.target.value);
                   if (e.target.value.length >= 6) {
                     setPasswordError("");
                   }
                 }}
+                value={password}
+                className="mb-0 newInput w-100 d-block mt-5 mb-1"
                 type="password"
-                validate
+                // validate
               />
               {passwordError && (
                 <div
                   style={{
-                    color: "red",
-                    marginTop: "-37px",
+                    color: "#ff8383",
+
+                    marginTop: "7px",
                     fontSize: "14px",
                     textAlign: "left",
                     marginBottom: "20px",
+                    fontWeight: "bold",
                   }}
                 >
                   {" "}
                   {passwordError}{" "}
                 </div>
               )}
+              <a
+                href=""
+                style={{
+                  // transform: "translateY(-14px)",
+                  color: "#fff",
+                  display: "inline-block",
+                  fontWeight: "bold",
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setForgot(true);
+                }}
+              >
+                {" "}
+                Forgot Password?
+              </a>
             </div>
             <MDBBtn
               onClick={() => {
@@ -190,20 +219,10 @@ const welcome = ({ changeContent }) => {
                 });
                 changeContent("first");
               }}
-              color="light-green btnMain w-100 mx-0 my-4"
+              color="light-green btnMain w-100 mx-0 mt-5 btnWithFrame my-4"
             >
-              submit
+              Sign In
             </MDBBtn>
-            <a
-              href=""
-              onClick={(e) => {
-                e.preventDefault();
-                setForgot(true);
-              }}
-            >
-              {" "}
-              Forgot Password?
-            </a>
           </>
 
           <br />

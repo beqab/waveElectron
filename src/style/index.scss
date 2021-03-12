@@ -143,6 +143,24 @@ body {
 .loginBody {
   background: #fff;
   min-width: 500px;
+  border-radius: 20px;
+  background: url("../imgs/modalBg.png");
+  h6 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #fff;
+  }
+  h3 {
+    font-weight: bold;
+    color: #fff !important;
+    &:hover {
+      color: #fff !important;
+    }
+  }
+  .modalContent {
+    max-width: 400px;
+    margin: auto;
+  }
 }
 
 .fff {
@@ -306,13 +324,18 @@ body {
       display: inline-block;
       width: 30px;
       // margin-right: 10px;
+      color: #fff;
     }
     input {
       max-width: calc(100% - 30px);
 
-      border-color: #30b5e2;
+      border-color: #ffffff;
       border-radius: 5px;
       padding-left: 5px;
+      background: transparent;
+      padding-left: 10px;
+      color: #fff;
+      border: 2px solid #fff !important;
     }
   }
 }
@@ -368,5 +391,41 @@ body {
   background: rgb(25, 66, 117);
   .accountItem {
     background: #0000004a;
+  }
+}
+
+.newInput {
+  background-color: #fff !important;
+  border-radius: 9px;
+  border: none;
+  // padding: 0 10px !important;
+  padding: 0.6rem 0.6rem 0.4rem 0.6rem !important;
+  &::placeholder {
+    color: #afafaf !important ;
+  }
+}
+
+.btnWithFrame {
+  border: 2px solid #fff !important;
+  font-weight: bold !important;
+}
+
+.createOrRestoreCard {
+  text-align: center;
+  border: 2px solid #fff;
+  height: 248px;
+  /* display: flex; */
+  /* flex-direction: column; */
+  position: relative;
+  border-radius: 15px;
+  max-width: 278px;
+  margin: 0 17px;
+
+  button {
+    margin: 0;
+    /* margin-bottom: -187px; */
+    width: 100%;
+    /* margin-left: 35px; */
+    transform: translate(-16px, 84px);
   }
 }

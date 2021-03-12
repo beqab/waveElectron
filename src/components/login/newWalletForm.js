@@ -105,14 +105,48 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
   const GetModalContent = (type = null) => {
     if (type === modalSteps.CREATE) {
       return (
-        <div className="card-body">
+        <div className="p-4">
           {!fromAccount && (
             <div className="text-left">
               <span
                 className="cursor-pointer"
                 onClick={() => changeContent("Welcome")}
               >
-                <i class="fas fa-backward"></i> go back11
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22.608"
+                  height="35.445"
+                  viewBox="0 0 42.608 35.445"
+                >
+                  <g
+                    id="Group_91"
+                    data-name="Group 91"
+                    transform="translate(-1363.867 -348.544)"
+                  >
+                    <line
+                      id="Line_51"
+                      data-name="Line 51"
+                      x1="38.272"
+                      transform="translate(1366.703 366.21)"
+                      fill="none"
+                      stroke="#fff"
+                      stroke-linecap="round"
+                      stroke-width="3"
+                    />
+                    <path
+                      id="Path_176"
+                      data-name="Path 176"
+                      d="M6013.589-1112.334l-15.6,15.6,15.6,15.6"
+                      transform="translate(-4632 1463)"
+                      fill="none"
+                      stroke="#fff"
+                      stroke-linecap="round"
+                      stroke-width="3"
+                    />
+                  </g>
+                </svg>
+
+                {/* <i class="fas fa-backward"></i> go back11 */}
               </span>
             </div>
           )}
@@ -141,7 +175,7 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
                 //   });
                 // }}
                 onClick={createKey}
-                color="light-green btnMain w-75"
+                color="light-green btnWithFrame btnMain w-75"
               >
                 CREATE A NEW PRIVATE KEY
               </MDBBtn>
@@ -161,7 +195,40 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
                 setModalStep(modalSteps.CREATE);
               }}
             >
-              <i class="fas fa-backward"></i> go back
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22.608"
+                height="35.445"
+                viewBox="0 0 42.608 35.445"
+              >
+                <g
+                  id="Group_91"
+                  data-name="Group 91"
+                  transform="translate(-1363.867 -348.544)"
+                >
+                  <line
+                    id="Line_51"
+                    data-name="Line 51"
+                    x1="38.272"
+                    transform="translate(1366.703 366.21)"
+                    fill="none"
+                    stroke="#fff"
+                    stroke-linecap="round"
+                    stroke-width="3"
+                  />
+                  <path
+                    id="Path_176"
+                    data-name="Path 176"
+                    d="M6013.589-1112.334l-15.6,15.6,15.6,15.6"
+                    transform="translate(-4632 1463)"
+                    fill="none"
+                    stroke="#fff"
+                    stroke-linecap="round"
+                    stroke-width="3"
+                  />
+                </g>
+              </svg>
+              {/* <i class="fas fa-backward"></i> go back22 */}
             </span>
           </div>
 
@@ -170,9 +237,16 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
             style={{ color: "#757575" }}
             action="#!"
           >
-            <h3 className="font-weight-bold my-2 pb-2 text-center dark-grey-text">
-              Create New Wallet
+            <h3
+              style={{ textTransform: "uppercase" }}
+              className="font-weight-bold my-2 pb-2 text-center dark-grey-text"
+            >
+              MNEMONIC PHRASE:
             </h3>
+            <h6 className="mb-4">
+              Write your mnemonic phrase down and make sure you store it in a
+              safe place
+            </h6>
 
             {/* <textarea value={words} className="wordsContainer"></textarea> */}
             <div className="mnemonicContainer">
@@ -206,7 +280,7 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
                 onClick={() => {
                   setModalStep(modalSteps.SET_ACCOUNT_NAME);
                 }}
-                color="light-green btnMain w-75"
+                color="light-green mt-3 btnWithFrame btnMain w-100"
               >
                 Next
               </MDBBtn>
@@ -226,7 +300,40 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
                 setModalStep(modalSteps.CREATED);
               }}
             >
-              <i class="fas fa-backward"></i> go back
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22.608"
+                height="35.445"
+                viewBox="0 0 42.608 35.445"
+              >
+                <g
+                  id="Group_91"
+                  data-name="Group 91"
+                  transform="translate(-1363.867 -348.544)"
+                >
+                  <line
+                    id="Line_51"
+                    data-name="Line 51"
+                    x1="38.272"
+                    transform="translate(1366.703 366.21)"
+                    fill="none"
+                    stroke="#fff"
+                    stroke-linecap="round"
+                    stroke-width="3"
+                  />
+                  <path
+                    id="Path_176"
+                    data-name="Path 176"
+                    d="M6013.589-1112.334l-15.6,15.6,15.6,15.6"
+                    transform="translate(-4632 1463)"
+                    fill="none"
+                    stroke="#fff"
+                    stroke-linecap="round"
+                    stroke-width="3"
+                  />
+                </g>
+              </svg>
+              {/* <i class="fas fa-backward"></i> go back */}
             </span>
           </div>
 
@@ -239,15 +346,15 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
               Create New Wallet
             </h3>
 
-            <MDBInput
-              label="Add Account Name"
+            <input
+              placeholder="Add Account Name"
               onChange={(e) => {
                 setAccountName(e.target.value);
                 setAccountNameError("");
               }}
-              className="form-control mb-0"
-              outline
-              required
+              className="form-control newInput mb-0"
+              // outline
+              // required
               // size="sm"
             />
             {accountNameError && (
@@ -276,7 +383,7 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
 
                     return setModalStep(modalSteps.CONFIRM);
                   }}
-                  color="light-green btnMain w-75"
+                  color="light-green btnWithFrame mt-4 btnMain w-75"
                 >
                   Next
                 </MDBBtn>
@@ -296,21 +403,88 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
                 setModalStep(modalSteps.CREATED);
               }}
             >
-              <i class="fas fa-backward"></i> go back
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22.608"
+                height="35.445"
+                viewBox="0 0 42.608 35.445"
+              >
+                <g
+                  id="Group_91"
+                  data-name="Group 91"
+                  transform="translate(-1363.867 -348.544)"
+                >
+                  <line
+                    id="Line_51"
+                    data-name="Line 51"
+                    x1="38.272"
+                    transform="translate(1366.703 366.21)"
+                    fill="none"
+                    stroke="#fff"
+                    stroke-linecap="round"
+                    stroke-width="3"
+                  />
+                  <path
+                    id="Path_176"
+                    data-name="Path 176"
+                    d="M6013.589-1112.334l-15.6,15.6,15.6,15.6"
+                    transform="translate(-4632 1463)"
+                    fill="none"
+                    stroke="#fff"
+                    stroke-linecap="round"
+                    stroke-width="3"
+                  />
+                </g>
+              </svg>
+              {/* <i class="fas fa-backward"></i> go back */}
             </span>
           </div>
 
-          <form
-            className="text-center"
-            style={{ color: "#757575" }}
-            action="#!"
-          >
+          <form className="text-center" style={{ color: "#fff" }} action="#!">
             <h3 className="font-weight-bold my-2 pb-2 text-center dark-grey-text">
               Wallet Created
             </h3>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="122"
+              height="122"
+              viewBox="0 0 162 162"
+            >
+              <g
+                id="Group_116"
+                data-name="Group 116"
+                transform="translate(-894 -370)"
+              >
+                <path
+                  id="Path_175"
+                  data-name="Path 175"
+                  d="M6950,3144.433l31.2,31.2,56.469-56.469,16.236-16.235"
+                  transform="translate(-6016.731 -2692.022)"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="7"
+                />
+                <g
+                  id="Ellipse_1"
+                  data-name="Ellipse 1"
+                  transform="translate(894 370)"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-width="7"
+                >
+                  <circle cx="81" cy="81" r="81" stroke="none" />
+                  <circle cx="81" cy="81" r="77.5" fill="none" />
+                </g>
+              </g>
+            </svg>
+
             <hr />
-            Your wallet has been created. <br />
-            Keep your public/private keys and paraphrase safe
+            <b>
+              Your wallet has been created. <br />
+              Keep your public/private keys and paraphrase safe
+            </b>
             {/* <div className="invalid-feedback"></div> */}
             {/* <textarea value={words} className="wordsContainer"></textarea> */}
             <div>
@@ -324,7 +498,7 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
                     // });
                     signIngHandler();
                   }}
-                  color="light-green btnMain w-75"
+                  color="light-green btnWithFrame mt-4 btnMain w-75"
                 >
                   OK
                 </MDBBtn>
@@ -339,9 +513,9 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
   return (
     <div>
       <form className="my-2 mx-md-10 newWoletContainer" action="">
-        <div className="row">
+        <div className="">
           <div className="col-md-12 mx-auto">
-            <div style={{ boxShadow: "none " }} className="card">
+            <div style={{ boxShadow: "none " }} className="">
               {GetModalContent(modalStep)}
             </div>
           </div>

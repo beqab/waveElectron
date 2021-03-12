@@ -14,15 +14,15 @@ const welcome = ({ changeContent }) => {
   const [passwordError, setPasswordError] = React.useState("");
 
   return (
-    <div className="mb-5 p-4">
+    <div className="py-4 p-4">
       {/* <h2 className="text-center mb-5">welcome to WAVE</h2> */}
 
-      <div className="d-flex justify-content-center flex-column">
+      <div className="d-flex justify-content-center mt-4 flex-column">
         {userKey?.wallets && (
           <>
             {" "}
             <select
-              className="browser-default custom-select"
+              className="browser-default custom-select "
               selected="Choose your Account"
               onChange={(e) => {
                 setCurrentAccount(e.target.value);
@@ -89,7 +89,7 @@ const welcome = ({ changeContent }) => {
                   name: currentAccount,
                 });
               }}
-              color="light-green btnMain w-100 mx-0 my-4"
+              color="light-green btnMain w-100 mx-0 mt-5 my-4 btnWithFrame"
             >
               sign in
             </MDBBtn>
@@ -98,7 +98,11 @@ const welcome = ({ changeContent }) => {
         <br />
         <a
           href="#"
-          className="text-center m-auto"
+          style={{
+            color: "#fff",
+            marginBottom: !userKey?.wallets ? "45px" : 0,
+          }}
+          className="text-center mx-auto"
           onClick={(e) => {
             e.preventDefault();
 

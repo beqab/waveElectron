@@ -13,7 +13,9 @@ const login = () => {
       <div className="container justify-content-center flex-column align-items-center d-flex  ">
         <div className="text-center fff">
           <img width="90" src={Logo} />
-          <h4 className="py-3">welcome to WAVE</h4>
+          <h4 style={{ fontWeight: "bold", fontSize: "30px" }} className="py-3">
+            Welcome to WAVE
+          </h4>
         </div>
         <div className="loginBody">
           {currentContent === "first" && (

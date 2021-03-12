@@ -61,9 +61,9 @@ const oldWaletFrom = ({ changeContent }) => {
   return (
     <div className="text-center w-100">
       <form className="my-5 mx-md-10" action="">
-        <div className="row">
+        <div className="">
           <div className="col-md-12 mx-auto">
-            <div style={{ boxShadow: "none " }} className="card">
+            <div style={{ boxShadow: "none " }} className="">
               {modalStep === "set_account_name" ? (
                 <div className="card-body">
                   <div className="text-left">
@@ -73,7 +73,40 @@ const oldWaletFrom = ({ changeContent }) => {
                         setModalStep("import");
                       }}
                     >
-                      <i class="fas fa-backward"></i> go back
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="22.608"
+                        height="35.445"
+                        viewBox="0 0 42.608 35.445"
+                      >
+                        <g
+                          id="Group_91"
+                          data-name="Group 91"
+                          transform="translate(-1363.867 -348.544)"
+                        >
+                          <line
+                            id="Line_51"
+                            data-name="Line 51"
+                            x1="38.272"
+                            transform="translate(1366.703 366.21)"
+                            fill="none"
+                            stroke="#fff"
+                            stroke-linecap="round"
+                            stroke-width="3"
+                          />
+                          <path
+                            id="Path_176"
+                            data-name="Path 176"
+                            d="M6013.589-1112.334l-15.6,15.6,15.6,15.6"
+                            transform="translate(-4632 1463)"
+                            fill="none"
+                            stroke="#fff"
+                            stroke-linecap="round"
+                            stroke-width="3"
+                          />
+                        </g>
+                      </svg>
+                      {/* <i class="fas fa-backward"></i> go back */}
                     </span>
                   </div>
 
@@ -86,14 +119,14 @@ const oldWaletFrom = ({ changeContent }) => {
                       Create New Wallet
                     </h3>
 
-                    <MDBInput
-                      label="Add Account Name"
+                    <input
+                      placeholder="Add newInput Account Name"
                       onChange={(e) => {
                         setAccountName(e.target.value);
                         setAccountNameError("");
                       }}
                       className="form-control mb-0"
-                      outline
+                      // outline
                       required
                       // size="sm"
                     />
@@ -124,7 +157,7 @@ const oldWaletFrom = ({ changeContent }) => {
 
                           signIngHandler();
                         }}
-                        color="light-green btnMain w-75"
+                        color="light-green newInput1212 btnMain w-75"
                       >
                         sing in
                       </MDBBtn>
@@ -133,19 +166,52 @@ const oldWaletFrom = ({ changeContent }) => {
                   </form>
                 </div>
               ) : (
-                <div className="card-body">
+                <div className="">
                   <div className="text-left">
                     <span
                       className="cursor-pointer"
                       onClick={() => changeContent("Welcome")}
                     >
-                      <i class="fas fa-backward"></i> go back
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="22.608"
+                        height="35.445"
+                        viewBox="0 0 42.608 35.445"
+                      >
+                        <g
+                          id="Group_91"
+                          data-name="Group 91"
+                          transform="translate(-1363.867 -348.544)"
+                        >
+                          <line
+                            id="Line_51"
+                            data-name="Line 51"
+                            x1="38.272"
+                            transform="translate(1366.703 366.21)"
+                            fill="none"
+                            stroke="#fff"
+                            stroke-linecap="round"
+                            stroke-width="3"
+                          />
+                          <path
+                            id="Path_176"
+                            data-name="Path 176"
+                            d="M6013.589-1112.334l-15.6,15.6,15.6,15.6"
+                            transform="translate(-4632 1463)"
+                            fill="none"
+                            stroke="#fff"
+                            stroke-linecap="round"
+                            stroke-width="3"
+                          />
+                        </g>
+                      </svg>
+                      {/* <i class="fas fa-backward"></i> go back */}
                     </span>
                   </div>
 
                   <form
                     className="text-center"
-                    style={{ color: "#757575" }}
+                    style={{ color: "#fff" }}
                     action="#!"
                   >
                     <h3 className="font-weight-bold my-4 pb-2 text-center dark-grey-text">
@@ -191,7 +257,7 @@ const oldWaletFrom = ({ changeContent }) => {
                           setModalStep("set_account_name");
                         }}
                         type="button"
-                        className="btn btn-default btnMain  btn-rounded my-4 waves-effect"
+                        className="btn btn-default btnMain btnWithFrame  btn-rounded my-4 waves-effect"
                       >
                         Next
                       </button>
