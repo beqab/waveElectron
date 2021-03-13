@@ -193,7 +193,7 @@ function index({ account }) {
               fill="#fff"
             />
           </svg>
-          Send by ID
+          Send
         </MDBBtn>
         {/* 
         <MDBBtn

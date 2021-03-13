@@ -14,8 +14,10 @@ import {
   MDBCardBody,
   MDBIcon,
 } from "mdbreact";
-import Logo from "../../imgs/logo.png";
+// import Logo from "../../imgs/logo.png";
+import ModalHead from "../../imgs/moadlHeder.png";
 import QR from "../../imgs/qr.png";
+import classnames from "classnames";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { WalletKeyContext } from "../walletKeyContext/walletKeyContext";
 
@@ -34,55 +36,62 @@ const ModalPage = ({ modal14, toggle, currentWallet }) => {
   const [copied, setCopied] = React.useState(false);
 
   return (
-    <MDBContainer className="MainModalWrapper">
+    <MDBContainer className="MainModalWrapper w650">
       <MDBModal
         isOpen={modal14}
         toggle={() => {
           setCopied(false);
           toggle(null);
         }}
+        className="ttttest"
         centered
       >
         <MDBModalHeader
-          className="text-center"
+          className="text-center addressModal"
           toggle={() => {
             setCopied(false);
 
             toggle(null);
           }}
         >
-          <img src={Logo} width="60" />
+          <img className="w-100" src={ModalHead} />
+          <h3 className="modalTitle">Your Wave Coin Address</h3>
+
+          <div className="WalletAddress ">
+            <div>{address}</div>
+          </div>
+          {/* <img src={Logo} width="60" /> */}
         </MDBModalHeader>
         <MDBModalBody>
           <MDBRow>
             <MDBCol md="10" lg="10" xl="10" className="mx-auto mt-3">
-              <MDBCard>
-                <h3 className="modalTitle">Your Wave Coin Address</h3>
-                <MDBCardBody className="mx-4">
-                  <div className="WalletAddress ">
-                    <div>{address}</div>
-                  </div>
-                  <div className="text-center">
-                    <img
-                      src={
-                        "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" +
-                        address
-                      }
-                    />
-                  </div>
-                  <div className="text-center pt-3 mb-3">
-                    <CopyToClipboard
-                      text={address}
-                      onCopy={() => setCopied(true)}
+              <MDBCardBody className="mx-4 pt-0">
+                <div className="text-center">
+                  <img
+                    src={
+                      "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" +
+                      address
+                    }
+                  />
+                </div>
+                <div className="text-center pt-3 mb-3">
+                  <CopyToClipboard
+                    text={address}
+                    onCopy={() => setCopied(true)}
+                  >
+                    <span
+                      style={{
+                        color: copied ? "green " : "#007bff",
+                        fontWeight: "bold",
+                      }}
+                      className={classnames("copy btn btnMain w-100 ", {
+                        green: copied,
+                      })}
                     >
-                      <span
-                        style={{ color: copied ? "green" : "#007bff" }}
-                        className="copy btn"
-                      >
-                        copy
-                      </span>
-                    </CopyToClipboard>
-                    {/* <MDBBtn
+                      copy
+                    </span>
+                  </CopyToClipboard>
+                  {/* <MDBBtn
                       type="button"
                       gradient="blue"
                       rounded
@@ -90,13 +99,12 @@ const ModalPage = ({ modal14, toggle, currentWallet }) => {
                     >
                       Send
                     </MDBBtn> */}
-                  </div>
-                  {/* <p className="dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
+                </div>
+                {/* <p className="dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
                     {" "}
                     or Sign up with:
                   </p> */}
-                </MDBCardBody>
-              </MDBCard>
+              </MDBCardBody>
             </MDBCol>
           </MDBRow>
         </MDBModalBody>
