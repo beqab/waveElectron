@@ -85,6 +85,77 @@ body {
   margin-top: 100px;
   text-align: center;
 }
+.MainModalWrapper.w650 .modal-dialog-centered {
+  max-width: 650px !important;
+}
+.MainModalWrapper .sendContainer {
+  transform: translateY(-150px);
+}
+.MainModalWrapper .sendContainer .md-form {
+  margin-bottom: 0px !important;
+}
+.MainModalWrapper .sendContainer input,
+.MainModalWrapper .sendContainer textarea {
+  box-shadow: 0 3px 6px 0px rgba(0, 0, 0, 0.16) !important;
+  border: none;
+  border-radius: 9px !important;
+  display: inline-block;
+  width: 100%;
+  padding: 0.6rem 0 0.4rem 0.6rem !important;
+  margin-bottom: 0px !important;
+}
+.MainModalWrapper .sendContainer label {
+  left: 15px;
+}
+.MainModalWrapper .modalContainer {
+  transform: translateY(-80px);
+}
+.MainModalWrapper .modalContainer .currencyField input {
+  border: 2px solid #0a3b89 !important;
+  border-radius: 9px !important;
+  box-shadow: 0 3px 6px 0px rgba(0, 0, 0, 0.16) !important;
+  padding-left: 20px;
+}
+.MainModalWrapper .modalContainer .currencyField .labelCurr {
+  margin-top: 3px;
+  color: #0a3b89;
+}
+.MainModalWrapper .modal-header {
+  border-bottom: none;
+}
+.MainModalWrapper .addressModal {
+  position: relative;
+}
+.MainModalWrapper .addressModal h3 {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-weight: bold;
+}
+.MainModalWrapper .addressModal .WalletAddress {
+  font-size: 14px;
+}
+.MainModalWrapper .addressModal .WalletAddress > div {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 7px 20px;
+  color: #0a3b89;
+  border-radius: 9px;
+  background: #fff;
+  box-shadow: 0 3px 6px 0px rgba(0, 0, 0, 0.16);
+}
+.MainModalWrapper .close {
+  opacity: 1 !important;
+  font-size: 40px !important;
+  right: 37px !important;
+}
+.MainModalWrapper .close span {
+  font-size: 40px !important;
+}
 .MainModalWrapper .modal-header {
   position: relative;
 }
@@ -106,7 +177,7 @@ body {
 }
 .MainModalWrapper .modal-content {
   box-shadow: none;
-  background-image: linear-gradient(60deg, #2cabdb, #023a85);
+  background: #fff;
   color: #fff;
   border-radius: 11px !important;
 }
@@ -147,6 +218,24 @@ body {
 .loginBody {
   background: #fff;
   min-width: 500px;
+  border-radius: 20px;
+  background: url("../imgs/modalBg.png");
+}
+.loginBody h6 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+}
+.loginBody h3 {
+  font-weight: bold;
+  color: #fff !important;
+}
+.loginBody h3:hover {
+  color: #fff !important;
+}
+.loginBody .modalContent {
+  max-width: 400px;
+  margin: auto;
 }
 .fff {
   color: #fff;
@@ -162,6 +251,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.btnMain.green {
+  color: #b3ffb3 !important;
 }
 .btnMain.active {
   background-image: linear-gradient(to right, #032d69, #44f1bd) !important;
@@ -289,12 +381,17 @@ body {
 .mnemonicContainer > div span {
   display: inline-block;
   width: 30px;
+  color: #fff;
 }
 .mnemonicContainer > div input {
   max-width: calc(100% - 30px);
-  border-color: #30b5e2;
+  border-color: #fff;
   border-radius: 5px;
   padding-left: 5px;
+  background: transparent;
+  padding-left: 10px;
+  color: #fff;
+  border: 2px solid #fff !important;
 }
 .walletInfo {
   padding: 15px;
@@ -340,4 +437,69 @@ body {
 }
 .accounts .accountItem {
   background: #000 4a;
+}
+.newInput {
+  background-color: #fff !important;
+  border-radius: 9px;
+  border: none;
+  padding: 0.6rem 0.6rem 0.4rem 0.6rem !important;
+}
+.newInput::placeholder {
+  color: #afafaf !important;
+}
+.btnWithFrame {
+  border: 2px solid #fff !important;
+  font-weight: bold !important;
+}
+.createOrRestoreCard {
+  text-align: center;
+  border: 2px solid #fff;
+  height: 248px;
+  /* display: flex;
+	 */
+  /* flex-direction: column;
+	 */
+  position: relative;
+  border-radius: 15px;
+  max-width: 278px;
+  margin: 0 17px;
+}
+.createOrRestoreCard button {
+  margin: 0;
+  /* margin-bottom: -187px;
+	 */
+  width: 100%;
+  /* margin-left: 35px;
+	 */
+  transform: translate(-16px, 84px);
+}
+.transactionsCards {
+  display: flex;
+}
+.transactionsCards > div {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #fff;
+  width: 250px;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 9px;
+  margin: 0 15px;
+  padding: 15px;
+}
+.transactionsCards > div svg {
+  margin: auto;
+  margin: 20px auto;
+}
+.btn-default.btnLight {
+  background-color: #fff !important;
+  color: #000 !important;
+  border-radius: 9px;
+  border: 1px solid #0a3b89;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+.blueColor {
+  color: #0a3b89 !important;
 }

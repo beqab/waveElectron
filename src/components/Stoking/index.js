@@ -213,9 +213,9 @@ function index({ account }) {
 
             <MDBRow>
               <MDBCol
-                md="9"
+                md="10"
                 lg="10"
-                xl="5"
+                xl="10"
                 className="mx-auto mt-0 modalContainer "
               >
                 {/* <MDBCard> */}

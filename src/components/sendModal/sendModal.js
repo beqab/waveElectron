@@ -66,6 +66,7 @@ const ModalPage = ({ modal14, toggle, account, reloadData }) => {
       });
   };
 
+  console.log("account", account);
   return (
     <MDBContainer className="MainModalWrapper  w650">
       <MDBModal
@@ -86,9 +87,9 @@ const ModalPage = ({ modal14, toggle, account, reloadData }) => {
         <MDBModalBody>
           <MDBRow>
             <MDBCol
-              md="9"
+              md="10"
               lg="10"
-              xl="5"
+              xl="10"
               className="mx-auto mt-3 sendContainer"
             >
               <MDBCardBody className="mx-4">
@@ -105,7 +106,7 @@ const ModalPage = ({ modal14, toggle, account, reloadData }) => {
                       {" "}
                       <b>From</b>{" "}
                     </div>
-                    <input className="blueColor" value="my adress" />
+                    <input className="blueColor" value={account?.currentUser} />
                   </div>
                 </div>
                 <MDBInput
@@ -133,7 +134,7 @@ const ModalPage = ({ modal14, toggle, account, reloadData }) => {
                         value={amountUsd}
                         onChange={(e) => {
                           setAmountUsd(e.target.value);
-                          setAmount(Math.ceil(e.target.value / 2).toFixed(3));
+                          setAmount((e.target.value * 20).toFixed(3));
 
                           setServerError("");
                         }}
@@ -155,9 +156,7 @@ const ModalPage = ({ modal14, toggle, account, reloadData }) => {
                         value={amount}
                         onChange={(e) => {
                           setAmount(e.target.value);
-                          setAmountUsd(
-                            Math.ceil(e.target.value * 2).toFixed(2)
-                          );
+                          setAmountUsd((e.target.value / 20).toFixed(2));
 
                           setServerError("");
                         }}
@@ -213,7 +212,7 @@ const ModalPage = ({ modal14, toggle, account, reloadData }) => {
                         borderRadius: "9px",
                       }}
                     >
-                      0 WAVE ($0.00)
+                      0 WAVE (${(amount * 0.015).toFixed(2)})
                     </span>
                   </span>
                 </div>
