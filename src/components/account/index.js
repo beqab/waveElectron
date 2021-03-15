@@ -68,15 +68,6 @@ function index() {
     if (openModal === "NewWallet") {
       return (
         <>
-          <MDBModalHeader
-            className="text-center addressModal"
-            toggle={() => setOpenModal(null)}
-          >
-            <img className="w-100" src={ModalHead} />
-            {/* <h3 className="modalTitle">Create New Wallet</h3> */}
-
-            {/* <img src={Logo} width="60" /> */}
-          </MDBModalHeader>
           <NewWallet fromAccount={true} />{" "}
         </>
       );

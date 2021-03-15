@@ -82,7 +82,7 @@ body {
 .wave-main {
   max-width: 800px;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 40px;
   text-align: center;
 }
 .MainModalWrapper.w650 .modal-dialog-centered {
@@ -371,6 +371,33 @@ body {
   align-items: center;
   justify-content: space-between;
 }
+.mnemonicContainer.account span {
+  display: inline-block;
+  width: 30px;
+  color: #0a3b89;
+}
+.mnemonicContainer.account > div {
+  max-width: calc(35% - 20px);
+  margin: 6px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mnemonicContainer.account > div span {
+  display: inline-block;
+  width: 30px;
+  color: #0a3b89;
+}
+.mnemonicContainer.account > div input {
+  max-width: calc(100% - 30px);
+  border-color: #0a3b89;
+  border-radius: 5px;
+  padding-left: 5px;
+  background: transparent;
+  padding-left: 10px;
+  color: #0a3b89;
+  border: 2px solid #0a3b89 !important;
+}
 .mnemonicContainer > div {
   max-width: calc(35% - 20px);
   margin: 6px 0px;
@@ -433,10 +460,17 @@ body {
 .accounts {
   max-height: 285px;
   overflow: auto;
-  background: #194275;
+  border: 5px solid #fff;
+  border-radius: 9px;
 }
 .accounts .accountItem {
-  background: #000 4a;
+  border: 3px solid #fff;
+  border-radius: 9px;
+}
+.accounts button {
+  border-radius: 9px !important;
+  border: 2px solid #fff !important;
+  background: transparent !important;
 }
 .newInput {
   background-color: #fff !important;
@@ -502,4 +536,43 @@ body {
 }
 .blueColor {
   color: #0a3b89 !important;
+}
+.accountBtns button {
+  border: 2px solid #fff !important;
+  font-weight: bold;
+}
+.input input,
+.input textarea {
+  box-shadow: 0 3px 6px 0px rgba(0, 0, 0, 0.16) !important;
+  border: none;
+  border-radius: 9px !important;
+  display: inline-block;
+  width: 100%;
+  padding: 0.6rem 0 0.4rem 0.6rem !important;
+  margin-bottom: 0px !important;
+}
+.input label {
+  left: 15px !important;
+}
+.settingContainer input {
+  border-bottom: 1px solid #fff !important;
+}
+.settingContainer label {
+  color: #fff !important;
+}
+.flatField {
+  border-bottom: 1px solid #707070;
+  color: #707070;
+  margin-bottom: 45px;
+  max-height: 25px;
+  display: flex;
+  align-items: flex-end;
+}
+.flatField .blue {
+  color: #0a3b89;
+}
+.sendTwo {
+  background: #fff;
+  box-shadow: 0 0 6px #000 63;
+  border-radius: 8px;
 }

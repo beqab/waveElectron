@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { MDBBtn, MDBInput } from "mdbreact";
+import { MDBBtn, MDBInput, MDBModalHeader } from "mdbreact";
 
 import { WalletKeyContext } from "../walletKeyContext/walletKeyContext";
 import axios from "axios";
+import classnames from "classnames";
+import ModalHead from "../../imgs/moadlHeder.png";
+
 const { ipcRenderer } = require("electron");
 
-const oldWaletFrom = ({ changeContent }) => {
+const oldWaletFrom = ({ changeContent, fromAccount }) => {
   const { setUserKey } = React.useContext(WalletKeyContext);
   const [accountName, setAccountName] = useState("");
   const [accountNameError, setAccountNameError] = useState("");
@@ -59,217 +62,248 @@ const oldWaletFrom = ({ changeContent }) => {
   };
 
   return (
-    <div className="text-center w-100">
-      <form className="my-5 mx-md-10" action="">
-        <div className="">
-          <div className="col-md-12 mx-auto">
-            <div style={{ boxShadow: "none " }} className="">
-              {modalStep === "set_account_name" ? (
-                <div className="card-body">
-                  <div className="text-left">
-                    <span
-                      className="cursor-pointer"
-                      onClick={() => {
-                        setModalStep("import");
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="22.608"
-                        height="35.445"
-                        viewBox="0 0 42.608 35.445"
-                      >
-                        <g
-                          id="Group_91"
-                          data-name="Group 91"
-                          transform="translate(-1363.867 -348.544)"
-                        >
-                          <line
-                            id="Line_51"
-                            data-name="Line 51"
-                            x1="38.272"
-                            transform="translate(1366.703 366.21)"
-                            fill="none"
-                            stroke="#fff"
-                            stroke-linecap="round"
-                            stroke-width="3"
-                          />
-                          <path
-                            id="Path_176"
-                            data-name="Path 176"
-                            d="M6013.589-1112.334l-15.6,15.6,15.6,15.6"
-                            transform="translate(-4632 1463)"
-                            fill="none"
-                            stroke="#fff"
-                            stroke-linecap="round"
-                            stroke-width="3"
-                          />
-                        </g>
-                      </svg>
-                      {/* <i class="fas fa-backward"></i> go back */}
-                    </span>
-                  </div>
+    <>
+      {fromAccount && (
+        <MDBModalHeader
+          className="text-center addressModal"
+          toggle={() => setOpenModal(null)}
+        >
+          <img className="w-100" src={ModalHead} />
+          <h3 className="modalTitle">ENTER MNEMONICS (12 WORDS)</h3>
 
-                  <form
-                    className="text-center"
-                    style={{ color: "#757575" }}
-                    action="#!"
-                  >
-                    <h3 className="font-weight-bold my-2 pb-2 text-center dark-grey-text">
-                      Create New Wallet
-                    </h3>
+          {/* <img src={Logo} width="60" /> */}
+        </MDBModalHeader>
+      )}
 
-                    <input
-                      placeholder="Add newInput Account Name"
-                      onChange={(e) => {
-                        setAccountName(e.target.value);
-                        setAccountNameError("");
-                      }}
-                      className="form-control mb-0"
-                      // outline
-                      required
-                      // size="sm"
-                    />
-                    {accountNameError && (
-                      <div
-                        style={{
-                          color: "red",
-                          marginTop: "-23px",
-                          textAlign: "left",
-                          marginBottom: "20px",
-                        }}
-                      >
-                        {" "}
-                        {accountNameError}{" "}
-                      </div>
-                    )}
-                    {/* <div className="invalid-feedback"></div> */}
-
-                    {/* <textarea value={words} className="wordsContainer"></textarea> */}
-                    <div>
-                      <MDBBtn
+      <div
+        style={{
+          transform: fromAccount ? "translateY(-70px)" : "null",
+        }}
+        className="text-center w-100"
+      >
+        <form
+          className={classnames("my-5 mx-md-10", {
+            "mt-0": fromAccount,
+          })}
+          action=""
+        >
+          <div className="">
+            <div className="col-md-12 mx-auto">
+              <div style={{ boxShadow: "none " }} className="">
+                {modalStep === "set_account_name" ? (
+                  <div className="card-body">
+                    <div className="text-left">
+                      <span
+                        className="cursor-pointer"
                         onClick={() => {
-                          if (!accountName) {
-                            return setAccountNameError(
-                              "Account name is require"
-                            );
-                          }
-
-                          signIngHandler();
+                          setModalStep("import");
                         }}
-                        color="light-green newInput1212 btnMain w-75"
                       >
-                        sing in
-                      </MDBBtn>
-                    </div>
-                    <div className="text-center"></div>
-                  </form>
-                </div>
-              ) : (
-                <div className="">
-                  <div className="text-left">
-                    <span
-                      className="cursor-pointer"
-                      onClick={() => changeContent("Welcome")}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="22.608"
-                        height="35.445"
-                        viewBox="0 0 42.608 35.445"
-                      >
-                        <g
-                          id="Group_91"
-                          data-name="Group 91"
-                          transform="translate(-1363.867 -348.544)"
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="22.608"
+                          height="35.445"
+                          viewBox="0 0 42.608 35.445"
                         >
-                          <line
-                            id="Line_51"
-                            data-name="Line 51"
-                            x1="38.272"
-                            transform="translate(1366.703 366.21)"
-                            fill="none"
-                            stroke="#fff"
-                            stroke-linecap="round"
-                            stroke-width="3"
-                          />
-                          <path
-                            id="Path_176"
-                            data-name="Path 176"
-                            d="M6013.589-1112.334l-15.6,15.6,15.6,15.6"
-                            transform="translate(-4632 1463)"
-                            fill="none"
-                            stroke="#fff"
-                            stroke-linecap="round"
-                            stroke-width="3"
-                          />
-                        </g>
-                      </svg>
-                      {/* <i class="fas fa-backward"></i> go back */}
-                    </span>
-                  </div>
-
-                  <form
-                    className="text-center"
-                    style={{ color: "#fff" }}
-                    action="#!"
-                  >
-                    <h3 className="font-weight-bold my-4 pb-2 text-center dark-grey-text">
-                      ENTER MNEMONICS (12 WORDS)
-                    </h3>
-                    <label>WORDS:</label>
-                    <div className="mnemonicContainer">
-                      {words.map((el, i) => {
-                        return (
-                          <div>
-                            <span>{i + 1}</span>
-                            <input
-                              value={el}
-                              key={i}
-                              onChange={(e) => {
-                                let NewWords = words.map((word, index) => {
-                                  // debugger;
-                                  if (i === index) {
-                                    return e.target.value;
-                                  } else {
-                                    return word;
-                                  }
-                                });
-                                setWords([...NewWords]);
-                              }}
+                          <g
+                            id="Group_91"
+                            data-name="Group 91"
+                            transform="translate(-1363.867 -348.544)"
+                          >
+                            <line
+                              id="Line_51"
+                              data-name="Line 51"
+                              x1="38.272"
+                              transform="translate(1366.703 366.21)"
+                              fill="none"
+                              stroke="#fff"
+                              stroke-linecap="round"
+                              stroke-width="3"
                             />
-                          </div>
-                        );
-                      })}
+                            <path
+                              id="Path_176"
+                              data-name="Path 176"
+                              d="M6013.589-1112.334l-15.6,15.6,15.6,15.6"
+                              transform="translate(-4632 1463)"
+                              fill="none"
+                              stroke="#fff"
+                              stroke-linecap="round"
+                              stroke-width="3"
+                            />
+                          </g>
+                        </svg>
+                        {/* <i class="fas fa-backward"></i> go back */}
+                      </span>
                     </div>
 
-                    <small
-                      id="passwordHelpBlock"
-                      className="form-text text-right blue-text"
-                    ></small>
+                    <form
+                      className="text-center"
+                      style={{ color: "#757575" }}
+                      action="#!"
+                    >
+                      <h3 className="font-weight-bold my-2 pb-2 text-center dark-grey-text">
+                        Create New Wallet
+                      </h3>
 
-                    <div className="text-center">
-                      <button
-                        onClick={() => {
-                          if (words.filter((el) => el === "").length) {
-                            return;
-                          }
-                          setModalStep("set_account_name");
+                      <input
+                        placeholder="Add newInput Account Name"
+                        onChange={(e) => {
+                          setAccountName(e.target.value);
+                          setAccountNameError("");
                         }}
-                        type="button"
-                        className="btn btn-default btnMain btnWithFrame  btn-rounded my-4 waves-effect"
+                        className="form-control mb-0"
+                        // outline
+                        required
+                        // size="sm"
+                      />
+                      {accountNameError && (
+                        <div
+                          style={{
+                            color: "red",
+                            marginTop: "-23px",
+                            textAlign: "left",
+                            marginBottom: "20px",
+                          }}
+                        >
+                          {" "}
+                          {accountNameError}{" "}
+                        </div>
+                      )}
+                      {/* <div className="invalid-feedback"></div> */}
+
+                      {/* <textarea value={words} className="wordsContainer"></textarea> */}
+                      <div>
+                        <MDBBtn
+                          onClick={() => {
+                            if (!accountName) {
+                              return setAccountNameError(
+                                "Account name is require"
+                              );
+                            }
+
+                            signIngHandler();
+                          }}
+                          color="light-green newInput1212 btnMain w-75"
+                        >
+                          sing in
+                        </MDBBtn>
+                      </div>
+                      <div className="text-center"></div>
+                    </form>
+                  </div>
+                ) : (
+                  <div className="">
+                    <div className="text-left">
+                      <span
+                        className="cursor-pointer"
+                        onClick={() => changeContent("Welcome")}
                       >
-                        Next
-                      </button>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="22.608"
+                          height="35.445"
+                          viewBox="0 0 42.608 35.445"
+                        >
+                          <g
+                            id="Group_91"
+                            data-name="Group 91"
+                            transform="translate(-1363.867 -348.544)"
+                          >
+                            <line
+                              id="Line_51"
+                              data-name="Line 51"
+                              x1="38.272"
+                              transform="translate(1366.703 366.21)"
+                              fill="none"
+                              stroke="#fff"
+                              stroke-linecap="round"
+                              stroke-width="3"
+                            />
+                            <path
+                              id="Path_176"
+                              data-name="Path 176"
+                              d="M6013.589-1112.334l-15.6,15.6,15.6,15.6"
+                              transform="translate(-4632 1463)"
+                              fill="none"
+                              stroke="#fff"
+                              stroke-linecap="round"
+                              stroke-width="3"
+                            />
+                          </g>
+                        </svg>
+                        {/* <i class="fas fa-backward"></i> go back */}
+                      </span>
                     </div>
-                  </form>
-                </div>
-              )}
+
+                    <form
+                      className="text-center"
+                      style={{ color: "#fff" }}
+                      action="#!"
+                    >
+                      {!fromAccount && (
+                        <h3 className="font-weight-bold my-4 pb-2 text-center dark-grey-text">
+                          ENTER MNEMONICS (12 WORDS)
+                        </h3>
+                      )}
+
+                      {/* <label>WORDS:</label> */}
+                      <div
+                        className={classnames("mnemonicContainer", {
+                          account: fromAccount,
+                        })}
+                      >
+                        {words.map((el, i) => {
+                          return (
+                            <div>
+                              <span>{i + 1}</span>
+                              <input
+                                value={el}
+                                key={i}
+                                onChange={(e) => {
+                                  let NewWords = words.map((word, index) => {
+                                    // debugger;
+                                    if (i === index) {
+                                      return e.target.value;
+                                    } else {
+                                      return word;
+                                    }
+                                  });
+                                  setWords([...NewWords]);
+                                }}
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      <small
+                        id="passwordHelpBlock"
+                        className="form-text text-right blue-text"
+                      ></small>
+
+                      <div className="text-center">
+                        <button
+                          onClick={() => {
+                            if (words.filter((el) => el === "").length) {
+                              return;
+                            }
+                            setModalStep("set_account_name");
+                          }}
+                          type="button"
+                          className="btn btn-default btnMain btnWithFrame  btn-rounded my-4 waves-effect"
+                        >
+                          Next
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </>
   );
 };
 

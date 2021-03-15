@@ -405,6 +405,40 @@ body {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  &.account {
+    span {
+      display: inline-block;
+      width: 30px;
+      // margin-right: 10px;
+      color: #0a3b89;
+    }
+
+    > div {
+      max-width: calc(35% - 20px);
+
+      margin: 6px 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      span {
+        display: inline-block;
+        width: 30px;
+        // margin-right: 10px;
+        color: #0a3b89;
+      }
+      input {
+        max-width: calc(100% - 30px);
+
+        border-color: #0a3b89;
+        border-radius: 5px;
+        padding-left: 5px;
+        background: transparent;
+        padding-left: 10px;
+        color: #0a3b89;
+        border: 2px solid#0a3b89 !important;
+      }
+    }
+  }
   > div {
     max-width: calc(35% - 20px);
 

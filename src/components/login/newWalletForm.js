@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { MDBBtn, MDBInput } from "mdbreact";
+import { MDBBtn, MDBInput, MDBModalHeader } from "mdbreact";
+import classnames from "classnames";
 const { ipcRenderer } = require("electron");
 import { WalletKeyContext } from "../walletKeyContext/walletKeyContext";
 const HttpsProxyAgent = require("https-proxy-agent");
+import ModalHead from "../../imgs/moadlHeder.png";
 import axios from "axios";
 const mnemonicWords = require("mnemonic-words");
 
@@ -156,9 +158,11 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
             style={{ color: "#757575" }}
             action="#!"
           >
-            <h3 className="font-weight-bold my-2 pb-2 text-center dark-grey-text">
-              Create New Wallet
-            </h3>
+            {!fromAccount && (
+              <h3 className="font-weight-bold my-2 pb-2 text-center dark-grey-text">
+                Create New Wallet
+              </h3>
+            )}
 
             {/* <textarea value={words} className="wordsContainer"></textarea> */}
 
@@ -249,7 +253,11 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
             </h6>
 
             {/* <textarea value={words} className="wordsContainer"></textarea> */}
-            <div className="mnemonicContainer">
+            <div
+              className={classnames("mnemonicContainer", {
+                account: fromAccount,
+              })}
+            >
               {words.map((el, i) => {
                 return (
                   <div>
@@ -342,9 +350,11 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
             style={{ color: "#757575" }}
             action="#!"
           >
-            <h3 className="font-weight-bold my-2 pb-2 text-center dark-grey-text">
-              Create New Wallet
-            </h3>
+            {!fromAccount && (
+              <h3 className="font-weight-bold my-2 pb-2 text-center dark-grey-text">
+                Create New Wallet
+              </h3>
+            )}
 
             <input
               placeholder="Add Account Name"
@@ -461,7 +471,7 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
                   d="M6950,3144.433l31.2,31.2,56.469-56.469,16.236-16.235"
                   transform="translate(-6016.731 -2692.022)"
                   fill="none"
-                  stroke="#fff"
+                  stroke={fromAccount ? "#000" : "#fff"}
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="7"
@@ -471,7 +481,8 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
                   data-name="Ellipse 1"
                   transform="translate(894 370)"
                   fill="none"
-                  stroke="#fff"
+                  stroke={fromAccount ? "#000" : "#fff"}
+                  // stroke="#fff"
                   stroke-width="7"
                 >
                   <circle cx="81" cy="81" r="81" stroke="none" />
@@ -481,7 +492,11 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
             </svg>
 
             <hr />
-            <b>
+            <b
+              style={{
+                color: fromAccount ? "#000" : "#fff",
+              }}
+            >
               Your wallet has been created. <br />
               Keep your public/private keys and paraphrase safe
             </b>
@@ -511,17 +526,37 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
     }
   };
   return (
-    <div>
-      <form className="my-2 mx-md-10 newWoletContainer" action="">
-        <div className="">
-          <div className="col-md-12 mx-auto">
-            <div style={{ boxShadow: "none " }} className="">
-              {GetModalContent(modalStep)}
+    <>
+      {fromAccount && (
+        <MDBModalHeader
+          className="text-center addressModal"
+          toggle={() => setOpenModal(null)}
+        >
+          <h3>Create New Wallet</h3>
+          <img className="w-100" src={ModalHead} />
+
+          {/* <img src={Logo} width="60" /> */}
+        </MDBModalHeader>
+      )}
+
+      <div>
+        <form
+          style={{
+            transform: fromAccount ? "translateY(-70px)" : "null",
+          }}
+          className="my-2 mx-md-10 newWoletContainer"
+          action=""
+        >
+          <div className="">
+            <div className="col-md-12 mx-auto">
+              <div style={{ boxShadow: "none " }} className="">
+                {GetModalContent(modalStep)}
+              </div>
             </div>
           </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </>
   );
 };
 
