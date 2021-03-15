@@ -39,6 +39,7 @@ function index({ account }) {
   const [copied, setCopied] = React.useState(false);
   const [address, setAddress] = React.useState("");
   const [activeIndex, setActiveIndex] = React.useState(null);
+  const [reward, setReward] = React.useState(0);
 
   useEffect(() => {
     fetchWalletData();
@@ -65,7 +66,7 @@ function index({ account }) {
         }
       )
       .then((res) => {
-        setStake(res.data.rewardSum);
+        setReward(res.data.rewardSum);
         // debugger;
       });
 
@@ -77,6 +78,49 @@ function index({ account }) {
         // debugger;
 
         setBalance(res.data.wallet);
+
+        let transactionsParse = [];
+        res.data.transactions.INCOMING.map((el) =>
+          transactionsParse.push({ ...el, type: "INCOMING" })
+        );
+        res.data.transactions.OUTGOING.map((el) =>
+          transactionsParse.push({ ...el, type: "OUTGOING" })
+        );
+
+        if (transactionsParse.length) {
+          axios
+            .get(
+              "http://51.255.211.135:8181/transactions/unfinished",
+
+              {
+                headers: {
+                  account: account,
+                },
+              }
+            )
+            .then((res2) => {
+              let newTrx = transactionsParse.map((el) => {
+                // debugger;
+                let check = res2.data.find((item) => item.txId === el.txId);
+
+                if (check) {
+                  el.pending = true;
+                } else {
+                  el.pending = false;
+                }
+                return el;
+              });
+
+              let myPending = newTrx.find((el) => el.pending);
+
+              setPending(myPending);
+            });
+        }
+        // debugger;
+        //   setBalance(res.data.wallet.balance);
+        //   // debugger;
+        //   setTransactions(newTrx);
+        // });
       })
       .catch((err) => {
         console.log(err);
@@ -98,8 +142,14 @@ function index({ account }) {
         );
         // userKey;
         let validator = res.data.find((el) => el.address === t.key);
+        setStake(validator.amount);
+
+        return;
+        debugger;
 
         if (validator && validator.amount) {
+          setPending(myPending);
+          setStake(validator.amount);
           axios
             .get(
               "http://51.255.211.135:8181/transactions/unfinished",
@@ -117,10 +167,12 @@ function index({ account }) {
                   (item.type.type === "validator" ||
                     item.type.type === "unstake")
               );
+
+              debugger;
               // debugger;
               if (myPending) {
                 setPending(myPending);
-                // setStake(validator.amount - myPending.output.amount);
+                setStake(validator.amount - myPending.output.amount);
               } else {
                 // setStake(validator.amount);
                 setPending(null);
@@ -132,10 +184,10 @@ function index({ account }) {
           setPending(null);
         }
 
-        // res.data.forEach((element) => {
-        //   // debugger;
-        //   sum += element.amount;
-        // });
+        res.data.forEach((element) => {
+          // debugger;
+          sum += element.amount;
+        });
       });
   };
 
@@ -420,7 +472,7 @@ function index({ account }) {
               />
             </g>
           </svg>
-          <span>{stake} WAVE</span>
+          <span>{pending?.output?.amount ? stake : stake} WAVE</span>
         </div>
         <div>
           <span>Total Rewarded</span>
@@ -479,7 +531,7 @@ function index({ account }) {
               </g>
             </g>
           </svg>
-          <span>{stake} WAVE</span>
+          <span>{reward} WAVE</span>
         </div>
       </div>
 
