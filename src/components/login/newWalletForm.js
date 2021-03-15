@@ -22,6 +22,7 @@ const mnemonicWords = require("mnemonic-words");
 const modalSteps = {
   CREATE: "create",
   CREATED: "created",
+  CONFIRMATION: "CONFIRMATION",
   SET_ACCOUNT_NAME: "set_account_name",
   CONFIRM: "CONFIRM",
 };
@@ -102,6 +103,137 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const CONFIRMATION = () => {
+    return (
+      <div className="card-body">
+        <div className="text-left">
+          <span
+            className="cursor-pointer"
+            onClick={() => {
+              setModalStep(modalSteps.CREATE);
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="22.608"
+              height="35.445"
+              viewBox="0 0 42.608 35.445"
+            >
+              <g
+                id="Group_91"
+                data-name="Group 91"
+                transform="translate(-1363.867 -348.544)"
+              >
+                <line
+                  id="Line_51"
+                  data-name="Line 51"
+                  x1="38.272"
+                  transform="translate(1366.703 366.21)"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-linecap="round"
+                  stroke-width="3"
+                />
+                <path
+                  id="Path_176"
+                  data-name="Path 176"
+                  d="M6013.589-1112.334l-15.6,15.6,15.6,15.6"
+                  transform="translate(-4632 1463)"
+                  fill="none"
+                  stroke="#fff"
+                  stroke-linecap="round"
+                  stroke-width="3"
+                />
+              </g>
+            </svg>
+            {/* <i class="fas fa-backward"></i> go back22 */}
+          </span>
+        </div>
+
+        <form className="text-center" style={{ color: "#757575" }} action="#!">
+          <h3
+            style={{ textTransform: "uppercase" }}
+            className="font-weight-bold my-2 pb-2 text-center dark-grey-text"
+          >
+            MNEMONIC PHRASE:
+          </h3>
+          <h6 className="mb-4">
+            Write your mnemonic phrase down and make sure you store it in a safe
+            place
+          </h6>
+
+          {/* <textarea value={words} className="wordsContainer"></textarea> */}
+          <div
+            className={classnames("mnemonicContainer", {
+              account: fromAccount,
+            })}
+          >
+            {/* {words.map((el, i) => { */}
+            {/* return ( */}
+            <div>
+              <span>{1}</span>
+              <input
+                value={"el1"}
+                name="el1"
+                key={"i"}
+                onChange={(e) => {
+                  // return;
+                }}
+              />
+            </div>
+            <div>
+              <span>{1}</span>
+              <input
+                value={"el1"}
+                name="el1"
+                key={"i"}
+                onChange={(e) => {
+                  // return;
+                }}
+              />
+            </div>
+            <div>
+              <span>{1}</span>
+              <input
+                value={"el1"}
+                name="el1"
+                key={"i"}
+                onChange={(e) => {
+                  // return;
+                }}
+              />
+            </div>
+
+            {/* ); */}
+            {/* })} */}
+          </div>
+          <small
+            id="passwordHelpBlock"
+            className="form-text text-right blue-text"
+          ></small>
+          <div>
+            {wordsError && (
+              <div style={{ color: "red", textAlign: "center" }}>
+                {" "}
+                {wordsError}{" "}
+              </div>
+            )}
+            <MDBBtn
+              onClick={() => {
+                setModalStep(modalSteps.SET_ACCOUNT_NAME);
+              }}
+              color="light-green mt-3 btnWithFrame btnMain w-100"
+            >
+              Next
+            </MDBBtn>
+          </div>
+
+          <div className="text-center"></div>
+        </form>
+      </div>
+    );
   };
 
   const GetModalContent = (type = null) => {
@@ -298,6 +430,10 @@ const newWalletForm = ({ changeContent, fromAccount }) => {
           </form>
         </div>
       );
+    } else if (type === modalStep.CONFIRMATION) {
+      {
+        CONFIRMATION();
+      }
     } else if (type === modalSteps.SET_ACCOUNT_NAME) {
       return (
         <div className="card-body">

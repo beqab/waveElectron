@@ -69,7 +69,7 @@ function index({ account }) {
           } else {
             return false;
           }
-
+          debugger;
           // }
         });
 
@@ -465,7 +465,7 @@ function index({ account }) {
         </MDBBtn> */}
       </div>
       <h5 style={{ color: "#fff" }} className="text-left mt-4">
-        How does freezing work on my wallet:
+        <b>How does freezing work on my wallet:</b>
       </h5>
       <h6 style={{ color: "#fff" }} className="text-left">
         Your frozen WAVE coins will be added to our node and will be

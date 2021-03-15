@@ -55,6 +55,21 @@ function index({ account }) {
 
   const fetchWalletData = () => {
     axios
+      .post(
+        "http://51.255.211.135:8181/wallet/stake-rewards",
+        {},
+        {
+          headers: {
+            account: account,
+          },
+        }
+      )
+      .then((res) => {
+        setStake(res.data.rewardSum);
+        // debugger;
+      });
+
+    axios
       .get(
         "http://51.255.211.135:8181/wallet/" + getSelectedWallet(userKey).key
       )
@@ -105,9 +120,9 @@ function index({ account }) {
               // debugger;
               if (myPending) {
                 setPending(myPending);
-                setStake(validator.amount - myPending.output.amount);
+                // setStake(validator.amount - myPending.output.amount);
               } else {
-                setStake(validator.amount);
+                // setStake(validator.amount);
                 setPending(null);
               }
               // debugger;
@@ -348,7 +363,7 @@ function index({ account }) {
           <span>{balance?.balance} WAVE</span>
         </div>
         <div>
-          <span>Stakad</span>
+          <span>Staked</span>
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -408,7 +423,7 @@ function index({ account }) {
           <span>{stake} WAVE</span>
         </div>
         <div>
-          <span>Rewarded</span>
+          <span>Total Rewarded</span>
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -737,7 +752,7 @@ function index({ account }) {
         </div>
       )}
       <h5 style={{ color: "#fff" }} className="text-left mt-4">
-        How does Staking work on my Wallet:
+        <b> How does Staking work on my Wallet: </b>
       </h5>
       <h6 style={{ color: "#fff" }} className="text-left">
         WAVE coins are added to our staking pool, so you don’t have to keep your

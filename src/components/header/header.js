@@ -121,7 +121,7 @@ const header = ({ setCurrentTab, currentTab }) => {
         </li>
         <li
           className={classnames("px-3", {
-            active: currentTab === "Help",
+            active: currentTab === "logout",
           })}
           onClick={() => {
             ipcRenderer.send("logout", {});
@@ -129,7 +129,44 @@ const header = ({ setCurrentTab, currentTab }) => {
           }}
         >
           <a href="#">
-            <span>{/* <img src={Faq} /> */}</span>
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28.256"
+                height="36.277"
+                viewBox="0 0 32.256 36.277"
+              >
+                <g
+                  id="Group_114"
+                  data-name="Group 114"
+                  transform="translate(-2475.083 -2678.749)"
+                >
+                  <path
+                    id="Path_204"
+                    data-name="Path 204"
+                    d="M2497.1,2702.519a15.628,15.628,0,1,1-11.71-.031"
+                    transform="translate(0 -18.099)"
+                    fill="none"
+                    stroke="#fff"
+                    stroke-linecap="round"
+                    stroke-miterlimit="10"
+                    stroke-width="1"
+                  />
+                  <rect
+                    id="Rectangle_87"
+                    data-name="Rectangle 87"
+                    width="2.95"
+                    height="19.591"
+                    rx="1.475"
+                    transform="translate(2489.736 2679.249)"
+                    fill="none"
+                    stroke="#fff"
+                    stroke-miterlimit="10"
+                    stroke-width="1"
+                  />
+                </g>
+              </svg>
+            </span>
             logout
           </a>
         </li>

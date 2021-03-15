@@ -185,6 +185,7 @@ function index({ setCurrentTab }) {
                 color: "#fff",
                 border: "5px solid #fff",
                 borderRadius: "25px",
+                height: "100%",
               }}
             >
               <div style={{ fontSize: "14px" }} class="col-12 text-left px-0 ">
@@ -226,14 +227,7 @@ function index({ setCurrentTab }) {
                 </h5>
                 Your Secret Recovery Phrase is needed to recover your wallet in
                 case the password is lost. Please write these 12 words down, in
-                order, and keep them somewhere safe offline. The secret recovery
-                phrase gives you (or anyone who has it) a way to restore your
-                wallet and access your funds. In the event that you lose your
-                password or our service is unavailable, this will be your safety
-                net Your Secret Recovery Phrase is needed to recover your wallet
-                in case the password is lost. Please write there 12 words down,
-                in order and keep them somewhere safe offline. the secret
-                Recovery phrase givers you (or anyone who has it) a way to ..
+                order, and keep them somewhere safe offline.
                 <div style={{ color: "#00C4D5", marginTop: "10px" }}>
                   Never share your secret phrase with anyone. Blockchain.com
                   will never ask you for this information.

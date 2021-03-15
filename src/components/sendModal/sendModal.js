@@ -117,9 +117,9 @@ const ModalPage = ({ modal14, toggle, account, reloadData, walletData }) => {
             {" "}
             <b> Amount </b>
           </span>
-          <span className="blueColor d-flex flex-column">
+          <span className="blueColor d-flex text-right flex-column">
             <span>{amount} WAVE</span>
-            <span>0.00 $</span>
+            <span>{(amount / 20).toFixed(2)} $</span>
           </span>
         </div>
 
@@ -136,7 +136,7 @@ const ModalPage = ({ modal14, toggle, account, reloadData, walletData }) => {
             {" "}
             <b> Total </b>
           </span>
-          <span className="blueColor">{amount + fee}</span>
+          <span className="blueColor">{Number(amount) + fee}</span>
         </div>
         {/* <MDBInput
           clear
@@ -201,12 +201,17 @@ const ModalPage = ({ modal14, toggle, account, reloadData, walletData }) => {
         toggle={() => {
           setServerError("");
           toggle(null);
+          setConfirm(false);
         }}
         centered
       >
         <MDBModalHeader
           className="text-center addressModal"
-          toggle={() => toggle(null)}
+          toggle={() => {
+            setConfirm(false);
+
+            toggle(null);
+          }}
         >
           <img className="w-100" src={ModalHead} />
           <h3 className="modalTitle">Send WAVE</h3>
