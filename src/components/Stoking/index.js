@@ -479,7 +479,7 @@ function index({ account }) {
               </g>
             </g>
           </svg>
-          <span>{balance?.balance + stake} WAVE</span>
+          <span>{stake} WAVE</span>
         </div>
       </div>
 
