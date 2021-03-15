@@ -48,10 +48,15 @@ function index({ setKeys }) {
   const getKeysTab = () => {
     return (
       <div
-        style={{ background: "#194275", color: "#fff" }}
-        className="card p-3 mt-3"
+        style={{
+          background: "transparent",
+          color: "#fff",
+          border: "5px solid #fff",
+          borderRadius: "19px",
+        }}
+        className="card p-3 settingContainer mt-3"
       >
-        <p style={{ fontSize: "13px" }}>
+        <p className="text-left" style={{ fontSize: "13px" }}>
           NEVER give you 12-wod backup phrase and private keys to anyone. Giving
           this data may result in loss of your funds
         </p>
@@ -84,7 +89,7 @@ function index({ setKeys }) {
         )}
 
         {passwordChanged && (
-          <div class="alert alert-success" role="alert">
+          <div className="text-left" role="alert">
             {userKey.wallets.map((el, i) => {
               return (
                 <>
@@ -107,7 +112,7 @@ function index({ setKeys }) {
                         <div>{el.wallet}</div>
                       </div>
                       {el.privateKey && (
-                        <div>
+                        <div className="mt-3 mb-3">
                           <span>
                             {" "}
                             <b> Private key </b>{" "}
@@ -125,7 +130,14 @@ function index({ setKeys }) {
                       </div>
                     </div>
                   </div>
-                  <hr />
+                  <hr
+                    style={{
+                      height: "5px",
+                      borderTop: "5px solid",
+                      width: "calc(100% + 33px)",
+                      transform: "translateX(-16px)",
+                    }}
+                  />
                 </>
               );
             })}
@@ -155,10 +167,15 @@ function index({ setKeys }) {
   const changePasswordTab = () => {
     return (
       <div
-        style={{ background: "#194275", color: "#fff" }}
-        className="card p-3 mt-3"
+        style={{
+          background: "transparent",
+          color: "#fff",
+          border: "5px solid #fff",
+          borderRadius: "19px",
+        }}
+        className="card p-3 mt-3 settingContainer"
       >
-        <p style={{ fontSize: "13px" }}>
+        <p className="text-left" style={{ fontSize: "13px" }}>
           Password keeps your wallet protected by encryption/ Please be careful
           when changing it, tis action cannot be undone. We strongly recommended
           saving the 12 words backup phrase before yo continue.

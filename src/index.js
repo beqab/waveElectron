@@ -2,8 +2,8 @@ import React from "react";
 import { render } from "react-dom";
 import App from "./components/App";
 
-// import "./style/index.scss";
-import "./style/index.css";
+import "./style/index.scss";
+// import "./style/index.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";

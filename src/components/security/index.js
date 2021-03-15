@@ -41,7 +41,10 @@ const Mark = ({ color = null, width = 35 }) => {
 
 function index({ setCurrentTab }) {
   return (
-    <div style={{ maxWidth: "1000px" }} className="wave-main">
+    <div
+      style={{ maxWidth: "1000px", fontWeight: "bold" }}
+      className="wave-main"
+    >
       <div className="">
         <svg
           id="Group_78"
@@ -73,19 +76,94 @@ function index({ setCurrentTab }) {
           className="row text-left mb-4"
         >
           <div className="col-6">
-            Complete the steps below to help prevent unauthorized access to your
+            Complete the steps below to prevent unauthorized access to your
             wallet. Add additional verification to access your funds at any
             time.
           </div>
           <div className="col-6">
             <div className="row    ">
-              <div className="col-4 d-flex px-1">
-                <Mark width={35} color="green" />
+              <div
+                style={{ justifyContent: " flex-end" }}
+                className="col-12 d-flex  align-items-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="27"
+                  height="47"
+                  viewBox="0 0 47 47"
+                >
+                  <g
+                    id="Group_101"
+                    data-name="Group 101"
+                    transform="translate(-667 -343)"
+                  >
+                    <path
+                      id="Path_182"
+                      data-name="Path 182"
+                      d="M6950,3115.1l9.149,9.149,21.318-21.318"
+                      transform="translate(-6271.983 -2748.437)"
+                      fill="none"
+                      stroke="#fff"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="4"
+                    />
+                    <g
+                      id="Ellipse_3"
+                      data-name="Ellipse 3"
+                      transform="translate(667 343)"
+                      fill="none"
+                      stroke="#fff"
+                      stroke-width="4"
+                    >
+                      <circle cx="23.5" cy="23.5" r="23.5" stroke="none" />
+                      <circle cx="23.5" cy="23.5" r="21.5" fill="none" />
+                    </g>
+                  </g>
+                </svg>
 
                 <span className="ml-2"> Setup your Wallet Password</span>
               </div>
-              <div className="col-4 d-flex px-1">
-                <Mark width="35" color="green" />
+              <div
+                style={{ justifyContent: " flex-end" }}
+                className="col-12 d-flex align-items-center "
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="27"
+                  height="47"
+                  viewBox="0 0 47 47"
+                >
+                  <g
+                    id="Group_101"
+                    data-name="Group 101"
+                    transform="translate(-667 -343)"
+                  >
+                    <path
+                      id="Path_182"
+                      data-name="Path 182"
+                      d="M6950,3115.1l9.149,9.149,21.318-21.318"
+                      transform="translate(-6271.983 -2748.437)"
+                      fill="none"
+                      stroke="#fff"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="4"
+                    />
+                    <g
+                      id="Ellipse_3"
+                      data-name="Ellipse 3"
+                      transform="translate(667 343)"
+                      fill="none"
+                      stroke="#fff"
+                      stroke-width="4"
+                    >
+                      <circle cx="23.5" cy="23.5" r="23.5" stroke="none" />
+                      <circle cx="23.5" cy="23.5" r="21.5" fill="none" />
+                    </g>
+                  </g>
+                </svg>
+
                 <span className="ml-2">Setup your Wallet Password</span>
               </div>
               {/* <div className="col-4 d-flex px-1">
@@ -95,61 +173,83 @@ function index({ setCurrentTab }) {
             </div>
           </div>
         </div>
+        <div className="row">
+          <div
+            // style={{ background: "#fff" }}
 
-        <div
-          style={{ background: "#fff" }}
-          className="row py-3 align-items-center mb-3"
-        >
-          <div class="col-2">
-            <Mark width={50} color="green" />
-          </div>
-          <div style={{ fontSize: "14px" }} class="col-7 text-left px-0 ">
-            <h5 style={{ color: "#000" }}>
-              <b>Wallet Password </b>
-            </h5>
-            Your wallet password was created successfully when you created your
-            wallet. Don`t tell others your password and keep sure it on the
-            right pace.
-          </div>
-
-          <div class="col-3">
-            <MDBBtn
-              onClick={() => setCurrentTab("Settings")}
-              style={{ padding: "5px 17px" }}
-              className="btnMain"
+            className="col-6 py-3  align-items-center mb-3"
+          >
+            <div
+              className="p-5"
+              style={{
+                color: "#fff",
+                border: "5px solid #fff",
+                borderRadius: "25px",
+              }}
             >
-              Change Password
-            </MDBBtn>
-          </div>
-        </div>
-        <div
-          style={{ background: "#fff" }}
-          className="row py-3 align-items-center mb-3"
-        >
-          <div class="col-2">
-            <Mark width={50} color="green" />
-          </div>
-          <div style={{ fontSize: "14px" }} class="col-7 text-left px-0 ">
-            <h5 style={{ color: "#000" }}>
-              <b>Secret Private Key Recovery Phrase </b>
-            </h5>
-            Your Secret Recovery Phrase is needed to recover your wallet in case
-            the password is lost. Please write there 12 words down, in order and
-            keep them somewhere safe offline. the secret Recovery phrase givers
-            you (or anyone who has it) a way to ..
-            <div style={{ color: "red", marginTop: "10px" }}>
-              Never share your secret phrase
+              <div style={{ fontSize: "14px" }} class="col-12 text-left px-0 ">
+                <h5 className="mb-5" style={{ color: "#fff" }}>
+                  <b>Wallet Password </b>
+                </h5>
+                Your wallet password has been created successfully when you
+                created your wallet. Never share your password with anyone and
+                make sure to store it tin a safe place.
+              </div>
+
+              <div class="col-12">
+                <MDBBtn
+                  onClick={() => setCurrentTab("Settings")}
+                  style={{ padding: "5px 17px" }}
+                  className="btnMain mt-4 px-4"
+                >
+                  Change Password
+                </MDBBtn>
+              </div>
             </div>
           </div>
+          <div
+            // style={{ background: "#fff" }}
 
-          <div class="col-3">
-            <MDBBtn
-              onClick={() => setCurrentTab("Settings")}
-              style={{ padding: "5px 17px" }}
-              className="btnMain"
+            className="col-6 py-3  align-items-center mb-3"
+          >
+            <div
+              className="p-5"
+              style={{
+                color: "#fff",
+                border: "5px solid #fff",
+                borderRadius: "25px",
+              }}
             >
-              Backup Funds
-            </MDBBtn>
+              <div style={{ fontSize: "14px" }} class="col-12 text-left px-0 ">
+                <h5 className="mb-5" style={{ color: "#fff" }}>
+                  <b>Secret Private Key Recovery Phrase </b>
+                </h5>
+                Your Secret Recovery Phrase is needed to recover your wallet in
+                case the password is lost. Please write these 12 words down, in
+                order, and keep them somewhere safe offline. The secret recovery
+                phrase gives you (or anyone who has it) a way to restore your
+                wallet and access your funds. In the event that you lose your
+                password or our service is unavailable, this will be your safety
+                net Your Secret Recovery Phrase is needed to recover your wallet
+                in case the password is lost. Please write there 12 words down,
+                in order and keep them somewhere safe offline. the secret
+                Recovery phrase givers you (or anyone who has it) a way to ..
+                <div style={{ color: "#00C4D5", marginTop: "10px" }}>
+                  Never share your secret phrase with anyone. Blockchain.com
+                  will never ask you for this information.
+                </div>
+              </div>
+
+              <div class="col-12">
+                <MDBBtn
+                  onClick={() => setCurrentTab("Settings")}
+                  style={{ padding: "5px 17px" }}
+                  className="btnMain mt-4 px-4"
+                >
+                  Backup Funds
+                </MDBBtn>
+              </div>
+            </div>
           </div>
         </div>
         {/* <div

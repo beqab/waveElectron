@@ -71,7 +71,7 @@ body {
 .wave-main {
   max-width: 800px;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 40px;
   text-align: center;
 }
 
@@ -480,9 +480,18 @@ body {
 .accounts {
   max-height: 285px;
   overflow: auto;
-  background: rgb(25, 66, 117);
+  // background: rgb(25, 66, 117);
+  border: 5px solid #fff;
+  border-radius: 9px;
   .accountItem {
-    background: #0000004a;
+    // background: #0000004a;
+    border: 3px solid #fff;
+    border-radius: 9px;
+  }
+  button {
+    border-radius: 9px !important;
+    border: 2px solid #fff !important;
+    background: transparent !important;
   }
 }
 
@@ -553,4 +562,53 @@ body {
 
 .blueColor {
   color: #0a3b89 !important;
+}
+.accountBtns {
+  button {
+    border: 2px solid #fff !important;
+    font-weight: bold;
+  }
+}
+
+.input {
+  input,
+  textarea {
+    box-shadow: 0 3px 6px 0px rgba(0, 0, 0, 0.16) !important;
+    border: none;
+    border-radius: 9px !important;
+    display: inline-block;
+    width: 100%;
+    padding: 0.6rem 0 0.4rem 0.6rem !important;
+    margin-bottom: 0px !important;
+  }
+  label {
+    left: 15px !important;
+  }
+}
+
+.settingContainer {
+  input {
+    border-bottom: 1px solid #fff !important;
+  }
+  label {
+    color: #fff !important;
+  }
+}
+
+.flatField {
+  border-bottom: 1px solid #707070;
+  color: #707070;
+  margin-bottom: 45px;
+  max-height: 25px;
+  display: flex;
+  align-items: flex-end;
+  .blue {
+    color: #0a3b89;
+  }
+}
+
+.sendTwo {
+  background: #fff;
+  box-shadow: 0 0 6px #00000063;
+  border-radius: 8px;
 }

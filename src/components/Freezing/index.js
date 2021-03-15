@@ -27,6 +27,7 @@ import ModalHead from "../../imgs/moadlHeder.png";
 
 function index({ account }) {
   const [balance, setBalance] = useState(null);
+  const [rewarded, setRewarded] = useState(0);
   const [amount, setAmount] = useState(null);
   const [openModal, setOpenModal] = useState(null);
   const { userKey } = React.useContext(WalletKeyContext);
@@ -55,6 +56,25 @@ function index({ account }) {
         // debugger;
 
         setBalance(res.data.wallet);
+
+        let reward = 0;
+        // debugger;
+        const incoming = res.data.transactions.INCOMING.filter((el) => {
+          // if (sum.output.amount) {
+          if (
+            el.input.from ===
+            "dc2152fd2bfe753c2a65af51c38c0c798cb101d1ac7bcdb906866fe2b7d07c3b"
+          ) {
+            return (reward += el.output.amount);
+          } else {
+            return false;
+          }
+
+          // }
+        });
+
+        setRewarded(reward.toFixed(4));
+
         // debugger;
       })
       .catch((err) => {
@@ -69,8 +89,8 @@ function index({ account }) {
       .post(
         "http://51.255.211.135:8181/wallet/freeze",
         {
-          to:
-            "0512d818771130abf35543032887fe2ae9677379c013126e1f092b366ad3391a",
+          // to:
+          //   "0512d818771130abf35543032887fe2ae9677379c013126e1f092b366ad3391a",
           // to: balance.pubKey,
           amount: Number(amount),
           type: "transaction",
@@ -101,8 +121,8 @@ function index({ account }) {
         "http://51.255.211.135:8181/wallet/unfreeze",
         {
           // to: balance.pubKey,
-          to:
-            "0512d818771130abf35543032887fe2ae9677379c013126e1f092b366ad3391a",
+          // to:
+          //   "0512d818771130abf35543032887fe2ae9677379c013126e1f092b366ad3391a",
           amount: Number(amount),
           type: "freeze",
         },
@@ -222,10 +242,10 @@ function index({ account }) {
       <div className="">
         <img width="90" src={Wave} />
       </div>
-      <div className="amount mb-1">Unfreeze WAVE</div>
-      <div className="mb-5" style={{ color: "#C3EEFD", fontWeight: "bold" }}>
+      <div className="amount mb-1 mb-4">freeze WAVE</div>
+      {/* <div className="mb-5" style={{ color: "#C3EEFD", fontWeight: "bold" }}>
         +25% Yearly yield
-      </div>
+      </div> */}
 
       <div className="transactionsCards">
         <div>
@@ -340,7 +360,7 @@ function index({ account }) {
           <span>{balance?.blocked} WAVE</span>
         </div>
         <div>
-          <span>Total balance</span>
+          <span>Total Rewarded </span>
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -396,7 +416,7 @@ function index({ account }) {
               </g>
             </g>
           </svg>
-          <span>{balance?.balance + balance?.blocked} WAVE</span>
+          <span>{rewarded ? rewarded : 0} WAVE</span>
         </div>
       </div>
 
@@ -444,6 +464,16 @@ function index({ account }) {
           <MDBIcon icon="exchange-alt" />
         </MDBBtn> */}
       </div>
+      <h5 style={{ color: "#fff" }} className="text-left mt-4">
+        How does freezing work on my wallet:
+      </h5>
+      <h6 style={{ color: "#fff" }} className="text-left">
+        Your frozen WAVE coins will be added to our node and will be
+        synchronized directly with it. After you froze your balance you will get
+        your first rewards from ur freezing concept between the next 12-48h. If
+        you decide to increase your frozen balance you have to cancel the
+        freezing and re-freeze the new desired amount again.
+      </h6>
     </div>
   );
 }

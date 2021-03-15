@@ -290,10 +290,10 @@ function index({ account }) {
       <div className="">
         <img width="90" src={Wave} />
       </div>
-      <div className="amount mb-1">Stake WAVE</div>
-      <div className="mb-5" style={{ color: "#C3EEFD", fontWeight: "bold" }}>
+      <div className="amount mb-1 mb-3">Stake WAVE</div>
+      {/* <div className="mb-5" style={{ color: "#C3EEFD", fontWeight: "bold" }}>
         +25% Yearly yield
-      </div>
+      </div> */}
 
       <div className="transactionsCards">
         <div>
@@ -736,6 +736,17 @@ function index({ account }) {
         </MDBBtn> */}
         </div>
       )}
+      <h5 style={{ color: "#fff" }} className="text-left mt-4">
+        How does Staking work on my Wallet:
+      </h5>
+      <h6 style={{ color: "#fff" }} className="text-left">
+        WAVE coins are added to our staking pool, so you don’t have to keep your
+        divice running and you are still connected to our node 24/7. This makes
+        it easy to stake your WAVE coins directly in the wallet. If you decide
+        to increase your Staking Balance you have to cancel the staking and
+        re-stake the desired new amount It can take up so 24 hours until the
+        staking balance is activated in the network.
+      </h6>
     </div>
   );
 }

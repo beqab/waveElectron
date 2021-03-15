@@ -130,6 +130,7 @@ function index({ account }) {
       <Modal
         account={account}
         modal14={modal14}
+        walletData={selectedWallet(userKey)}
         reloadData={() => {
           fetchWalletData();
         }}

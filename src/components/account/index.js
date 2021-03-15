@@ -5,6 +5,7 @@ const { app, BrowserWindow } = require("electron");
 const { ipcRenderer } = require("electron");
 import NewWallet from "../login/newWalletForm";
 import OldWallet from "../login/oldWaletFrom";
+import ModalHead from "../../imgs/moadlHeder.png";
 
 import {
   MDBBtn,
@@ -15,6 +16,7 @@ import {
   MDBCardImage,
   MDBCardTitle,
   MDBCardText,
+  MDBModalHeader,
   MDBContainer,
   MDBModalBody,
   MDBRow,
@@ -64,118 +66,155 @@ function index() {
 
   const modalContent = () => {
     if (openModal === "NewWallet") {
-      return <NewWallet fromAccount={true} />;
+      return (
+        <>
+          <MDBModalHeader
+            className="text-center addressModal"
+            toggle={() => setOpenModal(null)}
+          >
+            <img className="w-100" src={ModalHead} />
+            {/* <h3 className="modalTitle">Create New Wallet</h3> */}
+
+            {/* <img src={Logo} width="60" /> */}
+          </MDBModalHeader>
+          <NewWallet fromAccount={true} />{" "}
+        </>
+      );
     } else if (openModal === "OldWallet") {
       return <OldWallet fromAccount={true} />;
     } else if (openModal === "delete") {
       return (
-        <MDBModalBody>
-          <div className="amount mt-0 mb-1">
-            are you sure you want to delete the account : {selectedAccount} ?
-          </div>
+        <>
+          <MDBModalHeader
+            className="text-center addressModal"
+            toggle={() => setOpenModal(null)}
+          >
+            <img className="w-100" src={ModalHead} />
+            <h3 className="modalTitle">
+              are you sure you want to delete the account : {selectedAccount} ?
+            </h3>
 
-          <MDBRow>
-            <MDBCol md="9" lg="7" xl="5" className="mx-auto mt-3">
-              <MDBCard>
+            {/* <img src={Logo} width="60" /> */}
+          </MDBModalHeader>
+          <MDBModalBody>
+            <MDBRow>
+              <MDBCol md="12" lg="12" xl="12" className="mx-auto mt-3">
                 <MDBCardBody className="mx-4">
-                  <div className="text-center pt-3 mb-3">
-                    <MDBBtn
-                      type="button"
-                      gradient="blue"
-                      rounded
-                      className="btn-block z-depth-1a"
-                      onClick={() => {
-                        clear();
-                      }}
-                    >
-                      Cancel
-                    </MDBBtn>
-                    <MDBBtn
-                      type="button"
-                      gradient="blue"
-                      rounded
-                      className="btn-block z-depth-1a"
-                      onClick={() => {
-                        //   setOpenModal("edit");
-                        ipcRenderer.send("deleteAccount", {
-                          name: selectedAccount,
-                        });
-                        clear();
-                      }}
-                    >
-                      Delete Account
-                    </MDBBtn>
+                  <div className="text-center row pt-3 mb-3">
+                    <div className="col-6">
+                      <MDBBtn
+                        type="button"
+                        gradient="blue"
+                        rounded
+                        className="btn-block  z-depth-1a"
+                        onClick={() => {
+                          clear();
+                        }}
+                      >
+                        Cancel
+                      </MDBBtn>
+                    </div>
+                    <div className="col-6">
+                      <MDBBtn
+                        type="button"
+                        gradient="blue"
+                        rounded
+                        className="btn-block z-depth-1a"
+                        onClick={() => {
+                          //   setOpenModal("edit");
+                          ipcRenderer.send("deleteAccount", {
+                            name: selectedAccount,
+                          });
+                          clear();
+                        }}
+                      >
+                        Delete Account
+                      </MDBBtn>
+                    </div>
                   </div>
                   {/* <p className="dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
                   {" "}
                   or Sign up with:
                 </p> */}
                 </MDBCardBody>
-              </MDBCard>
-            </MDBCol>
-          </MDBRow>
-        </MDBModalBody>
+              </MDBCol>
+            </MDBRow>
+          </MDBModalBody>
+        </>
       );
     } else {
       return (
-        <MDBModalBody>
-          <div className="amount mt-0 mb-1">
-            Change Account : {selectedAccount}
-          </div>
+        <>
+          <MDBModalHeader
+            className="text-center addressModal"
+            toggle={() => setOpenModal(null)}
+          >
+            <img className="w-100" src={ModalHead} />
+            <h3 className="modalTitle">Change Account name</h3>
 
-          <MDBRow>
-            <MDBCol md="9" lg="7" xl="5" className="mx-auto mt-3">
-              <MDBCard>
+            {/* <img src={Logo} width="60" /> */}
+          </MDBModalHeader>
+          <MDBModalBody>
+            <div style={{ color: "#000" }} className="amount mt-0 mb-1">
+              Account Name: {selectedAccount}
+            </div>
+
+            <MDBRow>
+              <MDBCol md="12" lg="12" xl="12" className="mx-auto mt-3">
                 <MDBCardBody className="mx-4">
-                  <div className=" currencyField">
+                  <div className=" currencyField input">
                     <MDBInput
                       value={newName}
                       onChange={(e) => {
                         setNewName(e.target.value);
                       }}
-                      hint="Set New Account name"
+                      label="Set New Account name"
                       // type="text"
                     />
                   </div>
 
-                  <div className="text-center pt-3 mb-3">
-                    <MDBBtn
-                      type="button"
-                      gradient="blue"
-                      rounded
-                      className="btn-block z-depth-1a"
-                      onClick={() => {
-                        //   setOpenModal("edit");
-                        ipcRenderer.send("changeAccountName", {
-                          newName,
-                          name: selectedAccount,
-                        });
-                        clear();
-                      }}
-                    >
-                      Change Account Name
-                    </MDBBtn>
-                    <MDBBtn
-                      type="button"
-                      gradient="blue"
-                      rounded
-                      className="btn-block z-depth-1a"
-                      onClick={() => {
-                        clear();
-                      }}
-                    >
-                      Cancel
-                    </MDBBtn>
+                  <div className="text-center row pt-3 mb-3">
+                    <div className="col-6">
+                      <MDBBtn
+                        type="button"
+                        gradient="blue"
+                        rounded
+                        className="btn-block z-depth-1a"
+                        onClick={() => {
+                          //   setOpenModal("edit");
+                          ipcRenderer.send("changeAccountName", {
+                            newName,
+                            name: selectedAccount,
+                          });
+                          clear();
+                        }}
+                      >
+                        Change Account Name
+                      </MDBBtn>
+                    </div>
+                    <div className="col-6">
+                      <MDBBtn
+                        type="button"
+                        gradient="blue"
+                        rounded
+                        className="btn-block z-depth-1a"
+                        onClick={() => {
+                          clear();
+                        }}
+                      >
+                        Cancel
+                      </MDBBtn>
+                    </div>
                   </div>
                   {/* <p className="dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
               {" "}
               or Sign up with:
             </p> */}
                 </MDBCardBody>
-              </MDBCard>
-            </MDBCol>
-          </MDBRow>
-        </MDBModalBody>
+              </MDBCol>
+            </MDBRow>
+          </MDBModalBody>
+        </>
       );
     }
   };
@@ -186,7 +225,7 @@ function index() {
 
       className="wave-main"
     >
-      <MDBContainer className="MainModalWrapper">
+      <MDBContainer className="MainModalWrapper w650">
         <MDBModal isOpen={openModal} toggle={() => setOpenModal(null)} centered>
           {modalContent()}
           {/* <MDBModalFooter>
@@ -278,23 +317,28 @@ function index() {
             );
           })}
         </div>
-        <MDBBtn
-          onClick={() => {
-            setOpenModal("NewWallet");
-          }}
-          className="btnMain mt-2 w-100 mt-5"
-        >
-          Create New Account
-        </MDBBtn>
-
-        <MDBBtn
-          onClick={() => {
-            setOpenModal("OldWallet");
-          }}
-          className="btnMain mt-2 w-100"
-        >
-          Import Account
-        </MDBBtn>
+        <div className="row mt-5 accountBtns">
+          <div className="col-6">
+            <MDBBtn
+              onClick={() => {
+                setOpenModal("NewWallet");
+              }}
+              className="btnMain m-0 w-100 "
+            >
+              Create New Account
+            </MDBBtn>
+          </div>
+          <div className="col-6">
+            <MDBBtn
+              onClick={() => {
+                setOpenModal("OldWallet");
+              }}
+              className="btnMain m-0 w-100"
+            >
+              Import Account
+            </MDBBtn>
+          </div>
+        </div>
       </div>
     </div>
   );
