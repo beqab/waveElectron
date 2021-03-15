@@ -101,7 +101,14 @@ function index({ account }) {
             .then((res2) => {
               let newTrx = transactionsParse.map((el) => {
                 // debugger;
-                let check = res2.data.find((item) => item.txId === el.txId);
+                let check = res2.data.find(
+                  (item) =>
+                    item.txId === el.txId &&
+                    (el.input.from ===
+                      "0512d818771130abf35543032887fe2ae9677379c013126e1f092b366ad3391a" ||
+                      el.output.to ===
+                        "0512d818771130abf35543032887fe2ae9677379c013126e1f092b366ad3391a")
+                );
 
                 if (check) {
                   el.pending = true;
